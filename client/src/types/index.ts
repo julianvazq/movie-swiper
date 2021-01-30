@@ -1,2 +1,3 @@
-export interface Something {
+export interface Else {
+    hello: number;
 }

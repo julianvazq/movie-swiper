@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import SocketProvider from './context';
+import RoomProvider from './context';
 
 ReactDOM.render(
     <React.StrictMode>
-        <SocketProvider>
+        <RoomProvider>
             <App />
-        </SocketProvider>
+        </RoomProvider>
     </React.StrictMode>,
     document.getElementById('root'),
 );

@@ -1,17 +1,18 @@
-import fs from 'fs';
-import path from 'path';
+import { Server, Socket } from 'socket.io';
 
-module.exports = (io) => {
-    // Full path to the current directory
-    const listenersPath = path.resolve(__dirname);
+module.exports = (io: Server) => {
+    const { onTest } = require('./test')(io);
 
-    // Reads all the files in a directory
-    fs.readdirSync(listenersPath).forEach((fileName) => {
-        if (fileName !== 'index.ts') {
-            // Requires all the files in the directory that is not a index.js.
-            const listener = require(path.resolve(__dirname, fileName));
-            // Initialize it with io as the parameter.
-            listener(io);
-        }
-    });
+    const onConnection = (socket: Socket) => {
+        console.log(io);
+        socket.on('test', onTest);
+        socket.emit('test-response', { hello: 'hi' });
+
+        console.log('user connected --', socket.id);
+        socket.on('disconnect', () => {
+            console.log('disconnected', socket.id);
+        });
+    };
+
+    io.on('connection', onConnection);
 };

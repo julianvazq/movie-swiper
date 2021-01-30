@@ -1,23 +1,17 @@
-import React, { useState, useEffect, createContext } from 'react';
-import { io } from 'socket.io-client';
-// import io from 'socket.io-client';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 
 type Props = {
     children: JSX.Element;
 };
 
-/* Connect socket */
-const socket = io();
+export const RoomContext = createContext({} as any);
 
-export const SocketContext = createContext({} as any);
-
-export const useSocket = () => {
-    return SocketProvider(SocketContext);
+export const useRoom = () => {
+    return useContext(RoomContext);
 };
 
-const SocketProvider = ({ children }: any) => {
-    const value = { socket };
-    return <SocketContext.Provider value={value}>{children}</SocketContext.Provider>;
+const RoomProvider = ({ children }: any) => {
+    return <RoomContext.Provider value={{}}>{children}</RoomContext.Provider>;
 };
 
-export default SocketProvider;
+export default RoomProvider;

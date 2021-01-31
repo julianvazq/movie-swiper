@@ -1,5 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useRoom } from '../../../context/RoomContext';
+import { Container, MainTitle } from './style';
 
 const Home = () => {
     const history = useHistory();
@@ -7,10 +9,10 @@ const Home = () => {
         history.push('/create');
     };
     return (
-        <>
-            <div>Landing Page</div>
+        <Container>
+            <MainTitle>Landing Page</MainTitle>
             <button onClick={navigate}>Get Started</button>
-        </>
+        </Container>
     );
 };
 

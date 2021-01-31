@@ -4,7 +4,7 @@ module.exports = (io: Server) => {
     const { onTest } = require('./test')(io);
 
     const onConnection = (socket: Socket) => {
-        console.log(io);
+        // console.log(io);
         socket.on('test', onTest);
         socket.emit('test-response', { hello: 'hi' });
 

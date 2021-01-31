@@ -1,16 +1,16 @@
 import React from 'react';
 import { Subtitle, Title } from '../../../styles';
-import CreateForm from '../CreateForm';
+import JoinForm from '../JoinForm';
 import { Container } from './style';
 
-const Create = () => {
+const Join = () => {
     return (
         <Container>
-            <Title>Create New Movie Deck</Title>
+            <Title>Enter Your Name</Title>
             <Subtitle>Enter your name and a deck name before proceeding to movie selection.</Subtitle>
-            <CreateForm />
+            <JoinForm />
         </Container>
     );
 };
 
-export default Create;
+export default Join;

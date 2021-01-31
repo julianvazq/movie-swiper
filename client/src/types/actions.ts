@@ -1,22 +1,5 @@
-import { Movie } from './movies/movies';
-
-export interface Room {
-    roomName: string | null;
-    roomId: string | null;
-    participants: Participant[];
-    viewers: Participant[];
-    movies: Movie[];
-    stage: 'selection' | 'swiper' | 'results' | null;
-}
-
-export interface Viewer {
-    name: string;
-    id: string;
-}
-
-export interface Participant extends Viewer {
-    color: string;
-}
+import { Participant } from './room';
+import { Movie } from './movies';
 
 export enum ActionType {
     INITIALIZE_ROOM = 'initialize_room',

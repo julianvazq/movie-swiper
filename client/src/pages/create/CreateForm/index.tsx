@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useRoom } from '../../../context/RoomContext';
-import { userUser } from '../../../context/UserContext';
+import { useUser } from '../../../context/UserContext';
 import { Button } from '../../../styles';
 import { StyledForm } from './style';
 import randomColor from 'randomcolor';
-import { ActionType } from '../../../types';
+import { ActionType } from '../../../types/actions';
 import { socket } from '../../../sockets';
 import { useHistory } from 'react-router-dom';
+import { createRoom } from '../../../sockets/emitters';
 
-const Form = () => {
-    const { room, dispatch } = useRoom();
-    const { user, setUser } = userUser();
+const CreateForm = () => {
+    const { dispatch } = useRoom();
+    const { setUser } = useUser();
     const [name, setName] = useState('');
     const [roomName, setRoomName] = useState('');
     const history = useHistory();
@@ -21,7 +22,14 @@ const Form = () => {
         const newUser = { name, id: userId, color: randomColor() };
         setUser(newUser);
         dispatch({ type: ActionType.INITIALIZE_ROOM, payload: { roomName, participant: newUser } });
-        history.push('/selection');
+        createRoom((res) => {
+            if (!res.success) {
+                return;
+            }
+
+            const roomId = res.data.roomId;
+            history.push(`/selection/${roomId}`);
+        });
     };
 
     return (
@@ -35,4 +43,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default CreateForm;

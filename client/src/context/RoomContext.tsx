@@ -1,7 +1,8 @@
 import React, { useEffect, createContext, useContext, useReducer } from 'react';
 import { ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { Action, ActionType, Room } from '../types';
+import { Action, ActionType } from '../types/actions';
+import { Room } from '../types/room';
 
 type Props = {
     children: ReactNode;
@@ -11,13 +12,12 @@ const initialState: Room = {
     roomName: null,
     roomId: null,
     participants: [],
-    viewers: [],
     movies: [],
     stage: null,
 };
 
 interface ContextProps {
-    room: any;
+    room: Room;
     dispatch: (action: Action) => void;
 }
 export const RoomContext = createContext<ContextProps>({ room: initialState, dispatch: () => ({}) });
@@ -27,6 +27,7 @@ export const useRoom = () => {
 };
 
 const reducer = (state: Room, action: Action): Room => {
+    console.log(action);
     switch (action.type) {
         case ActionType.INITIALIZE_ROOM:
             return {
@@ -54,6 +55,7 @@ const reducer = (state: Room, action: Action): Room => {
 const RoomProvider = ({ children }: Props) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [room, setRoom] = useLocalStorage('room', state);
+
     useEffect(() => {
         setRoom(state);
     }, [state]);

@@ -1,11 +1,18 @@
 import { Movie } from './movies';
 
+export enum Stage {
+    SELECTION = 'selection',
+    SWIPER = 'swiper',
+    RESULTS = 'results',
+    NULL = 'null',
+}
+
 export interface Room {
     roomName: string | null;
     roomId: string | null;
     participants: Participant[];
     movies: Movie[];
-    stage: 'selection' | 'swiper' | 'results' | null;
+    stage: Stage;
 }
 
 export interface Participant {

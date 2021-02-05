@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
 import { socket } from '../../../sockets';
 import { Button } from '../../../styles';
-import { ActionType } from '../../../types/actions';
 import { StyledForm } from './stlye';
 import randomColor from 'randomcolor';
+import { joinRoom } from '../../../sockets/emitters';
 
 const JoinForm = () => {
-    const { setUser } = useUser();
-    const { dispatch } = useRoom();
+    const { user, setUser } = useUser();
     const [name, setName] = useState('');
     const history = useHistory();
-    const params = useParams();
+    const { id: roomId }: any = useParams();
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const userId = socket.id;
-        const newUser = { name, id: userId, color: randomColor() };
+        const newUser = { ...user, name, color: randomColor() };
         setUser(newUser);
-        // dispatch({ type: ActionType.INITIALIZE_ROOM, payload: { roomName, participant: newUser } });
-        // history.push('/selection');
+        joinRoom({ roomId, user: newUser }, (res) => {
+            console.log('join res', res);
+            if (res.success) {
+                // history.push(`/selection/${roomId}`);
+            }
+        });
     };
 
     return (

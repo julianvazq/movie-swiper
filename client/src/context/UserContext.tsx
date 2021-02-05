@@ -1,6 +1,8 @@
 import React, { useEffect, createContext, useContext } from 'react';
 import { ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { socket } from '../sockets';
+import { onConnection } from '../sockets/listeners';
 import { Participant } from '../types/room';
 
 type Props = {
@@ -21,8 +23,11 @@ const UserProvider = ({ children }: Props) => {
     const [user, setUser] = useLocalStorage('user', {} as Participant);
 
     useEffect(() => {
-        setUser(user);
-    }, [user]);
+        onConnection(() => {
+            console.log('connected');
+            setUser({ ...user, id: socket.id });
+        });
+    }, [socket]);
 
     return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };

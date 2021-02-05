@@ -17,11 +17,6 @@ const Selection = () => {
             return;
         }
         const inRoom = checkIfIncluded(room.participants, { id: user.id });
-        const movies = [{ id: 123 }, { id: 124 }];
-        const included = checkIfIncluded(room.participants, { id: user.id });
-
-        console.log(included);
-        // const inRoom = room.participants.find((p) => p.id === user.id);
         if (!inRoom) {
             console.log('new user!');
         }

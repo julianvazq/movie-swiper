@@ -1,3 +1,4 @@
+import { Participant } from './../../../server/src/types/index';
 import { socket } from '.';
 import { Room } from '../types/room';
 import { SocketResponse } from '../types/socket';
@@ -12,6 +13,13 @@ export const createRoom = (callback: (res: SocketResponse<{ roomId: string }>) =
     socket.emit('room:create', null, callback);
 };
 
-export const joinRoom = (data: { roomId: string }, callback: (res: SocketResponse<{ room: Room }>) => void) => {
-    socket.emit('room:get', data, callback);
+export const checkRoom = (data: { roomId: string }, callback: (res: SocketResponse<{ roomId: string }>) => void) => {
+    socket.emit('room:check', data, callback);
+};
+
+export const joinRoom = (
+    data: { roomId: string; user: Participant },
+    callback: (res: SocketResponse<{ roomId: string }>) => void,
+) => {
+    socket.emit('room:join', data, callback);
 };

@@ -12,8 +12,8 @@ import { createRoom } from '../../../sockets/emitters';
 const CreateForm = () => {
     const { dispatch } = useRoom();
     const { setUser } = useUser();
-    const [name, setName] = useState('');
-    const [roomName, setRoomName] = useState('');
+    const [name, setName] = useState('Julian');
+    const [roomName, setRoomName] = useState('MyDeck');
     const history = useHistory();
 
     const initializeRoomAndUser = (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,13 +21,13 @@ const CreateForm = () => {
         const userId = socket.id;
         const newUser = { name, id: userId, color: randomColor() };
         setUser(newUser);
-        dispatch({ type: ActionType.INITIALIZE_ROOM, payload: { roomName, participant: newUser } });
         createRoom((res) => {
             if (!res.success) {
                 return;
             }
 
             const roomId = res.data.roomId;
+            dispatch({ type: ActionType.INITIALIZE_ROOM, payload: { roomName, roomId, participant: newUser } });
             history.push(`/selection/${roomId}`);
         });
     };
@@ -35,9 +35,9 @@ const CreateForm = () => {
     return (
         <StyledForm onSubmit={initializeRoomAndUser}>
             <label>Your Name</label>
-            <input type="text" name="name" onChange={(e) => setName(e.target.value)} />
+            <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} />
             <label>Movie Deck Name</label>
-            <input type="text" name="roomName" onChange={(e) => setRoomName(e.target.value)} />
+            <input type="text" name="roomName" value={roomName} onChange={(e) => setRoomName(e.target.value)} />
             <Button>Get Started</Button>
         </StyledForm>
     );

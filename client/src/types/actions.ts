@@ -1,17 +1,23 @@
-import { Participant } from './room';
+import { Participant, Room, Stage } from './room';
 import { Movie } from './movies';
 
 export enum ActionType {
     INITIALIZE_ROOM = 'initialize_room',
+    GET_ROOM = 'get_room',
     JOIN = 'join',
     LEAVE = 'leave',
     ADD_MOVIE = 'add_movie',
     REMOVE_MOVIE = 'remove_movie',
 }
 
+export interface GetRoomAction {
+    type: ActionType.GET_ROOM;
+    payload: Room;
+}
+
 export interface InitializeRoomAction {
     type: ActionType.INITIALIZE_ROOM;
-    payload: { roomName: string; participant: Participant };
+    payload: { roomName: string; roomId: string; participant: Participant };
 }
 
 export interface JoinAction {
@@ -34,4 +40,10 @@ export interface RemoveMovieAction {
     payload: { id: number };
 }
 
-export type Action = JoinAction | LeaveAction | AddMovieAction | RemoveMovieAction | InitializeRoomAction;
+export type Action =
+    | JoinAction
+    | LeaveAction
+    | AddMovieAction
+    | RemoveMovieAction
+    | InitializeRoomAction
+    | GetRoomAction;

@@ -2,7 +2,10 @@ import React, { useEffect, createContext, useContext, useReducer } from 'react';
 import { ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { Action, ActionType } from '../types/actions';
-import { Room } from '../types/room';
+import { Room, Stage } from '../types/room';
+import { onParticipantJoin, onParticipantLeave, onGetRoom } from '../sockets/listeners';
+import { socket } from '../sockets';
+import { Participant } from '../../../server/src/types';
 
 type Props = {
     children: ReactNode;
@@ -13,7 +16,7 @@ const initialState: Room = {
     roomId: null,
     participants: [],
     movies: [],
-    stage: null,
+    stage: Stage.NULL,
 };
 
 interface ContextProps {
@@ -33,8 +36,13 @@ const reducer = (state: Room, action: Action): Room => {
             return {
                 ...state,
                 roomName: action.payload.roomName,
+                roomId: action.payload.roomId,
                 participants: [action.payload.participant],
-                stage: 'selection',
+                stage: Stage.SELECTION,
+            };
+        case ActionType.GET_ROOM:
+            return {
+                ...action.payload,
             };
         case ActionType.JOIN:
             return { ...state, participants: [...state.participants, action.payload] };
@@ -53,12 +61,40 @@ const reducer = (state: Room, action: Action): Room => {
 };
 
 const RoomProvider = ({ children }: Props) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
-    const [room, setRoom] = useLocalStorage('room', state);
+    const [room, dispatch] = useReducer(reducer, initialState);
+    const [storedMovies, setStoredMovies] = useLocalStorage('movies', {});
 
     useEffect(() => {
-        setRoom(state);
-    }, [state]);
+        if (room.movies) {
+            const newMovieList = {
+                id: room.roomId,
+                movies: room.movies,
+            };
+            setStoredMovies({ ...storedMovies, newMovieList });
+        }
+    }, [room.movies]);
+
+    useEffect(() => {
+        onParticipantJoin(room, (newParticipant) => {
+            dispatch({ type: ActionType.JOIN, payload: newParticipant });
+        });
+        onParticipantLeave(({ socketId }) => {
+            console.log(socketId, ' left');
+            dispatch({ type: ActionType.LEAVE, payload: { id: socketId } });
+        });
+        onGetRoom(({ room }) => {
+            console.log('got ROOM: ', room);
+            const user: Participant = JSON.parse(localStorage.getItem('user') || '');
+            let participants: Participant[] = [...room.participants];
+            if (user) {
+                participants = [...participants, user];
+            }
+            dispatch({ type: ActionType.GET_ROOM, payload: { ...room, participants } });
+        });
+        return () => {
+            socket.removeAllListeners();
+        };
+    }, [socket, room, dispatch]);
 
     return <RoomContext.Provider value={{ room, dispatch }}>{children}</RoomContext.Provider>;
 };

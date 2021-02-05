@@ -10,24 +10,11 @@ import Create from './pages/create/Create';
 import Selection from './pages/selection/Selection';
 import ProtectedRoute from './pages/shared/ProtectedRoute';
 import Join from './pages/join/Join';
+import Expired from './pages/expired/Expired';
+import { onGetRoom, onParticipantJoin } from './sockets/listeners';
+import { useRoom } from './context/RoomContext';
 
 const App = () => {
-    useEffect(() => {
-        // console.log(emitTest());
-        // socket.on('connect', () => {
-        //     console.log('client connected');
-        // });
-        // socket.on('test-response', () => {
-        //     console.log('test client response');
-        // });
-        // socket.emit('test');
-        // return () => socket.off();
-    }, []);
-
-    // const emit = () => {
-    //     emitTest({ hello: 'hi' });
-    // };
-
     return (
         <Router>
             <AppContainer>
@@ -35,7 +22,8 @@ const App = () => {
                 <Switch>
                     <Route path="/" exact component={Home} />
                     <Route path="/create" component={Create} />
-                    <ProtectedRoute path="/join/:id" component={Join} />
+                    <Route path="/join/:id" component={Join} />
+                    <Route path="/expired" component={Expired} />
                     <ProtectedRoute path="/selection/:id" component={Selection} />
                     {/* <Protecte path="/swiper" exact component={} /> */}
                     {/* <Route path="/results" exact component={} /> */}

@@ -3,6 +3,7 @@ import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
 import { Subtitle, Title } from '../../../styles';
 import { checkIfIncluded } from '../../../utils';
+import MovieSelection from '../MovieSelection';
 import { Container } from './style';
 
 type Status = 'loading' | 'error' | 'success';
@@ -10,7 +11,7 @@ type Status = 'loading' | 'error' | 'success';
 const Selection = () => {
     const { room, dispatch } = useRoom();
     const { user, setUser } = useUser();
-    const [status, setStatus] = useState<Status>('loading');
+    // const [status, setStatus] = useState<Status>('loading');
 
     useEffect(() => {
         if (!user.id) {
@@ -26,9 +27,9 @@ const Selection = () => {
         <Container>
             <Title>Pick Your Movies</Title>
             <Subtitle>Add movies you and your friends may want to watch.</Subtitle>
-            {status === 'loading' && <p>Loading...</p>}
-            {status === 'error' && <p>Sorry, something went wrong. Try refreshing the page.</p>}
-            {/* {status === 'loading' && } */}
+            {/* {status === 'loading' && <p>Loading...</p>}
+            {status === 'error' && <p>Sorry, something went wrong. Try refreshing the page.</p>} */}
+            <MovieSelection />
         </Container>
     );
 };

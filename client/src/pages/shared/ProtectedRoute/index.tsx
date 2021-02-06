@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
-import { socket } from '../../../sockets';
 import { checkRoom, joinRoom } from '../../../sockets/emitters';
 import { Title } from '../../../styles';
 import { ActionType } from '../../../types/actions';
@@ -10,17 +9,16 @@ import { ActionType } from '../../../types/actions';
 interface Props {
     component: React.ElementType;
     computedMatch?: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 }
 
 const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props) => {
-    const { room, dispatch } = useRoom();
+    const { room } = useRoom();
     const { user } = useUser();
     const history = useHistory();
+    const [status, setStatus] = useState<'loading' | 'error' | 'success'>('loading');
     const roomId = computedMatch.params.id;
     const path = computedMatch.url.split('/')[1];
-    const [status, setStatus] = useState<'loading' | 'error' | 'success'>('loading');
 
     useEffect(() => {
         try {
@@ -34,13 +32,12 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
                     }
                 });
                 /* If username is already set, join room */
-
                 if (user.name) {
                     console.log('ROOMMMMM', room);
                     joinRoom({ roomId, user }, (res) => {
                         console.log('join res', res);
                         if (res.success) {
-                            setStatus('success');
+                            setTimeout(() => setStatus('success'), 1000);
                         } else {
                             setStatus('error');
                         }
@@ -50,7 +47,7 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
                     history.replace(`/join/${roomId}`);
                 }
             } else {
-                setStatus('success');
+                setTimeout(() => setStatus('success'), 1000);
             }
         } catch (error) {
             console.log(error);

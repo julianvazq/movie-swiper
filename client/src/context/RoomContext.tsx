@@ -84,7 +84,7 @@ const RoomProvider = ({ children }: Props) => {
         onParticipantJoin(room, (newParticipant) => {
             console.log('NEW JOIN TOASTER', room.participants, newParticipant);
             toast.remove(toastId);
-            toastId = toast.success(`${newParticipant.name} joined.`);
+            toast.success(`${newParticipant.name} joined.`);
             dispatch({ type: ActionType.JOIN, payload: newParticipant });
         });
         onParticipantLeave(({ socketId }) => {

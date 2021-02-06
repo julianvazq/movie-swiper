@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import Home from './pages/home/Home';
 import Nav from './pages/shared/Nav';
-import { emitTest } from './sockets/emitters';
-import { socket } from './sockets';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import AppContainer from './pages/shared/AppContainer';
 import Create from './pages/create/Create';
@@ -11,14 +9,14 @@ import Selection from './pages/selection/Selection';
 import ProtectedRoute from './pages/shared/ProtectedRoute';
 import Join from './pages/join/Join';
 import Expired from './pages/expired/Expired';
-import { onGetRoom, onParticipantJoin } from './sockets/listeners';
-import { useRoom } from './context/RoomContext';
 import Swiper from './pages/swiper/Swiper';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
     return (
         <Router>
             <AppContainer>
+                <Toaster />
                 <Nav />
                 <Switch>
                     <Route path="/" exact component={Home} />

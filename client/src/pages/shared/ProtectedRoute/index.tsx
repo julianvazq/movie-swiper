@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
+import { socket } from '../../../sockets';
 import { checkRoom, joinRoom } from '../../../sockets/emitters';
 import { Title } from '../../../styles';
 import { ActionType } from '../../../types/actions';
@@ -21,36 +22,41 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
     const path = computedMatch.url.split('/')[1];
     const [status, setStatus] = useState<'loading' | 'error' | 'success'>('loading');
 
-    console.log(computedMatch);
     useEffect(() => {
         try {
-            if (room.roomId !== roomId) {
+            new Promise((resolve) => setTimeout(resolve, 3000));
+            const userNotInRoom = room.roomId !== roomId;
+            if (userNotInRoom) {
+                /* Check if room exists */
                 checkRoom({ roomId }, (res) => {
-                    console.log('protected: ', res);
                     if (!res.success) {
                         history.replace('/expired');
                     }
                 });
+                /* If username is already set, join room */
 
                 if (user.name) {
+                    console.log('ROOMMMMM', room);
                     joinRoom({ roomId, user }, (res) => {
                         console.log('join res', res);
+                        if (res.success) {
+                            setStatus('success');
+                        } else {
+                            setStatus('error');
+                        }
                     });
+                    /* If username is not set, go to Join screen to set it */
+                } else {
+                    history.replace(`/join/${roomId}`);
                 }
+            } else {
+                setStatus('success');
             }
-
-            console.log('stage', room.stage);
-            if (room.stage) {
-            }
-
-            console.log(user);
-            setStatus('success');
-            return () => setStatus('success');
         } catch (error) {
             console.log(error);
             setStatus('error');
         }
-    }, [computedMatch.params.id, user.id]);
+    }, [computedMatch.params.id, user]);
 
     useEffect(() => {
         if (room.roomId && path !== room.stage) {
@@ -63,11 +69,7 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
     }
 
     if (status === 'error') {
-        return <Title>Something went wrong...</Title>;
-    }
-
-    if (!user.name) {
-        return <Redirect to={`/join/${roomId}`} />;
+        return <Title>Could not join. Please try again.</Title>;
     }
 
     return <Component {...rest} />;

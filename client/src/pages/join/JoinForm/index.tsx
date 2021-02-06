@@ -18,14 +18,7 @@ const JoinForm = () => {
         e.preventDefault();
         const newUser = { ...user, name, color: randomColor() };
         setUser(newUser);
-        joinRoom({ roomId, user: newUser }, (res) => {
-            console.log('join res', res);
-            if (res.success) {
-                history.push(`/selection/${roomId}`);
-            } else {
-                setErrorMessage('Something went wrong. Please try again.');
-            }
-        });
+        history.push(`/selection/${roomId}`);
     };
 
     return (

@@ -6,6 +6,7 @@ import { Room, Stage } from '../types/room';
 import { onParticipantJoin, onParticipantLeave, onGetRoom } from '../sockets/listeners';
 import { socket } from '../sockets';
 import { Participant } from '../../../server/src/types';
+import toast from 'react-hot-toast';
 
 type Props = {
     children: ReactNode;
@@ -79,7 +80,11 @@ const RoomProvider = ({ children }: Props) => {
     }, [room.movies]);
 
     useEffect(() => {
+        let toastId: string;
         onParticipantJoin(room, (newParticipant) => {
+            console.log('NEW JOIN TOASTER', room.participants, newParticipant);
+            toast.remove(toastId);
+            toastId = toast.success(`${newParticipant.name} joined.`);
             dispatch({ type: ActionType.JOIN, payload: newParticipant });
         });
         onParticipantLeave(({ socketId }) => {

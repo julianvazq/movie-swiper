@@ -27,6 +27,13 @@ module.exports = (io: Server) => {
         try {
             const socket: Socket = this;
 
+            // const socketsInRoom = Object.keys(
+            //     io.sockets.adapter.rooms[data.roomId].sockets
+            // );
+            // if (socketsInRoom.includes(socket.id)) {
+            //     return;
+            // }
+
             socket.join(data.roomId, () => {
                 socket.to(data.roomId).emit('room:newjoin', {
                     socketId: socket.id,
@@ -39,11 +46,11 @@ module.exports = (io: Server) => {
                 data: { roomId: data.roomId },
             });
 
-            console.log(
-                'joined room: ',
-                data.roomId,
-                io.sockets.adapter.rooms[data.roomId].sockets
-            );
+            console.log('EVENT: joined room', {
+                roomId: data.roomId,
+                sockets: io.sockets.adapter.rooms[data.roomId].sockets,
+                length: io.sockets.adapter.rooms[data.roomId].length,
+            });
         } catch (error) {
             console.log(error);
             callback({
@@ -70,14 +77,11 @@ module.exports = (io: Server) => {
             const socket: Socket = this;
 
             const clientsInRoom =
-                (io.sockets.adapter &&
-                    io.sockets.adapter.rooms[data.roomId] &&
-                    io.sockets.adapter.rooms[data.roomId].sockets) ||
-                {};
-            const roomExists = Object.keys(clientsInRoom).length > 0;
-            console.log(`clients in room: ${data.roomId} `, clientsInRoom);
+                (io.sockets.adapter.rooms[data.roomId] &&
+                    io.sockets.adapter.rooms[data.roomId].length) ||
+                0;
 
-            if (roomExists) {
+            if (clientsInRoom > 0) {
                 callback({
                     success: true,
                     data: { roomId: data.roomId },

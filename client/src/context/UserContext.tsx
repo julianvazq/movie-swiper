@@ -24,7 +24,7 @@ const UserProvider = ({ children }: Props) => {
 
     useEffect(() => {
         onConnection(() => {
-            console.log('connected');
+            console.log('set new user IDDDD');
             setUser({ ...user, id: socket.id });
         });
     }, [socket.id]);

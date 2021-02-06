@@ -27,7 +27,7 @@ const UserProvider = ({ children }: Props) => {
             console.log('connected');
             setUser({ ...user, id: socket.id });
         });
-    }, [socket]);
+    }, [socket.id]);
 
     return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };

@@ -13,6 +13,7 @@ import Join from './pages/join/Join';
 import Expired from './pages/expired/Expired';
 import { onGetRoom, onParticipantJoin } from './sockets/listeners';
 import { useRoom } from './context/RoomContext';
+import Swiper from './pages/swiper/Swiper';
 
 const App = () => {
     return (
@@ -25,8 +26,8 @@ const App = () => {
                     <Route path="/join/:id" component={Join} />
                     <Route path="/expired" component={Expired} />
                     <ProtectedRoute path="/selection/:id" component={Selection} />
-                    {/* <Protecte path="/swiper" exact component={} /> */}
-                    {/* <Route path="/results" exact component={} /> */}
+                    <ProtectedRoute path="/swiper/:id" component={Swiper} />
+                    {/* <Route path="/results/:id" component={} /> */}
                     <Route component={Home} />
                 </Switch>
                 {/* <button onClick={emit}>Emit</button> */}

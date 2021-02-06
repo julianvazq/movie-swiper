@@ -28,15 +28,16 @@ module.exports = (io: Server) => {
             const socket: Socket = this;
 
             socket.join(data.roomId, () => {
-                socket
-                    .to(data.roomId)
-                    .emit('room:newjoin', {
-                        socketId: socket.id,
-                        user: data.user,
-                    });
+                socket.to(data.roomId).emit('room:newjoin', {
+                    socketId: socket.id,
+                    user: data.user,
+                });
             });
 
-            // EMIT TO EVERYONE THAT SOCKET JOINED
+            callback({
+                success: true,
+                data: { roomId: data.roomId },
+            });
 
             console.log(
                 'joined room: ',
@@ -45,6 +46,10 @@ module.exports = (io: Server) => {
             );
         } catch (error) {
             console.log(error);
+            callback({
+                success: false,
+                message: `Failed to join the room: ${data.roomId}`,
+            });
         }
     };
 

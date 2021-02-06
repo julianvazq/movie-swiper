@@ -10,6 +10,7 @@ import { joinRoom } from '../../../sockets/emitters';
 const JoinForm = () => {
     const { user, setUser } = useUser();
     const [name, setName] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const history = useHistory();
     const { id: roomId }: any = useParams();
 
@@ -20,7 +21,9 @@ const JoinForm = () => {
         joinRoom({ roomId, user: newUser }, (res) => {
             console.log('join res', res);
             if (res.success) {
-                // history.push(`/selection/${roomId}`);
+                history.push(`/selection/${roomId}`);
+            } else {
+                setErrorMessage('Something went wrong. Please try again.');
             }
         });
     };
@@ -29,6 +32,7 @@ const JoinForm = () => {
         <StyledForm onSubmit={onSubmit}>
             <label>Your Name</label>
             <input type="text" name="name" onChange={(e) => setName(e.target.value)} />
+            {errorMessage && <p>{errorMessage}</p>}
             <Button>Get Started</Button>
         </StyledForm>
     );

@@ -6,7 +6,7 @@ import fetch from 'node-fetch';
  * @route POST /movies/genre
  * @desc Get individual movie details
  */
-router.get('/genres', async (req, res) => {
+router.post('/genres', async (req, res) => {
     try {
         const { genres = [], page = '1' } = req.body;
         const genreIds = genres.join(',');
@@ -22,17 +22,16 @@ router.get('/genres', async (req, res) => {
 });
 
 /**
- * @route GET /movies/:id
+ * @route GET /movies/:query
  * @desc Get individual movie details
  */
-router.get('/:id', async (req, res) => {
+router.get('/:query', async (req, res) => {
     try {
-        const { id } = req.params;
+        const { query } = req.params;
 
-        const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.API_KEY}&append_to_response=images`;
+        const url = `https://api.themoviedb.org/3/search/movie/?api_key=${process.env.API_KEY}&language=en-US&query=${query}&append_to_response=images`;
         const data = await fetch(url);
         const movie = await data.json();
-        console.log(movie);
         res.send(movie);
     } catch (err) {
         console.log(err);

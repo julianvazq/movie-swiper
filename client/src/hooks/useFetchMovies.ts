@@ -44,7 +44,7 @@ const useFetchMovies = ({ genres, movieQuery }: Props) => {
             if (movieQuery) {
                 try {
                     setLoading(true);
-                    const res = await axios.get(`/movies/${movieQuery}`, {
+                    const res = await axios.get(`/movies/query/${movieQuery}`, {
                         cancelToken: cancelToken.token,
                     });
                     if (res.status === 200) {

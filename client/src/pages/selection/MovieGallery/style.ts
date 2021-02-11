@@ -10,10 +10,10 @@ export const Gallery = styled.div`
     }
 
     @media screen and (min-width: 700px) {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 
         & > * {
-            min-height: 400px;
+            min-height: 300px;
         }
     }
 `;

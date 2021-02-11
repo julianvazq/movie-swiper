@@ -8,9 +8,11 @@ interface Props {
 }
 
 const MovieGallery = ({ movies }: Props) => {
+    const moviesOnDisplay = movies.results || [];
+
     return (
         <Gallery>
-            {movies.results.map((movie) => (
+            {moviesOnDisplay.map((movie) => (
                 <MovieCard key={movie.id} movie={movie} />
             ))}
         </Gallery>

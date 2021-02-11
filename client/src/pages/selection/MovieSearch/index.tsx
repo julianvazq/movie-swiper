@@ -45,7 +45,8 @@ const MovieSearch = () => {
                     />
                 </FormField>
             </form>
-            <MovieGallery movies={moviesOnDisplay} />
+            {loading && <p>Loading...</p>}
+            {!loading && <MovieGallery movies={moviesOnDisplay} />}
         </section>
     );
 };

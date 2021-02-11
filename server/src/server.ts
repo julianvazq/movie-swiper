@@ -9,10 +9,11 @@ import cors from 'cors';
 app.use(cors());
 import dotenv from 'dotenv';
 dotenv.config();
+console.log(require('dotenv').config());
 app.use(express.json());
-const initListeners = require('./listeners');
 
 /* SocketIO */
+const initListeners = require('./listeners');
 initListeners(io);
 
 /* Routes */
@@ -20,4 +21,5 @@ import movies from './routes/movies';
 app.use('/movies', movies);
 
 const PORT = 4500;
+
 server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));

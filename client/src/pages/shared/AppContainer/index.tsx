@@ -2,7 +2,7 @@ import React from 'react';
 import { Background, Container } from './style';
 
 type Props = {
-    children: React.ReactNode[];
+    children: React.ReactNode | React.ReactNode[];
 };
 
 const AppContainer = ({ children }: Props) => {

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Movie } from '../../../../../server/src/types/movies';
 import Modal from '../../shared/Modal';
 import MovieModal from '../../shared/MovieModal';
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const MovieCard = ({ movie }: Props) => {
+    const history = useHistory();
     const [visible, setVisible] = useState(false);
     const [moviePlus, setMoviePlus] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -22,6 +24,11 @@ const MovieCard = ({ movie }: Props) => {
 
     const onOpen = () => {
         setVisible(true);
+    };
+
+    const onClick = () => {
+        const currPathname = history.location.pathname;
+        history.push({ pathname: `${currPathname}/${movie.id}`, state: { movie } });
     };
 
     useEffect(() => {
@@ -46,10 +53,10 @@ const MovieCard = ({ movie }: Props) => {
 
     return (
         <>
-            <Card imageUrl={imageUrl} onClick={onOpen}>
+            <Card imageUrl={imageUrl} onClick={onClick} layoutId={`image-${movie.id}`}>
                 <Title>{movie.title}</Title>
             </Card>
-            <MovieModal movie={moviePlus || movie} visible={visible} onClose={onClose} loading={loading} />
+            {/* <MovieModal movie={moviePlus || movie} visible={visible} onClose={onClose} loading={loading} /> */}
         </>
     );
 };

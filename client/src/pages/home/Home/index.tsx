@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRoom } from '../../../context/RoomContext';
 import { Container, MainTitle } from './style';
 
 const Home = () => {

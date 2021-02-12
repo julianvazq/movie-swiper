@@ -11,24 +11,27 @@ import Join from './pages/join/Join';
 import Expired from './pages/expired/Expired';
 import Swiper from './pages/swiper/Swiper';
 import { Toaster } from 'react-hot-toast';
+import { AnimateSharedLayout } from 'framer-motion';
+import Movie from './pages/selection/MovieDetail';
 
 const App = () => {
     return (
         <Router>
             <AppContainer>
-                <Toaster />
-                <Nav />
-                <Switch>
-                    <Route path="/" exact component={Home} />
-                    <Route path="/create" component={Create} />
-                    <Route path="/join/:id" component={Join} />
-                    <Route path="/expired" component={Expired} />
-                    <ProtectedRoute path="/selection/:id" component={Selection} />
-                    <ProtectedRoute path="/swiper/:id" component={Swiper} />
-                    {/* <Route path="/results/:id" component={} /> */}
-                    <Route component={Home} />
-                </Switch>
-                {/* <button onClick={emit}>Emit</button> */}
+                <AnimateSharedLayout type="crossfade">
+                    <Toaster />
+                    <Nav />
+                    <Switch>
+                        <Route path="/" exact component={Home} />
+                        <Route path="/create" component={Create} />
+                        <Route path="/join/:id" component={Join} />
+                        <Route path="/expired" component={Expired} />
+                        <ProtectedRoute path={['/selection/:id/:movieId', '/selection/:id']} component={Selection} />
+                        <ProtectedRoute path="/swiper/:id" component={Swiper} />
+                        {/* <Route path="/results/:id" component={} /> */}
+                        <Route component={Home} />
+                    </Switch>
+                </AnimateSharedLayout>
             </AppContainer>
         </Router>
     );

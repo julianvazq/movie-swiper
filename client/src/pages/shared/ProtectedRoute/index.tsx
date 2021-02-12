@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { RouteProps, useHistory } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
 import { checkRoom, joinRoom } from '../../../sockets/emitters';
 import { Title } from '../../../styles';
-import { ActionType } from '../../../types/actions';
 
 interface Props {
     component: React.ElementType;
     computedMatch?: any;
-    [key: string]: any;
+    location?: RouteProps['location'];
+    path?: RouteProps['path'];
 }
 
 const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props) => {
@@ -19,6 +19,7 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
     const [status, setStatus] = useState<'loading' | 'error' | 'success'>('loading');
     const roomId = computedMatch.params.id;
     const path = computedMatch.url.split('/')[1];
+    console.log(rest);
 
     useEffect(() => {
         try {
@@ -69,7 +70,7 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
         return <Title>Could not join. Please try again.</Title>;
     }
 
-    return <Component {...rest} />;
+    return <Component {...computedMatch} {...rest} />;
 };
 
 export default ProtectedRoute;

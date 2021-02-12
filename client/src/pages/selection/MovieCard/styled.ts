@@ -1,7 +1,8 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import PosterUnavailable from '../../../assets/poster_unavailable.png';
 
-export const Card = styled.button<{ imageUrl: string | null }>`
+export const Card = styled(motion.button)<{ imageUrl: string | null }>`
     background: linear-gradient(to top, hsla(0, 0%, 0%, 0.25) 0%, hsla(0, 0%, 0%, 0) 100%),
         url(${(props) => (props.imageUrl ? props.imageUrl : PosterUnavailable)});
     background-repeat: no-repeat;

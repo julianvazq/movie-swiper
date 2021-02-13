@@ -3,20 +3,20 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
 import { Movie } from '../../../types/movies';
 import Modal from '../../shared/Modal';
-import { ContentContainer, Container, Title, Overlay } from './style';
+import { ContentContainer, Container, Title, Overlay, BackButtonContainer, Image } from './style';
 
 interface Props {
     movie: Movie;
 }
 
 const MovieDetail = ({ movie }: Props) => {
+    const { room } = useRoom();
     const history = useHistory();
     const imageWidth = 'w500';
     const imageUrl = movie.poster_path ? `https://image.tmdb.org/t/p/${imageWidth}${movie.poster_path}` : null;
-    console.log(history);
 
     const backToSelection = () => {
-        history.goBack();
+        history.push(`/selection/${room.roomId}`);
     };
 
     return (
@@ -28,7 +28,9 @@ const MovieDetail = ({ movie }: Props) => {
         >
             <Container onClick={backToSelection}>
                 <ContentContainer layoutId={`image-${movie.id}`} imageUrl={imageUrl}>
+                    <Image src={imageUrl || undefined} />
                     <Title>{movie.title}</Title>
+                    <BackButtonContainer></BackButtonContainer>
                 </ContentContainer>
             </Container>
         </Overlay>

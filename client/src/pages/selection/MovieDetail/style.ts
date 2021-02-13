@@ -21,8 +21,9 @@ export const Container = styled(motion.section)<{ imageUrl?: string | null }>`
     top: 0;
     bottom: 0;
     will-change: opacity;
-    z-index: 2;
+    z-index: 1;
     overflow: hidden;
+    z-index: 2;
 
     @media screen and (min-width: 700px) {
         max-width: 800px;
@@ -36,18 +37,37 @@ export const Container = styled(motion.section)<{ imageUrl?: string | null }>`
     }
 `;
 
-export const ContentContainer = styled(motion.div)<{ imageUrl: string | null }>`
-    background: linear-gradient(to top, hsla(0, 0%, 0%, 0.25) 0%, hsla(0, 0%, 0%, 0) 100%),
-        url(${(props) => props.imageUrl});
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+export const Image = styled(motion.img)`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 100%;
     width: 100%;
+    display: block;
+    object-fit: cover;
 
     @media screen and (min-width: 700px) {
         width: 200px;
     }
 `;
 
+export const ContentContainer = styled(motion.div)<{ imageUrl: string | null }>`
+    /* background: linear-gradient(to top, hsla(0, 0%, 0%, 0.25) 0%, hsla(0, 0%, 0%, 0) 100%),
+        url(${(props) => props.imageUrl});
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center; */
+    height: 100%;
+    width: 100%;
+    position: relative;
+`;
+
 export const Title = styled(motion.h3)``;
+
+export const BackButtonContainer = styled.div`
+    padding: 1rem;
+    background: pink;
+    margin-top: auto;
+`;

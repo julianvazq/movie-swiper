@@ -40,7 +40,6 @@ const Selection = ({ location, params }: Props) => {
     }, [location]);
 
     const movie = location?.state?.movie;
-    console.log(movie);
 
     return (
         <>

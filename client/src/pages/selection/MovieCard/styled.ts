@@ -1,28 +1,35 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import PosterUnavailable from '../../../assets/poster_unavailable.png';
 
-export const Card = styled(motion.button)`
+export const Card = styled(motion.button)<{ zIndex: number }>`
     border-radius: 4px;
     cursor: pointer;
-    overflow: hidden;
+    z-index: ${(props) => props.zIndex || 0};
 
     &:focus {
         outline: none;
     }
 `;
 
-export const ContentContainer = styled(motion.div)<{ imageUrl: string | null }>`
-    background: linear-gradient(to top, hsla(0, 0%, 0%, 0.25) 0%, hsla(0, 0%, 0%, 0) 100%),
-        url(${(props) => (props.imageUrl ? props.imageUrl : PosterUnavailable)});
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+export const ContentContainer = styled(motion.div)`
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+`;
+
+export const Image = styled(motion.img)`
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    object-fit: cover;
 `;
 
 export const Title = styled(motion.h3)`

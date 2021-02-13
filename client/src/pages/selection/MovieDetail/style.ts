@@ -9,9 +9,13 @@ export const Overlay = styled(motion.div)`
     right: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0);
     will-change: opacity;
+    z-index: 3;
+
+    @media screen and (min-width: 700px) {
+        background: rgba(0, 0, 0, 0.8);
+    }
 `;
 
 export const Container = styled(motion.section)<{ imageUrl?: string | null }>`
@@ -21,9 +25,8 @@ export const Container = styled(motion.section)<{ imageUrl?: string | null }>`
     top: 0;
     bottom: 0;
     will-change: opacity;
-    z-index: 1;
     overflow: hidden;
-    z-index: 2;
+    z-index: 4;
 
     @media screen and (min-width: 700px) {
         max-width: 800px;
@@ -47,6 +50,8 @@ export const Image = styled(motion.img)`
     width: 100%;
     display: block;
     object-fit: cover;
+    filter: brightness(0.5);
+    z-index: -1;
 
     @media screen and (min-width: 700px) {
         width: 200px;

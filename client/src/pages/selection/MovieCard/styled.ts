@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export const Card = styled(motion.button)<{ zIndex: number }>`
     border-radius: 4px;
     cursor: pointer;
+    z-index: 0;
     z-index: ${(props) => props.zIndex || 0};
 
     &:focus {
@@ -30,6 +31,7 @@ export const Image = styled(motion.img)`
     width: 100%;
     display: block;
     object-fit: cover;
+    z-index: -1;
 `;
 
 export const Title = styled(motion.h3)`

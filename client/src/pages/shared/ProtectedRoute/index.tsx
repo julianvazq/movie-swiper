@@ -19,7 +19,6 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
     const [status, setStatus] = useState<'loading' | 'error' | 'success'>('loading');
     const roomId = computedMatch.params.id;
     const path = computedMatch.url.split('/')[1];
-    console.log(rest);
 
     useEffect(() => {
         try {

@@ -1,10 +1,9 @@
 import axios from 'axios';
-import { animate, AnimatePresence, motion, useMotionValue } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
 import { Movie } from '../../../types/movies';
-import Modal from '../../shared/Modal';
 import { ContentContainer, Container, Title, Overlay, BackButtonContainer, Image } from './style';
 
 interface Props {
@@ -23,18 +22,10 @@ const MovieDetail = ({ movie }: Props) => {
         history.push(`/selection/${room.roomId}`);
     };
 
-    const opacity = useMotionValue(0);
     useEffect(() => {
-        const controls = animate(opacity, 1, {
-            type: 'tween',
-            ease: 'easeIn',
-            duration: 0,
-            onComplete: fetchMovieDetails,
-        });
-
+        fetchMovieDetails();
         return () => {
             cancelToken.cancel('Component got unmounted');
-            controls.stop;
         };
     }, [movie]);
 
@@ -61,14 +52,18 @@ const MovieDetail = ({ movie }: Props) => {
     console.log('details', movieDetails);
     return (
         <Overlay
-            style={{ opacity }}
-            // initial={{ opacity: 0 }}
-            // animate={{ opacity: 1 }}
-            // exit={{ opacity: 0, transition: { duration: 0.15 } }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0 } }}
             // transition={{ duration: 0.2, delay: 0.15 }}
         >
             <Container onClick={backToSelection}>
-                <ContentContainer style={{ opacity }} layoutId={`image-${movie.id}`} imageUrl={imageUrl}>
+                <ContentContainer
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    layoutId={`image-${movie.id}`}
+                    imageUrl={imageUrl}
+                >
                     <Image src={imageUrl || undefined} />
                     <AnimatePresence>
                         {movieDetails && (

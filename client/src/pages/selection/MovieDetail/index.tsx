@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
 import { Movie } from '../../../types/movies';
-import { Background, Container, Title } from './style';
+import Modal from '../../shared/Modal';
+import { ContentContainer, Container, Title, Overlay } from './style';
 
 interface Props {
     movie: Movie;
@@ -19,17 +20,18 @@ const MovieDetail = ({ movie }: Props) => {
     };
 
     return (
-        <Container
-            onClick={backToSelection}
+        <Overlay
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
-            // transition={{ duration: 0.2, delay: 0.15 }}
+            transition={{ duration: 0.2, delay: 0.15 }}
         >
-            <Background layoutId={`image-${movie.id}`} imageUrl={imageUrl}>
-                <Title>{movie.title}</Title>
-            </Background>
-        </Container>
+            <Container onClick={backToSelection}>
+                <ContentContainer layoutId={`image-${movie.id}`} imageUrl={imageUrl}>
+                    <Title>{movie.title}</Title>
+                </ContentContainer>
+            </Container>
+        </Overlay>
     );
 };
 

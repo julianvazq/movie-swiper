@@ -12,7 +12,7 @@ export const Card = styled(motion.button)`
     }
 `;
 
-export const Background = styled(motion.div)<{ imageUrl: string | null }>`
+export const ContentContainer = styled(motion.div)<{ imageUrl: string | null }>`
     background: linear-gradient(to top, hsla(0, 0%, 0%, 0.25) 0%, hsla(0, 0%, 0%, 0) 100%),
         url(${(props) => (props.imageUrl ? props.imageUrl : PosterUnavailable)});
     background-repeat: no-repeat;

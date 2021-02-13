@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Movie } from '../../../../../server/src/types/movies';
 import Modal from '../../shared/Modal';
 import MovieModal from '../../shared/MovieModal';
-import { Background, Card, Title } from './styled';
+import { ContentContainer, Card, Title } from './styled';
 
 interface Props {
     movie: Movie;
@@ -53,9 +53,9 @@ const MovieCard = ({ movie }: Props) => {
 
     return (
         <Card onClick={onClick} layoutId={`image-${movie.id}`}>
-            <Background imageUrl={imageUrl}>
+            <ContentContainer imageUrl={imageUrl}>
                 <Title>{movie.title}</Title>
-            </Background>
+            </ContentContainer>
             {/* <MovieModal movie={moviePlus || movie} visible={visible} onClose={onClose} loading={loading} /> */}
         </Card>
     );

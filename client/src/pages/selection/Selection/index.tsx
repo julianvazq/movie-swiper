@@ -8,7 +8,7 @@ import { RouteProps } from 'react-router';
 import { Container } from './style';
 import { Movie } from '../../../types/movies';
 import MovieDetail from '../MovieDetail';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 
 interface Props {
     isExact: boolean;
@@ -44,9 +44,7 @@ const Selection = ({ location, params }: Props) => {
 
     return (
         <>
-            {/* <AnimatePresence> */}
-            {movie && <MovieDetail movie={movie} />}
-            {/* </AnimatePresence> */}
+            <AnimatePresence>{movie && <MovieDetail movie={movie} />}</AnimatePresence>
             <Container show={!movie}>
                 <Title>Pick Your Movies</Title>
                 <Subtitle>Add movies you and your friends may want to watch.</Subtitle>

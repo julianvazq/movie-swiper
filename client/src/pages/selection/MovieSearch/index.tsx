@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useFetchMovies from '../../../hooks/useFetchMovies';
 import { Genre } from '../../../types/movies';
-import { colorStyles, FormField } from './style';
+import { colorStyles, FormField, StyledSelect } from './style';
 import Select, { OptionsType } from 'react-select';
 import { genres as allGenres } from './genres';
 import MovieGallery from '../MovieGallery';
@@ -36,7 +36,7 @@ const MovieSearch = () => {
                 </FormField>
                 <FormField show={movieQuery === ''}>
                     <label>Search By Genre</label>
-                    <Select
+                    <StyledSelect
                         isMulti
                         name="genres"
                         options={genreOptions}

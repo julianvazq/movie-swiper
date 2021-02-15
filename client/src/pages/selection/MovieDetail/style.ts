@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { AiFillStar } from 'react-icons/ai';
 
 export const Overlay = styled(motion.div)`
     position: fixed;
@@ -11,10 +12,10 @@ export const Overlay = styled(motion.div)`
     height: 100%;
     background: rgba(0, 0, 0, 0);
     will-change: opacity;
-    z-index: 3;
+    z-index: 6;
 
-    @media screen and (min-width: 700px) {
-        background: rgba(0, 0, 0, 0.8);
+    @media screen and (min-width: 600px) {
+        background: rgba(0, 0, 0, 0.5);
     }
 `;
 
@@ -25,16 +26,16 @@ export const Container = styled(motion.section)<{ imageUrl?: string | null }>`
     top: 0;
     bottom: 0;
     will-change: opacity;
-    z-index: 4;
+    z-index: 7;
     overflow-y: scroll;
 
-    @media screen and (min-width: 700px) {
+    @media screen and (min-width: 600px) {
         max-width: 800px;
         max-height: 500px;
         left: 0;
         right: 0;
         margin: auto;
-        background: pink;
+        background: rgba(0, 0, 0, 0.5);
         border-radius: 4px;
     }
 `;
@@ -51,12 +52,6 @@ export const Image = styled(motion.img)`
     object-fit: cover;
     filter: brightness(0.25);
     z-index: -1;
-
-    @media screen and (min-width: 700px) {
-        position: static;
-        width: 200px;
-        filter: none;
-    }
 `;
 
 export const ContentContainer = styled(motion.article)`
@@ -65,10 +60,6 @@ export const ContentContainer = styled(motion.article)`
     width: 100%;
     position: relative;
     padding: 2rem;
-
-    @media screen and (min-width: 700px) {
-        display: flex;
-    }
 `;
 
 export const Title = styled(motion.h3)`
@@ -122,12 +113,36 @@ export const Divider = styled.p`
 
 export const Grid = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, auto));
     grid-gap: 1rem;
     margin-bottom: 2rem;
+
+    @media screen and (min-width: 350px) {
+        grid-template-columns: repeat(2, minmax(130px, 200px));
+    }
 `;
 
-export const GridCell = styled.div``;
+export const GridCell = styled.div`
+    p {
+        display: flex;
+    }
+`;
+
+export const Star = styled(AiFillStar)`
+    margin-left: 0.5rem;
+    color: #dada1b;
+`;
+
+export const Video = styled.iframe`
+    width: 100%;
+
+    @media screen and (min-width: 450px) {
+        height: 275px;
+    }
+
+    @media screen and (min-width: 700px) {
+        height: 500px;
+    }
+`;
 
 export const BackButtonContainer = styled.div`
     padding: 1rem;

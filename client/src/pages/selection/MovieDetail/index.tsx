@@ -19,6 +19,8 @@ import {
     Grid,
     GridCell,
     Divider,
+    Star,
+    Video,
 } from './style';
 import PosterUnavailable from '../../../assets/poster_unavailable.png';
 
@@ -35,6 +37,11 @@ const MovieDetail = ({ movie }: Props) => {
     const imageUrl = movie.poster_path
         ? `https://image.tmdb.org/t/p/${imageWidth}${movie.poster_path}`
         : PosterUnavailable;
+    const trailerData =
+        movieDetails &&
+        movieDetails?.videos?.results?.find((video) => video.type === 'Trailer' && video.site === 'YouTube');
+    const trailerUrl = `https://www.youtube.com/embed/${trailerData?.key}`;
+    console.log(trailerUrl);
 
     const backToSelection = () => {
         history.push(`/selection/${room.roomId}`);
@@ -98,20 +105,30 @@ const MovieDetail = ({ movie }: Props) => {
                                 <Divider>More Details</Divider>
                                 <Grid>
                                     <GridCell>
-                                        <Label>Released</Label>
-                                        <p>{movieDetails.release_date}</p>
+                                        <Label>Rating</Label>
+                                        <p>
+                                            {movieDetails.vote_average} <Star />
+                                        </p>
                                     </GridCell>
                                     <GridCell>
                                         <Label>Runtime</Label>
                                         <p>{movieDetails.runtime} min</p>
                                     </GridCell>
                                     <GridCell>
+                                        <Label>Released</Label>
+                                        <p>{movieDetails.release_date}</p>
+                                    </GridCell>
+                                    <GridCell>
                                         <Label>Language</Label>
                                         <p>{movieDetails.original_language.toUpperCase()}</p>
                                     </GridCell>
                                 </Grid>
-                                <Divider>Trailer</Divider>
-                                <iframe src="https://www.youtube.com/embed/xOsLIiBStEs"></iframe>
+                                {trailerData && (
+                                    <>
+                                        <Divider>Trailer</Divider>
+                                        <Video src={trailerUrl} frameBorder="0" allowFullScreen></Video>
+                                    </>
+                                )}
                                 {/* <BackButtonContainer></BackButtonContainer> */}
                             </motion.div>
                         )}

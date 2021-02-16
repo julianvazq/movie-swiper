@@ -22,6 +22,7 @@ export const ContentContainer = styled(motion.div)`
 `;
 
 export const Image = styled(motion.img)`
+    border-radius: 4px;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -35,6 +36,7 @@ export const Image = styled(motion.img)`
 `;
 
 export const Title = styled(motion.h3)`
+    border-radius: 4px;
     width: 100%;
     padding: 1rem;
     margin-top: auto;

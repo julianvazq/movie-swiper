@@ -21,6 +21,7 @@ import {
     Divider,
     Star,
     Video,
+    BackIcon,
 } from './style';
 import PosterUnavailable from '../../../assets/poster_unavailable.png';
 
@@ -43,9 +44,28 @@ const MovieDetail = ({ movie }: Props) => {
     const trailerUrl = `https://www.youtube.com/embed/${trailerData?.key}`;
     console.log(trailerUrl);
 
+    const onOverlayClick = (e: any) => {
+        if (e.target.attributes['data-overlay']) {
+            history.push(`/selection/${room.roomId}`);
+        }
+    };
+
     const backToSelection = () => {
         history.push(`/selection/${room.roomId}`);
     };
+
+    useEffect(() => {
+        const onEscPress = (e: KeyboardEvent) => {
+            console.log(e);
+            if (e.key === 'Escape') {
+                history.push(`/selection/${room.roomId}`);
+            }
+        };
+
+        window.addEventListener('keydown', onEscPress);
+
+        return window.removeEventListener('keydown', onEscPress);
+    }, []);
 
     useEffect(() => {
         fetchMovieDetails();
@@ -77,12 +97,14 @@ const MovieDetail = ({ movie }: Props) => {
     console.log('details', movieDetails);
     return (
         <Overlay
+            data-overlay={true}
+            onClick={onOverlayClick}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0 } }}
             // transition={{ duration: 0.2, delay: 0.15 }}
         >
-            <Container onClick={backToSelection}>
+            <Container>
                 <ContentContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} layoutId={`image-${movie.id}`}>
                     <Image src={imageUrl} />
                     <AnimatePresence>
@@ -129,7 +151,10 @@ const MovieDetail = ({ movie }: Props) => {
                                         <Video src={trailerUrl} frameBorder="0" allowFullScreen></Video>
                                     </>
                                 )}
-                                {/* <BackButtonContainer></BackButtonContainer> */}
+                                <BackButtonContainer onClick={backToSelection}>
+                                    <BackIcon />
+                                    Go Back
+                                </BackButtonContainer>
                             </motion.div>
                         )}
                     </AnimatePresence>

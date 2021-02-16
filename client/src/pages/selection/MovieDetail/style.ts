@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
+import { IoIosArrowBack } from 'react-icons/io';
 
 export const Overlay = styled(motion.div)`
     position: fixed;
@@ -59,7 +60,18 @@ export const ContentContainer = styled(motion.article)`
     min-height: 100%;
     width: 100%;
     position: relative;
-    padding: 2rem;
+    padding: 2rem 2rem 6rem;
+
+    @media screen and (min-width: 600px) {
+        max-width: 800px;
+        max-height: 500px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        padding: 3rem;
+    }
 `;
 
 export const Title = styled(motion.h3)`
@@ -139,13 +151,35 @@ export const Video = styled.iframe`
         height: 275px;
     }
 
-    @media screen and (min-width: 700px) {
+    @media screen and (min-width: 600px) {
         height: 500px;
+        margin-bottom: 3rem;
     }
 `;
 
-export const BackButtonContainer = styled.div`
-    padding: 1rem;
-    background: pink;
+export const BackButtonContainer = styled.button`
+    padding: 1.5rem 1rem;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: hsl(213deg 23% 25%);
+    color: white;
+    box-shadow: 0 -2px 10px -1px rgb(0 0 0 / 30%);
+    text-transform: uppercase;
+    letter-spacing: 1px;
     margin-top: auto;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (min-width: 600px) {
+        display: none;
+    }
+`;
+
+export const BackIcon = styled(IoIosArrowBack)`
+    margin-right: 1rem;
+    font-size: 1.125rem;
 `;

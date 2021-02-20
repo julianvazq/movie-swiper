@@ -1,4 +1,4 @@
-import { Movie } from './movies';
+import { AddedMovie, Movie } from './movies';
 
 export enum Stage {
     SELECTION = 'selection',
@@ -11,7 +11,7 @@ export interface Room {
     roomName: string | null;
     roomId: string | null;
     participants: Participant[];
-    movies: Movie[];
+    movies: AddedMovie[];
     stage: Stage;
 }
 

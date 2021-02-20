@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { HiOutlinePlus, HiMinus } from 'react-icons/hi';
+import { ButtonState } from '../../../types';
 
 export const Container = styled.article`
     position: relative;
@@ -54,19 +55,23 @@ export const Title = styled(motion.h3)`
     z-index: 1;
 `;
 
-export const ButtonContainer = styled.button`
+export const ButtonContainer = styled.button<{ backgroundColor: string }>`
     position: absolute;
     top: 1rem;
     right: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #4c7fbd;
+    background: ${(props) => props.backgroundColor || '#4c7fbd'};
     border-radius: 50%;
     padding: 0.25rem;
     box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
 `;
 
 export const PlusIcon = styled(HiOutlinePlus)`
+    font-size: 2rem;
+`;
+
+export const MinusIcon = styled(HiMinus)`
     font-size: 2rem;
 `;

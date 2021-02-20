@@ -166,6 +166,10 @@ export const ButtonContainer = styled(motion.div)`
     background: hsl(213deg 23% 25%);
     box-shadow: 0 -2px 10px -1px rgb(0 0 0 / 30%);
     margin-top: auto;
+
+    @media screen and (min-width: 600px) {
+        display: none;
+    }
 `;
 
 const buttonStyles = css`
@@ -181,10 +185,6 @@ const buttonStyles = css`
 
 export const BackButton = styled.button`
     ${buttonStyles}
-
-    @media screen and (min-width: 600px) {
-        display: none;
-    }
 `;
 
 export const AddButton = styled.button`
@@ -203,4 +203,18 @@ export const BackIcon = styled(IoIosArrowBack)`
 
 export const PlusIcon = styled(HiOutlinePlus)`
     ${iconStyles}
+`;
+
+export const DesktopAddButton = styled.button`
+    ${buttonStyles}
+    display: none;
+    max-width: 300px;
+    background: var(--add);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+
+    @media screen and (min-width: 600px) {
+        display: flex;
+    }
 `;

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
-import { MovieDetails, Movie } from '../../../types/movies';
+import { MovieDetails, Movie, AddedMovie } from '../../../types/movies';
 import {
     ContentContainer,
     Container,
@@ -25,15 +25,21 @@ import {
     ButtonContainer,
     AddButton,
     PlusIcon,
+    DesktopAddButton,
 } from './style';
 import PosterUnavailable from '../../../assets/poster_unavailable.png';
+import { addMovie } from '../../../sockets/emitters';
+import toast, { dispatch } from 'react-hot-toast';
+import { useUser } from '../../../context/UserContext';
+import { ActionType } from '../../../types/actions';
 
 interface Props {
     movie: Movie;
 }
 
 const MovieDetail = ({ movie }: Props) => {
-    const { room } = useRoom();
+    const { room, dispatch } = useRoom();
+    const { user } = useUser();
     const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -46,6 +52,7 @@ const MovieDetail = ({ movie }: Props) => {
         movieDetails?.videos?.results?.find((video) => video.type === 'Trailer' && video.site === 'YouTube');
     const trailerUrl = `https://www.youtube.com/embed/${trailerData?.key}`;
     console.log(trailerUrl);
+    const movieInList = room.movies.find((m) => m.id === movie.id);
 
     const onOverlayClick = (e: any) => {
         if (e.target.attributes['data-overlay']) {
@@ -98,8 +105,22 @@ const MovieDetail = ({ movie }: Props) => {
         }
     };
 
-    console.log('movie', movie);
-    console.log('details', movieDetails);
+    const addMovieHandler = () => {
+        if (movieInList) {
+            toast((t) => <span>{movie.title} is already in the list.</span>);
+            return;
+        }
+
+        const addedMovie: AddedMovie = { ...movie, addedByUserId: user.id, matches: [], swiped: false };
+        addMovie({ roomId: room.roomId as string, movie: addedMovie }, (res) => {
+            if (res.success) {
+                toast.success(`Added ${movie.title}.`);
+            } else {
+                toast.error(`There was a problem adding ${movie.title}.`);
+            }
+        });
+    };
+
     return (
         <Overlay
             data-overlay={true}
@@ -119,6 +140,10 @@ const MovieDetail = ({ movie }: Props) => {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.2, delay: 0.25 }}
                             >
+                                <DesktopAddButton onClick={addMovieHandler}>
+                                    {' '}
+                                    <PlusIcon /> Add Movie
+                                </DesktopAddButton>
                                 <Title>{movieDetails.title}</Title>
                                 <Tag>{movieDetails.tagline}</Tag>
 
@@ -170,7 +195,7 @@ const MovieDetail = ({ movie }: Props) => {
                                         <BackIcon />
                                         Go Back
                                     </BackButton>
-                                    <AddButton>
+                                    <AddButton onClick={addMovieHandler}>
                                         <PlusIcon /> Add Movie
                                     </AddButton>
                                 </ButtonContainer>

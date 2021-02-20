@@ -1,5 +1,5 @@
 import { Participant, Room, Stage } from './room';
-import { Movie } from './movies';
+import { AddedMovie, Movie } from './movies';
 
 export enum ActionType {
     INITIALIZE_ROOM = 'initialize_room',
@@ -32,7 +32,7 @@ export interface LeaveAction {
 
 export interface AddMovieAction {
     type: ActionType.ADD_MOVIE;
-    payload: Movie;
+    payload: AddedMovie;
 }
 
 export interface RemoveMovieAction {

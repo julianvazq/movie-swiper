@@ -33,11 +33,11 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
                 });
                 /* If username is already set, join room */
                 if (user.name) {
-                    console.log('ROOMMMMM', room);
                     joinRoom({ roomId, user }, (res) => {
                         console.log('join res', res);
                         if (res.success) {
-                            setTimeout(() => setStatus('success'), 1000);
+                            // setTimeout(() => setStatus('success'), 1000);
+                            setStatus('success');
                         } else {
                             setStatus('error');
                         }
@@ -47,7 +47,8 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
                     history.replace(`/join/${roomId}`);
                 }
             } else {
-                setTimeout(() => setStatus('success'), 1000);
+                // setTimeout(() => setStatus('success'), 1000);
+                setStatus('success');
             }
         } catch (error) {
             console.log(error);

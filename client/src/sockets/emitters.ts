@@ -2,6 +2,7 @@ import { Participant } from './../../../server/src/types/index';
 import { socket } from '.';
 import { Room } from '../types/room';
 import { SocketResponse } from '../types/socket';
+import { AddedMovie } from '../types/movies';
 
 export const emitTest = (arg: any) => {
     socket.emit('test', arg, () => {
@@ -22,4 +23,11 @@ export const joinRoom = (
     callback: (res: SocketResponse<{ roomId: string }>) => void,
 ) => {
     socket.emit('room:join', data, callback);
+};
+
+export const addMovie = (
+    data: { roomId: string; movie: AddedMovie },
+    callback: (res: SocketResponse<{ movieId: string }>) => void,
+) => {
+    socket.emit('movie:add', data, callback);
 };

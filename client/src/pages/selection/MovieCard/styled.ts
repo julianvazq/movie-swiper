@@ -2,8 +2,14 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { HiOutlinePlus, HiMinus } from 'react-icons/hi';
 
-export const Card = styled(motion.button)<{ zIndex: number }>`
+export const Container = styled.article`
+    position: relative;
     border-radius: 4px;
+`;
+
+export const Card = styled(motion.button)<{ zIndex: number }>`
+    height: 100%;
+    width: 100%;
     cursor: pointer;
     z-index: ${(props) => props.zIndex || 0};
 
@@ -15,10 +21,10 @@ export const Card = styled(motion.button)<{ zIndex: number }>`
 export const ContentContainer = styled(motion.div)`
     height: 100%;
     width: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
 `;
 
 export const Image = styled(motion.img)`
@@ -32,7 +38,7 @@ export const Image = styled(motion.img)`
     width: 100%;
     display: block;
     object-fit: cover;
-    z-index: -1;
+    z-index: 0;
 `;
 
 export const Title = styled(motion.h3)`
@@ -45,6 +51,7 @@ export const Title = styled(motion.h3)`
     line-height: 1.3;
     background: #00000038;
     background: linear-gradient(180deg, rgba(247, 245, 252, 0) -10%, rgba(0, 0, 0, 1) 100%);
+    z-index: 1;
 `;
 
 export const ButtonContainer = styled.button`

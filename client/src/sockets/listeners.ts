@@ -1,6 +1,7 @@
 import { Participant } from './../../../server/src/types/index';
 import { socket } from '.';
 import { Room } from '../types/room';
+import { AddedMovie } from '../types/movies';
 
 export const onTest = () => {
     return socket.on('test', () => {
@@ -27,4 +28,10 @@ export const onParticipantLeave = (callback: (data: { socketId: string }) => voi
 
 export const onGetRoom = (callback: (data: { room: Room }) => void) => {
     return socket.once('room:get', callback);
+};
+
+export const onMovieAdd = (callback: (movie: AddedMovie) => void) => {
+    return socket.on('movie:add', (data: { movie: AddedMovie }) => {
+        callback(data.movie);
+    });
 };

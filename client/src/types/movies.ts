@@ -23,6 +23,12 @@ export interface Movie {
     vote_count: number;
 }
 
+export interface AddedMovie extends Movie {
+    addedByUserId: string;
+    matches: { id: string }[];
+    swiped: boolean;
+}
+
 export interface Genre {
     id: number;
     name: string;

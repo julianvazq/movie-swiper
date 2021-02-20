@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { Action, ActionType } from '../types/actions';
 import { Room, Stage } from '../types/room';
-import { onParticipantJoin, onParticipantLeave, onGetRoom } from '../sockets/listeners';
+import { onParticipantJoin, onParticipantLeave, onGetRoom, onMovieAdd } from '../sockets/listeners';
 import { socket } from '../sockets';
 import { Participant } from '../../../server/src/types';
 import toast from 'react-hot-toast';
@@ -57,7 +57,10 @@ const reducer = (state: Room, action: Action): Room => {
                 participants: state.participants.filter((participant) => participant.id !== action.payload.id),
             };
         case ActionType.ADD_MOVIE:
-            return { ...state, movies: [...state.movies, action.payload] };
+            return {
+                ...state,
+                movies: [...state.movies.filter((movie) => movie.id !== action.payload.id), action.payload],
+            };
         case ActionType.REMOVE_MOVIE:
             return { ...state, movies: state.movies.filter((movie) => movie.id !== action.payload.id) };
         default:
@@ -102,6 +105,9 @@ const RoomProvider = ({ children }: Props) => {
                 participants = [...participants, user];
             }
             dispatch({ type: ActionType.GET_ROOM, payload: { ...room, participants } });
+        });
+        onMovieAdd((movie) => {
+            dispatch({ type: ActionType.ADD_MOVIE, payload: movie });
         });
         return () => {
             socket.removeAllListeners();

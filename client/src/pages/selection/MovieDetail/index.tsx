@@ -9,7 +9,7 @@ import {
     Container,
     Title,
     Overlay,
-    BackButtonContainer,
+    BackButton,
     Image,
     Overview,
     Tag,
@@ -22,6 +22,9 @@ import {
     Star,
     Video,
     BackIcon,
+    ButtonContainer,
+    AddButton,
+    PlusIcon,
 } from './style';
 import PosterUnavailable from '../../../assets/poster_unavailable.png';
 
@@ -69,8 +72,10 @@ const MovieDetail = ({ movie }: Props) => {
 
     useEffect(() => {
         fetchMovieDetails();
+        document.body.style.overflow = 'hidden';
         return () => {
             cancelToken.cancel('Component got unmounted');
+            document.body.style.overflow = 'unset';
         };
     }, [movie]);
 
@@ -124,7 +129,7 @@ const MovieDetail = ({ movie }: Props) => {
                                 </WrapContainer>
                                 <Label>Overview</Label>
                                 <Overview>{movieDetails.overview}</Overview>
-                                <Divider>More Details</Divider>
+                                <Divider>Details</Divider>
                                 <Grid>
                                     <GridCell>
                                         <Label>Rating</Label>
@@ -151,10 +156,24 @@ const MovieDetail = ({ movie }: Props) => {
                                         <Video src={trailerUrl} frameBorder="0" allowFullScreen></Video>
                                     </>
                                 )}
-                                <BackButtonContainer onClick={backToSelection}>
-                                    <BackIcon />
-                                    Go Back
-                                </BackButtonContainer>
+                                <ButtonContainer
+                                    initial={{ opacity: 0, y: 50 }}
+                                    animate={{
+                                        opacity: 1,
+                                        y: 0,
+                                        transition: {
+                                            duration: 0.75,
+                                        },
+                                    }}
+                                >
+                                    <BackButton onClick={backToSelection}>
+                                        <BackIcon />
+                                        Go Back
+                                    </BackButton>
+                                    <AddButton>
+                                        <PlusIcon /> Add Movie
+                                    </AddButton>
+                                </ButtonContainer>
                             </motion.div>
                         )}
                     </AnimatePresence>

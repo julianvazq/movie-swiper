@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
+import { HiOutlinePlus } from 'react-icons/hi';
 
 export const Overlay = styled(motion.div)`
     position: fixed;
@@ -95,8 +96,7 @@ export const WrapContainer = styled.div`
 `;
 
 export const Genre = styled.p`
-    background: black;
-    border: 0.5px solid var(--white);
+    background: #495768;
     color: var(--white);
     padding: 0.125rem 0.75rem;
     border-radius: 99px;
@@ -157,29 +157,50 @@ export const Video = styled.iframe`
     }
 `;
 
-export const BackButtonContainer = styled.button`
-    padding: 1.5rem 1rem;
-    width: 100%;
+export const ButtonContainer = styled(motion.div)`
+    display: flex;
+    position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     background: hsl(213deg 23% 25%);
-    color: white;
     box-shadow: 0 -2px 10px -1px rgb(0 0 0 / 30%);
-    text-transform: uppercase;
-    letter-spacing: 1px;
     margin-top: auto;
-    position: fixed;
+`;
+
+const buttonStyles = css`
+    padding: 1.5rem 1rem;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+`;
+
+export const BackButton = styled.button`
+    ${buttonStyles}
 
     @media screen and (min-width: 600px) {
         display: none;
     }
 `;
 
-export const BackIcon = styled(IoIosArrowBack)`
+export const AddButton = styled.button`
+    ${buttonStyles}
+    background: var(--add);
+`;
+
+const iconStyles = css`
     margin-right: 1rem;
     font-size: 1.125rem;
+`;
+
+export const BackIcon = styled(IoIosArrowBack)`
+    ${iconStyles}
+`;
+
+export const PlusIcon = styled(HiOutlinePlus)`
+    ${iconStyles}
 `;

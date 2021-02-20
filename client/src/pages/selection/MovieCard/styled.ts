@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { HiOutlinePlus, HiMinus } from 'react-icons/hi';
 
 export const Card = styled(motion.button)<{ zIndex: number }>`
     border-radius: 4px;
     cursor: pointer;
-    z-index: 0;
     z-index: ${(props) => props.zIndex || 0};
 
     &:focus {
@@ -45,4 +45,21 @@ export const Title = styled(motion.h3)`
     line-height: 1.3;
     background: #00000038;
     background: linear-gradient(180deg, rgba(247, 245, 252, 0) -10%, rgba(0, 0, 0, 1) 100%);
+`;
+
+export const ButtonContainer = styled.button`
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #4c7fbd;
+    border-radius: 50%;
+    padding: 0.25rem;
+    box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
+`;
+
+export const PlusIcon = styled(HiOutlinePlus)`
+    font-size: 2rem;
 `;

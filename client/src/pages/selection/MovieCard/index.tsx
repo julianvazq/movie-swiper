@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Movie } from '../../../../../server/src/types/movies';
-import { ContentContainer, Card, Title, Image } from './styled';
+import { ContentContainer, Card, Title, Image, PlusIcon, ButtonContainer } from './styled';
 import PosterUnavailable from '../../../assets/poster_unavailable.png';
 import { useRoom } from '../../../context/RoomContext';
 
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const MovieCard = ({ movie }: Props) => {
-    const { room } = useRoom();
+    const { room, dispatch } = useRoom();
     const history = useHistory();
     const [zIndex, setZIndex] = useState(0);
     const imageWidth = 'w342';
@@ -32,6 +32,9 @@ const MovieCard = ({ movie }: Props) => {
         <Card onClick={onClick} layoutId={`image-${movie.id}`} zIndex={zIndex}>
             <ContentContainer>
                 <Image src={imageUrl} />
+                <ButtonContainer>
+                    <PlusIcon />
+                </ButtonContainer>
                 <Title>{movie.title}</Title>
             </ContentContainer>
         </Card>

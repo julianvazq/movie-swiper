@@ -24,9 +24,14 @@ const UserProvider = ({ children }: Props) => {
 
     useEffect(() => {
         onConnection(() => {
-            setUser({ ...user, id: socket.id });
+            if (!user.id) {
+                setUser({ ...user, id: socket.id });
+                socket.emit('user:new', { ...user, id: socket.id });
+            } else {
+                socket.emit('user:new', user);
+            }
         });
-    }, [socket.id]);
+    }, []);
 
     return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };

@@ -14,16 +14,15 @@ export const onConnection = (callback: (socketId: string) => void) => {
 };
 
 export const onParticipantJoin = (room: Room, callback: (user: Participant) => void) => {
-    return socket.on('room:newjoin', (data: { socketId: string; user: Participant }) => {
+    return socket.on('room:new-join', (data: { socketId: string; user: Participant }) => {
         console.log('new join: ', data.user);
-        console.log(room);
         socket.emit('room:send', { socketId: data.socketId, room });
         callback(data.user);
     });
 };
 
 export const onParticipantLeave = (callback: (data: { socketId: string }) => void) => {
-    return socket.once('room:leave', callback);
+    return socket.on('room:leave', callback);
 };
 
 export const onGetRoom = (callback: (data: { room: Room }) => void) => {

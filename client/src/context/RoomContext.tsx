@@ -46,10 +46,7 @@ const reducer = (state: Room, action: Action): Room => {
                 ...action.payload,
             };
         case ActionType.JOIN:
-            const participants = [
-                ...state.participants.filter((p) => p.name !== action.payload.name && p.color !== action.payload.color),
-                action.payload,
-            ];
+            const participants = [...state.participants.filter((p) => p.id !== action.payload.id), action.payload];
             return { ...state, participants };
         case ActionType.LEAVE:
             return {
@@ -98,9 +95,7 @@ const RoomProvider = ({ children }: Props) => {
             console.log('got ROOM: ', room);
             const user: Participant = JSON.parse(localStorage.getItem('user') || '');
             /* Remove duplicate user */
-            let participants: Participant[] = [
-                ...room.participants.filter((p) => p.name !== user.name && p.color !== user.color),
-            ];
+            let participants: Participant[] = [...room.participants.filter((p) => p.id !== user.id)];
             if (user) {
                 participants = [...participants, user];
             }

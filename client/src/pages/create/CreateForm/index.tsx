@@ -11,15 +11,14 @@ import { createRoom } from '../../../sockets/emitters';
 
 const CreateForm = () => {
     const { dispatch } = useRoom();
-    const { setUser } = useUser();
+    const { user, setUser } = useUser();
     const [name, setName] = useState('Julian');
     const [roomName, setRoomName] = useState('MyDeck');
     const history = useHistory();
 
     const initializeRoomAndUser = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const userId = socket.id;
-        const newUser = { name, id: userId, color: randomColor() };
+        const newUser = { ...user, name, color: randomColor() };
         setUser(newUser);
         createRoom((res) => {
             if (!res.success) {

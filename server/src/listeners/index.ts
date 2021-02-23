@@ -1,11 +1,13 @@
 import { Server, Socket } from 'socket.io';
+import { Participant } from '../types';
+import { SocketWithUserId } from '../types/socketio';
 
 module.exports = (io: Server) => {
     const { onTest } = require('./test')(io);
     const { createRoom, joinRoom, sendRoom, checkRoom } = require('./room')(io);
     const { addMovie } = require('./movie')(io);
 
-    const onConnection = (socket: Socket) => {
+    const onConnection = (socket: SocketWithUserId) => {
         // console.log(io);
         socket.on('test', onTest);
         // socket.emit('test-response', { hello: 'hi' });
@@ -17,12 +19,17 @@ module.exports = (io: Server) => {
 
         socket.on('movie:add', addMovie);
 
-        console.log('user connected --', socket.id);
+        socket.on('user:new', (user: Participant) => {
+            socket.userId = user.id;
+            console.log('user connected: ', user);
+        });
+
         socket.on('disconnecting', () => {
-            console.log('disconnected', socket.id);
-            console.log('was in rooms: ', socket.rooms);
+            console.log('disconnected', socket.userId);
             for (const roomId in socket.rooms) {
-                socket.to(roomId).emit('room:leave', { socketId: socket.id });
+                socket
+                    .to(roomId)
+                    .emit('room:leave', { socketId: socket.userId });
             }
         });
     };

@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { HiOutlinePlus, HiMinus } from 'react-icons/hi';
-import { ButtonState } from '../../../types';
 
 export const Container = styled.article`
     position: relative;

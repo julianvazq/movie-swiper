@@ -35,7 +35,7 @@ module.exports = (io: Server) => {
             // }
 
             socket.join(data.roomId, () => {
-                socket.to(data.roomId).emit('room:newjoin', {
+                socket.to(data.roomId).emit('room:new-join', {
                     socketId: socket.id,
                     user: data.user,
                 });

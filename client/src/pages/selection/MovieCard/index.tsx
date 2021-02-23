@@ -4,7 +4,7 @@ import { Movie } from '../../../../../server/src/types/movies';
 import { Container, ContentContainer, Card, Title, Image, PlusIcon, ButtonContainer, MinusIcon } from './styled';
 import PosterUnavailable from '../../../assets/poster_unavailable.png';
 import { useRoom } from '../../../context/RoomContext';
-import { addMovie } from '../../../sockets/emitters';
+import { addMovie, removeMovie } from '../../../sockets/emitters';
 import { AddedMovie } from '../../../types/movies';
 import { useUser } from '../../../context/UserContext';
 import toast from 'react-hot-toast';
@@ -23,7 +23,7 @@ const MovieCard = ({ movie }: Props) => {
         ? `https://image.tmdb.org/t/p/${imageWidth}${movie.poster_path}`
         : PosterUnavailable;
     const movieInList = room.movies.find((m) => m.id === movie.id);
-    // const addedByMe =
+    const addedByMe = movieInList?.addedByUserId === user.id;
 
     const onMovieClick = () => {
         const currPathname = history.location.pathname;
@@ -45,10 +45,15 @@ const MovieCard = ({ movie }: Props) => {
                     toast.error(`There was a problem adding ${movie.title}.`);
                 }
             });
-        } else if (movieInList && movieInList.addedByUserId !== user.id) {
-            toast((t) => <span>{movie.title}can only be removed by the person who added it.</span>);
+        } else if (movieInList && !addedByMe) {
+            toast((t) => <span>{movie.title} can only be removed by the person who added it.</span>);
             return;
         } else {
+            removeMovie({ roomId: room.roomId as string, movieId: movie.id }, (res) => {
+                if (!res.success) {
+                    toast.error(`There was a problem removing ${movie.title}.`);
+                }
+            });
             /* Emit remove event */
         }
     };
@@ -56,7 +61,7 @@ const MovieCard = ({ movie }: Props) => {
     const getButtonState = (): string => {
         if (!movieInList) {
             return '#4c7fbd';
-        } else if (movieInList && movieInList.addedByUserId !== user.id) {
+        } else if (movieInList && !addedByMe) {
             return '#5a5f65';
         } else {
             return '#b53f3f';

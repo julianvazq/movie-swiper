@@ -9,7 +9,7 @@ module.exports = (io: Server) => {
     ) {
         try {
             const socket: Socket = this;
-            console.log('added movie: ', data.movie.title);
+            console.log('added movie: ', data.movie.title, data.movie.id);
 
             io.in(data.roomId).emit('movie:add', {
                 movie: data.movie,
@@ -28,5 +28,30 @@ module.exports = (io: Server) => {
         }
     };
 
-    return { addMovie };
+    const removeMovie = function (
+        data: { roomId: string; movieId: number },
+        callback: SocketCallback
+    ) {
+        try {
+            const socket: Socket = this;
+            console.log('removed movie: ', data.movieId);
+
+            io.in(data.roomId).emit('movie:remove', {
+                movieId: data.movieId,
+            });
+
+            callback({
+                success: true,
+                data: { movieId: data.movieId },
+            });
+        } catch (error) {
+            console.log(error);
+            callback({
+                success: false,
+                message: `Failed to add movie: ${data.movieId}`,
+            });
+        }
+    };
+
+    return { addMovie, removeMovie };
 };

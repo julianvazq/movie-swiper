@@ -1,6 +1,5 @@
 import { Participant } from './../../../server/src/types/index';
 import { socket } from '.';
-import { Room } from '../types/room';
 import { SocketResponse } from '../types/socket';
 import { AddedMovie } from '../types/movies';
 
@@ -30,4 +29,11 @@ export const addMovie = (
     callback: (res: SocketResponse<{ movieId: string }>) => void,
 ) => {
     socket.emit('movie:add', data, callback);
+};
+
+export const removeMovie = (
+    data: { roomId: string; movieId: number },
+    callback: (res: SocketResponse<{ movieId: string }>) => void,
+) => {
+    socket.emit('movie:remove', data, callback);
 };

@@ -26,6 +26,7 @@ import {
     AddButton,
     PlusIcon,
     DesktopAddButton,
+    MinusIcon,
 } from './style';
 import PosterUnavailable from '../../../assets/poster_unavailable.png';
 import { addMovie } from '../../../sockets/emitters';
@@ -51,8 +52,8 @@ const MovieDetail = ({ movie }: Props) => {
         movieDetails &&
         movieDetails?.videos?.results?.find((video) => video.type === 'Trailer' && video.site === 'YouTube');
     const trailerUrl = `https://www.youtube.com/embed/${trailerData?.key}`;
-    console.log(trailerUrl);
     const movieInList = room.movies.find((m) => m.id === movie.id);
+    const addedByMe = movieInList?.addedByUserId === user.id;
 
     const onOverlayClick = (e: any) => {
         if (e.target.attributes['data-overlay']) {
@@ -106,19 +107,31 @@ const MovieDetail = ({ movie }: Props) => {
     };
 
     const addMovieHandler = () => {
-        if (movieInList) {
-            toast((t) => <span>{movie.title} is already in the list.</span>);
+        if (!movieInList) {
+            const addedMovie: AddedMovie = { ...movie, addedByUserId: user.id, matches: [], swiped: false };
+            addMovie({ roomId: room.roomId as string, movie: addedMovie }, (res) => {
+                if (res.success) {
+                    toast.success(`Added ${movie.title}.`);
+                } else {
+                    toast.error(`There was a problem adding ${movie.title}.`);
+                }
+            });
+        } else if (movieInList && !addedByMe) {
+            toast((t) => <span>{movie.title} can only be removed by the person who added it.</span>);
             return;
+        } else {
+            /* Emit remove event */
         }
+    };
 
-        const addedMovie: AddedMovie = { ...movie, addedByUserId: user.id, matches: [], swiped: false };
-        addMovie({ roomId: room.roomId as string, movie: addedMovie }, (res) => {
-            if (res.success) {
-                toast.success(`Added ${movie.title}.`);
-            } else {
-                toast.error(`There was a problem adding ${movie.title}.`);
-            }
-        });
+    const getButtonState = (): string => {
+        if (!movieInList) {
+            return '#4c7fbd';
+        } else if (movieInList && !addedByMe) {
+            return '#5a5f65';
+        } else {
+            return '#b53f3f';
+        }
     };
 
     return (
@@ -140,7 +153,7 @@ const MovieDetail = ({ movie }: Props) => {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.2, delay: 0.25 }}
                             >
-                                <DesktopAddButton onClick={addMovieHandler}>
+                                <DesktopAddButton onClick={addMovieHandler} backgroundColor={getButtonState()}>
                                     {' '}
                                     <PlusIcon /> Add Movie
                                 </DesktopAddButton>
@@ -195,8 +208,17 @@ const MovieDetail = ({ movie }: Props) => {
                                         <BackIcon />
                                         Go Back
                                     </BackButton>
-                                    <AddButton onClick={addMovieHandler}>
-                                        <PlusIcon /> Add Movie
+                                    <AddButton onClick={addMovieHandler} backgroundColor={getButtonState()}>
+                                        {!movieInList && (
+                                            <>
+                                                <PlusIcon /> Add Movie
+                                            </>
+                                        )}
+                                        {movieInList && (
+                                            <>
+                                                <MinusIcon /> Remove
+                                            </>
+                                        )}
                                     </AddButton>
                                 </ButtonContainer>
                             </motion.div>

@@ -1,6 +1,3 @@
-import { Movie } from './movies';
-import { Room } from './room';
-
 interface FailResponse {
     success: false;
     message: string;

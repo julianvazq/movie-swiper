@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { Action, ActionType } from '../types/actions';
 import { Room, Stage } from '../types/room';
-import { onParticipantJoin, onParticipantLeave, onGetRoom, onMovieAdd } from '../sockets/listeners';
+import { onParticipantJoin, onParticipantLeave, onGetRoom, onMovieAdd, onMovieRemove } from '../sockets/listeners';
 import { socket } from '../sockets';
 import { Participant } from '../../../server/src/types';
 import toast from 'react-hot-toast';
@@ -103,6 +103,9 @@ const RoomProvider = ({ children }: Props) => {
         });
         onMovieAdd((movie) => {
             dispatch({ type: ActionType.ADD_MOVIE, payload: movie });
+        });
+        onMovieRemove(({ movieId }) => {
+            dispatch({ type: ActionType.REMOVE_MOVIE, payload: { id: movieId } });
         });
         return () => {
             socket.removeAllListeners();

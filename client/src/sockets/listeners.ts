@@ -34,3 +34,7 @@ export const onMovieAdd = (callback: (movie: AddedMovie) => void) => {
         callback(data.movie);
     });
 };
+
+export const onMovieRemove = (callback: (data: { movieId: number }) => void) => {
+    return socket.on('movie:remove', callback);
+};

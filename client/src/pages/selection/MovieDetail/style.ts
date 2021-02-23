@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
-import { HiOutlinePlus } from 'react-icons/hi';
+import { HiOutlinePlus, HiMinus } from 'react-icons/hi';
 
 export const Overlay = styled(motion.div)`
     position: fixed;
@@ -187,9 +187,9 @@ export const BackButton = styled.button`
     ${buttonStyles}
 `;
 
-export const AddButton = styled.button`
+export const AddButton = styled.button<{ backgroundColor: string }>`
     ${buttonStyles}
-    background: var(--add);
+    background: ${(props) => props.backgroundColor || 'var(--add)'};
 `;
 
 const iconStyles = css`
@@ -205,11 +205,15 @@ export const PlusIcon = styled(HiOutlinePlus)`
     ${iconStyles}
 `;
 
-export const DesktopAddButton = styled.button`
+export const MinusIcon = styled(HiMinus)`
+    ${iconStyles}
+`;
+
+export const DesktopAddButton = styled.button<{ backgroundColor: string }>`
     ${buttonStyles}
     display: none;
     max-width: 300px;
-    background: var(--add);
+    background: ${(props) => props.backgroundColor || 'var(--add)'};
     padding: 0.5rem 1rem;
     border-radius: 4px;
     margin-bottom: 2rem;

@@ -65,6 +65,7 @@ export const ButtonContainer = styled.button<{ backgroundColor: string }>`
     border-radius: 50%;
     padding: 0.25rem;
     box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
+    cursor: pointer;
 `;
 
 export const PlusIcon = styled(HiOutlinePlus)`

@@ -1,8 +1,7 @@
 :root {
     --white: #fff;
-    --add: #4c7fbd;
-    --remove: red;
-    --dark-blue-bg: #243447;
+    --add: hsl(213deg 40% 49%);
+    --dark-blue-bg: hsl(210deg 38% 15%);
 }
 
 *,
@@ -57,7 +56,7 @@ button::-moz-focus-inner {
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {

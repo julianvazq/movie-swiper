@@ -8,22 +8,21 @@ import { addMovie, removeMovie } from '../../../sockets/emitters';
 import { AddedMovie } from '../../../types/movies';
 import { useUser } from '../../../context/UserContext';
 import toast from 'react-hot-toast';
+import useMovieManager from '../../../hooks/useMovieManager';
 
 interface Props {
     movie: Movie;
 }
 
 const MovieCard = ({ movie }: Props) => {
-    const { room, dispatch } = useRoom();
-    const { user } = useUser();
+    const { room } = useRoom();
     const history = useHistory();
     const [zIndex, setZIndex] = useState(0);
     const imageWidth = 'w342';
     const imageUrl = movie.poster_path
         ? `https://image.tmdb.org/t/p/${imageWidth}${movie.poster_path}`
         : PosterUnavailable;
-    const movieInList = room.movies.find((m) => m.id === movie.id);
-    const addedByMe = movieInList?.addedByUserId === user.id;
+    const { movieActionHandler, buttonBackgroundColor, movieInList } = useMovieManager(movie);
 
     const onMovieClick = () => {
         const currPathname = history.location.pathname;
@@ -35,39 +34,6 @@ const MovieCard = ({ movie }: Props) => {
         }
     };
 
-    const addMovieHandler = () => {
-        if (!movieInList) {
-            const addedMovie: AddedMovie = { ...movie, addedByUserId: user.id, matches: [], swiped: false };
-            addMovie({ roomId: room.roomId as string, movie: addedMovie }, (res) => {
-                if (res.success) {
-                    toast.success(`Added ${movie.title}.`);
-                } else {
-                    toast.error(`There was a problem adding ${movie.title}.`);
-                }
-            });
-        } else if (movieInList && !addedByMe) {
-            toast((t) => <span>{movie.title} can only be removed by the person who added it.</span>);
-            return;
-        } else {
-            removeMovie({ roomId: room.roomId as string, movieId: movie.id }, (res) => {
-                if (!res.success) {
-                    toast.error(`There was a problem removing ${movie.title}.`);
-                }
-            });
-            /* Emit remove event */
-        }
-    };
-
-    const getButtonState = (): string => {
-        if (!movieInList) {
-            return '#4c7fbd';
-        } else if (movieInList && !addedByMe) {
-            return '#5a5f65';
-        } else {
-            return '#b53f3f';
-        }
-    };
-
     return (
         <Container>
             <Card onClick={onMovieClick} tabIndex={0} layoutId={`image-${movie.id}`} zIndex={zIndex}>
@@ -76,7 +42,7 @@ const MovieCard = ({ movie }: Props) => {
                     <Title>{movie.title}</Title>
                 </ContentContainer>
             </Card>
-            <ButtonContainer onClick={addMovieHandler} backgroundColor={getButtonState()}>
+            <ButtonContainer onClick={movieActionHandler} backgroundColor={buttonBackgroundColor}>
                 {!movieInList && <PlusIcon />}
                 {movieInList && <MinusIcon />}
             </ButtonContainer>

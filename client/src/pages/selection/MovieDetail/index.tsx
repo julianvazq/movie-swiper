@@ -33,6 +33,7 @@ import { addMovie } from '../../../sockets/emitters';
 import toast, { dispatch } from 'react-hot-toast';
 import { useUser } from '../../../context/UserContext';
 import { ActionType } from '../../../types/actions';
+import useMovieManager from '../../../hooks/useMovieManager';
 
 interface Props {
     movie: Movie;
@@ -52,8 +53,7 @@ const MovieDetail = ({ movie }: Props) => {
         movieDetails &&
         movieDetails?.videos?.results?.find((video) => video.type === 'Trailer' && video.site === 'YouTube');
     const trailerUrl = `https://www.youtube.com/embed/${trailerData?.key}`;
-    const movieInList = room.movies.find((m) => m.id === movie.id);
-    const addedByMe = movieInList?.addedByUserId === user.id;
+    const { movieActionHandler, buttonBackgroundColor, movieInList } = useMovieManager(movie);
 
     const onOverlayClick = (e: any) => {
         if (e.target.attributes['data-overlay']) {
@@ -106,34 +106,6 @@ const MovieDetail = ({ movie }: Props) => {
         }
     };
 
-    const addMovieHandler = () => {
-        if (!movieInList) {
-            const addedMovie: AddedMovie = { ...movie, addedByUserId: user.id, matches: [], swiped: false };
-            addMovie({ roomId: room.roomId as string, movie: addedMovie }, (res) => {
-                if (res.success) {
-                    toast.success(`Added ${movie.title}.`);
-                } else {
-                    toast.error(`There was a problem adding ${movie.title}.`);
-                }
-            });
-        } else if (movieInList && !addedByMe) {
-            toast((t) => <span>{movie.title} can only be removed by the person who added it.</span>);
-            return;
-        } else {
-            /* Emit remove event */
-        }
-    };
-
-    const getButtonState = (): string => {
-        if (!movieInList) {
-            return '#4c7fbd';
-        } else if (movieInList && !addedByMe) {
-            return '#5a5f65';
-        } else {
-            return '#b53f3f';
-        }
-    };
-
     return (
         <Overlay
             data-overlay={true}
@@ -153,7 +125,7 @@ const MovieDetail = ({ movie }: Props) => {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.2, delay: 0.25 }}
                             >
-                                <DesktopAddButton onClick={addMovieHandler} backgroundColor={getButtonState()}>
+                                <DesktopAddButton onClick={movieActionHandler} backgroundColor={buttonBackgroundColor}>
                                     {' '}
                                     <PlusIcon /> Add Movie
                                 </DesktopAddButton>
@@ -208,7 +180,7 @@ const MovieDetail = ({ movie }: Props) => {
                                         <BackIcon />
                                         Go Back
                                     </BackButton>
-                                    <AddButton onClick={addMovieHandler} backgroundColor={getButtonState()}>
+                                    <AddButton onClick={movieActionHandler} backgroundColor={buttonBackgroundColor}>
                                         {!movieInList && (
                                             <>
                                                 <PlusIcon /> Add Movie

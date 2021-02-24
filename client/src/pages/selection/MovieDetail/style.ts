@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 import { HiOutlinePlus, HiMinus } from 'react-icons/hi';
+import { Button } from '../../../styles';
 
 export const Overlay = styled(motion.div)`
     position: fixed;
@@ -172,23 +173,9 @@ export const ButtonContainer = styled(motion.div)`
     }
 `;
 
-const buttonStyles = css`
-    padding: 1.5rem 1rem;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: white;
-`;
+export const BackButton = styled(Button)``;
 
-export const BackButton = styled.button`
-    ${buttonStyles}
-`;
-
-export const AddButton = styled.button<{ backgroundColor: string }>`
-    ${buttonStyles}
+export const AddButton = styled(Button)<{ backgroundColor: string }>`
     background: ${(props) => props.backgroundColor || 'var(--add)'};
 `;
 
@@ -209,8 +196,7 @@ export const MinusIcon = styled(HiMinus)`
     ${iconStyles}
 `;
 
-export const DesktopAddButton = styled.button<{ backgroundColor: string }>`
-    ${buttonStyles}
+export const DesktopAddButton = styled(Button)<{ backgroundColor: string }>`
     display: none;
     max-width: 300px;
     background: ${(props) => props.backgroundColor || 'var(--add)'};

@@ -8,7 +8,7 @@ import { RouteProps } from 'react-router';
 import { Container } from './style';
 import { Movie } from '../../../types/movies';
 import MovieDetail from '../MovieDetail';
-import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 interface Props {
     isExact: boolean;
@@ -20,9 +20,9 @@ interface Props {
 
 type Status = 'loading' | 'error' | 'success';
 
-const Selection = ({ location, params }: Props) => {
-    const { room, dispatch } = useRoom();
-    const { user, setUser } = useUser();
+const Selection = ({ location }: Props) => {
+    const { room } = useRoom();
+    const { user } = useUser();
     // const [status, setStatus] = useState<Status>('loading');
 
     useEffect(() => {
@@ -34,10 +34,6 @@ const Selection = ({ location, params }: Props) => {
             console.log('new user!');
         }
     }, []);
-
-    useEffect(() => {
-        // console.log(location?.state);
-    }, [location]);
 
     const movie = location?.state?.movie;
 

@@ -34,21 +34,18 @@ import toast, { dispatch } from 'react-hot-toast';
 import { useUser } from '../../../context/UserContext';
 import { ActionType } from '../../../types/actions';
 import useMovieManager from '../../../hooks/useMovieManager';
+import { generateImageUrl } from '../../../utils';
 
 interface Props {
     movie: Movie;
 }
 
 const MovieDetail = ({ movie }: Props) => {
-    const { room, dispatch } = useRoom();
-    const { user } = useUser();
+    const { room } = useRoom();
     const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-    const imageWidth = 'w500';
-    const imageUrl = movie.poster_path
-        ? `https://image.tmdb.org/t/p/${imageWidth}${movie.poster_path}`
-        : PosterUnavailable;
+    const imageUrl = generateImageUrl(movie.poster_path, 'w500');
     const trailerData =
         movieDetails &&
         movieDetails?.videos?.results?.find((video) => video.type === 'Trailer' && video.site === 'YouTube');

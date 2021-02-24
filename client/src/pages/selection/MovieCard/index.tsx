@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Movie } from '../../../../../server/src/types/movies';
 import { Container, ContentContainer, Card, Title, Image, PlusIcon, ButtonContainer, MinusIcon } from './styled';
-import PosterUnavailable from '../../../assets/poster_unavailable.png';
 import { useRoom } from '../../../context/RoomContext';
 import { addMovie, removeMovie } from '../../../sockets/emitters';
 import { AddedMovie } from '../../../types/movies';
 import { useUser } from '../../../context/UserContext';
 import toast from 'react-hot-toast';
 import useMovieManager from '../../../hooks/useMovieManager';
+import { generateImageUrl } from '../../../utils';
 
 interface Props {
     movie: Movie;
@@ -18,10 +18,7 @@ const MovieCard = ({ movie }: Props) => {
     const { room } = useRoom();
     const history = useHistory();
     const [zIndex, setZIndex] = useState(0);
-    const imageWidth = 'w342';
-    const imageUrl = movie.poster_path
-        ? `https://image.tmdb.org/t/p/${imageWidth}${movie.poster_path}`
-        : PosterUnavailable;
+    const imageUrl = generateImageUrl(movie.poster_path, 'w342');
     const { movieActionHandler, buttonBackgroundColor, movieInList } = useMovieManager(movie);
 
     const onMovieClick = () => {

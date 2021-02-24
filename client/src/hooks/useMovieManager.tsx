@@ -39,7 +39,7 @@ const useMovieManager = (movie: Movie) => {
         } else if (movieInList && !addedByMe) {
             return '#5a5f65';
         } else {
-            return '#b53f3f';
+            return '#6e3030';
         }
     };
 

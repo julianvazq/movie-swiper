@@ -11,5 +11,13 @@ export const Subtitle = styled.h2`
 `;
 
 export const Button = styled.button`
-    padding: 0.5rem 0.75rem;
+    padding: 1.5rem 1rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    color: white;
 `;

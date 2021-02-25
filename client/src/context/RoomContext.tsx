@@ -43,10 +43,13 @@ const reducer = (state: Room, action: Action): Room => {
             };
         case ActionType.GET_ROOM:
             return {
-                ...action.payload,
+                ...action.payload.room,
             };
         case ActionType.JOIN:
-            const participants = [...state.participants.filter((p) => p.id !== action.payload.id), action.payload];
+            const participants = [
+                ...state.participants.filter((p) => p.id !== action.payload.participant.id),
+                action.payload.participant,
+            ];
             return { ...state, participants };
         case ActionType.LEAVE:
             return {
@@ -56,10 +59,12 @@ const reducer = (state: Room, action: Action): Room => {
         case ActionType.ADD_MOVIE:
             return {
                 ...state,
-                movies: [...state.movies.filter((movie) => movie.id !== action.payload.id), action.payload],
+                movies: [...state.movies.filter((movie) => movie.id !== action.payload.movie.id), action.payload.movie],
             };
         case ActionType.REMOVE_MOVIE:
             return { ...state, movies: state.movies.filter((movie) => movie.id !== action.payload.id) };
+        case ActionType.SET_STAGE:
+            return { ...state, stage: action.payload.stage };
         default:
             throw new Error();
     }
@@ -85,7 +90,7 @@ const RoomProvider = ({ children }: Props) => {
             console.log('NEW JOIN TOASTER', room.participants, newParticipant);
             toast.remove(toastId);
             toast.success(`${newParticipant.name} joined.`);
-            dispatch({ type: ActionType.JOIN, payload: newParticipant });
+            dispatch({ type: ActionType.JOIN, payload: { participant: { ...newParticipant, ready: false } } });
         });
         onParticipantLeave(({ socketId }) => {
             console.log(socketId, ' left');
@@ -95,14 +100,14 @@ const RoomProvider = ({ children }: Props) => {
             console.log('got ROOM: ', room);
             const user: Participant = JSON.parse(localStorage.getItem('user') || '');
             /* Remove duplicate user */
-            let participants: Participant[] = [...room.participants.filter((p) => p.id !== user.id)];
+            let participants: Participant[] = room.participants.filter((p) => p.id !== user.id);
             if (user) {
-                participants = [...participants, user];
+                participants = [...participants, { ...user, ready: false } as Participant];
             }
-            dispatch({ type: ActionType.GET_ROOM, payload: { ...room, participants } });
+            dispatch({ type: ActionType.GET_ROOM, payload: { room: { ...room, participants } } });
         });
         onMovieAdd((movie) => {
-            dispatch({ type: ActionType.ADD_MOVIE, payload: movie });
+            dispatch({ type: ActionType.ADD_MOVIE, payload: { movie } });
         });
         onMovieRemove(({ movieId }) => {
             dispatch({ type: ActionType.REMOVE_MOVIE, payload: { id: movieId } });

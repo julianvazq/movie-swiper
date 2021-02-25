@@ -19,4 +19,6 @@ export interface Participant {
     name: string;
     id: string;
     color: string;
+    ready?: boolean;
+    owner?: boolean;
 }

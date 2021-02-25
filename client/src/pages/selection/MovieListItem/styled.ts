@@ -11,6 +11,10 @@ export const Item = styled.article`
     height: 250px;
     border-bottom: 1px solid hsl(212deg 22% 43% / 38%);
 
+    &:last-of-type {
+        border: none;
+    }
+
     @media screen and (min-width: 800px) {
         height: 300px;
     }

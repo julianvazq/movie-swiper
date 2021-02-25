@@ -18,7 +18,7 @@ const CreateForm = () => {
 
     const initializeRoomAndUser = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newUser = { ...user, name, color: randomColor() };
+        const newUser = { ...user, name, owner: true, color: randomColor() };
         setUser(newUser);
         createRoom((res) => {
             if (!res.success) {

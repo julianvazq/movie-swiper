@@ -1,5 +1,5 @@
 import { Participant, Room, Stage } from './room';
-import { AddedMovie, Movie } from './movies';
+import { AddedMovie } from './movies';
 
 export enum ActionType {
     INITIALIZE_ROOM = 'initialize_room',
@@ -8,11 +8,13 @@ export enum ActionType {
     LEAVE = 'leave',
     ADD_MOVIE = 'add_movie',
     REMOVE_MOVIE = 'remove_movie',
+    TOGGLE_READY = 'toggle_ready',
+    SET_STAGE = 'set_stage',
 }
 
 export interface GetRoomAction {
     type: ActionType.GET_ROOM;
-    payload: Room;
+    payload: { room: Room };
 }
 
 export interface InitializeRoomAction {
@@ -22,7 +24,7 @@ export interface InitializeRoomAction {
 
 export interface JoinAction {
     type: ActionType.JOIN;
-    payload: Participant;
+    payload: { participant: Participant };
 }
 
 export interface LeaveAction {
@@ -32,12 +34,22 @@ export interface LeaveAction {
 
 export interface AddMovieAction {
     type: ActionType.ADD_MOVIE;
-    payload: AddedMovie;
+    payload: { movie: AddedMovie };
 }
 
 export interface RemoveMovieAction {
     type: ActionType.REMOVE_MOVIE;
     payload: { id: number };
+}
+
+export interface ToggleReadyAction {
+    type: ActionType.TOGGLE_READY;
+    payload: { id: string };
+}
+
+export interface SetStageAction {
+    type: ActionType.SET_STAGE;
+    payload: { stage: Stage.SELECTION | Stage.SWIPER };
 }
 
 export type Action =
@@ -46,4 +58,6 @@ export type Action =
     | AddMovieAction
     | RemoveMovieAction
     | InitializeRoomAction
-    | GetRoomAction;
+    | GetRoomAction
+    | ToggleReadyAction
+    | SetStageAction;

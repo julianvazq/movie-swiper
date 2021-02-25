@@ -33,7 +33,7 @@ const MovieCard = ({ movie }: Props) => {
 
     return (
         <Container>
-            <Card onClick={onMovieClick} tabIndex={0} layoutId={`image-${movie.id}`} zIndex={zIndex}>
+            <Card onClick={onMovieClick} layoutId={`image-${movie.id}`} zIndex={zIndex}>
                 <ContentContainer>
                     <Image src={imageUrl} />
                     <Title>{movie.title}</Title>

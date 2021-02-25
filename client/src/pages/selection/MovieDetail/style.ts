@@ -176,7 +176,7 @@ export const ButtonContainer = styled(motion.div)`
 export const BackButton = styled(Button)``;
 
 export const AddButton = styled(Button)<{ backgroundColor: string }>`
-    background: ${(props) => props.backgroundColor || 'var(--add)'};
+    background: ${(props) => props.backgroundColor || 'var(--blue-action)'};
 `;
 
 const iconStyles = css`
@@ -199,7 +199,7 @@ export const MinusIcon = styled(HiMinus)`
 export const DesktopAddButton = styled(Button)<{ backgroundColor: string }>`
     display: none;
     max-width: 300px;
-    background: ${(props) => props.backgroundColor || 'var(--add)'};
+    background: ${(props) => props.backgroundColor || 'var(--blue-action)'};
     padding: 0.5rem 1rem;
     border-radius: 4px;
     margin-bottom: 2rem;

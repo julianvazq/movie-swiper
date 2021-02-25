@@ -1,7 +1,8 @@
 :root {
     --white: #fff;
-    --add: hsl(213deg 40% 49%);
     --dark-blue-bg: hsl(210deg 38% 15%);
+    --blue-action: hsl(213deg 40% 49%);
+    --blue-muted: hsl(213deg 23% 25%);
 }
 
 *,

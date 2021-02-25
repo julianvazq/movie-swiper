@@ -9,6 +9,7 @@ import { Container } from './style';
 import { Movie } from '../../../types/movies';
 import MovieDetail from '../MovieDetail';
 import { AnimatePresence } from 'framer-motion';
+import ActionButton from '../ActionButton';
 
 interface Props {
     isExact: boolean;
@@ -40,13 +41,14 @@ const Selection = ({ location }: Props) => {
     return (
         <>
             <AnimatePresence>{movie && <MovieDetail movie={movie} />}</AnimatePresence>
-            <Container show={!movie}>
+            <Container>
                 <Title>Pick Your Movies</Title>
                 <Subtitle>Add movies you and your friends may want to watch.</Subtitle>
                 {/* {status === 'loading' && <p>Loading...</p>} */}
                 {/* {status === 'error' && <p>Sorry, something went wrong. Try refreshing the page.</p>} */}
                 <MovieSelection />
             </Container>
+            <ActionButton />
         </>
     );
 };

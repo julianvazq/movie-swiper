@@ -65,6 +65,13 @@ const reducer = (state: Room, action: Action): Room => {
             return { ...state, movies: state.movies.filter((movie) => movie.id !== action.payload.id) };
         case ActionType.SET_STAGE:
             return { ...state, stage: action.payload.stage };
+        case ActionType.TOGGLE_READY:
+            return {
+                ...state,
+                participants: state.participants.map((participant) =>
+                    participant.id === action.payload.id ? { ...participant, ready: !participant.ready } : participant,
+                ),
+            };
         default:
             throw new Error();
     }

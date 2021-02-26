@@ -37,3 +37,10 @@ export const removeMovie = (
 ) => {
     socket.emit('movie:remove', data, callback);
 };
+
+export const toggleReady = (
+    data: { roomId: string; userId: string },
+    callback?: (res: SocketResponse<{ userId: string }>) => void,
+) => {
+    socket.emit('room:ready', data, callback);
+};

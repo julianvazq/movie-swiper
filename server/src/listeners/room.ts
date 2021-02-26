@@ -17,6 +17,7 @@ module.exports = (io: Server) => {
             callback({ success: true, data: resData });
         } catch (error) {
             console.log(error);
+            callback({ success: false, message: 'Failed to create room.' });
         }
     };
 
@@ -26,13 +27,6 @@ module.exports = (io: Server) => {
     ) {
         try {
             const socket: Socket = this;
-
-            // const socketsInRoom = Object.keys(
-            //     io.sockets.adapter.rooms[data.roomId].sockets
-            // );
-            // if (socketsInRoom.includes(socket.id)) {
-            //     return;
-            // }
 
             socket.join(data.roomId, () => {
                 socket.to(data.roomId).emit('room:new-join', {
@@ -75,7 +69,6 @@ module.exports = (io: Server) => {
     ) {
         try {
             const socket: Socket = this;
-
             const clientsInRoom =
                 (io.sockets.adapter.rooms[data.roomId] &&
                     io.sockets.adapter.rooms[data.roomId].length) ||
@@ -101,5 +94,31 @@ module.exports = (io: Server) => {
         }
     };
 
-    return { createRoom, joinRoom, sendRoom, checkRoom };
+    const toggleReady = function (
+        data: { roomId: string; userId: string },
+        callback: SocketCallback
+    ) {
+        try {
+            const socket: Socket = this;
+            io.in(data.roomId).emit('room:ready', {
+                userId: data.userId,
+            });
+
+            callback({ success: true, data: { userId: data.userId } });
+        } catch (error) {
+            console.log(error);
+            callback({
+                success: false,
+                message: 'Failed to toggle ready state.',
+            });
+        }
+    };
+
+    return {
+        createRoom,
+        joinRoom,
+        sendRoom,
+        checkRoom,
+        toggleReady,
+    };
 };

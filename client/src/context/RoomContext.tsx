@@ -3,7 +3,14 @@ import { ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { Action, ActionType } from '../types/actions';
 import { Room, Stage } from '../types/room';
-import { onParticipantJoin, onParticipantLeave, onGetRoom, onMovieAdd, onMovieRemove } from '../sockets/listeners';
+import {
+    onParticipantJoin,
+    onParticipantLeave,
+    onGetRoom,
+    onMovieAdd,
+    onMovieRemove,
+    onToggleReady,
+} from '../sockets/listeners';
 import { socket } from '../sockets';
 import { Participant } from '../../../server/src/types';
 import toast from 'react-hot-toast';
@@ -92,10 +99,7 @@ const RoomProvider = ({ children }: Props) => {
     }, [room.movies]);
 
     useEffect(() => {
-        let toastId: string;
         onParticipantJoin(room, (newParticipant) => {
-            console.log('NEW JOIN TOASTER', room.participants, newParticipant);
-            toast.remove(toastId);
             toast.success(`${newParticipant.name} joined.`);
             dispatch({ type: ActionType.JOIN, payload: { participant: { ...newParticipant, ready: false } } });
         });
@@ -104,7 +108,6 @@ const RoomProvider = ({ children }: Props) => {
             dispatch({ type: ActionType.LEAVE, payload: { id: socketId } });
         });
         onGetRoom(({ room }) => {
-            console.log('got ROOM: ', room);
             const user: Participant = JSON.parse(localStorage.getItem('user') || '');
             /* Remove duplicate user */
             let participants: Participant[] = room.participants.filter((p) => p.id !== user.id);
@@ -119,6 +122,11 @@ const RoomProvider = ({ children }: Props) => {
         onMovieRemove(({ movieId }) => {
             dispatch({ type: ActionType.REMOVE_MOVIE, payload: { id: movieId } });
         });
+        onToggleReady(({ userId }) => {
+            console.log(userId, ' is ready');
+            dispatch({ type: ActionType.TOGGLE_READY, payload: { id: userId } });
+        });
+
         return () => {
             socket.removeAllListeners();
         };

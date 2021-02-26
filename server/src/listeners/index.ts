@@ -1,9 +1,15 @@
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
 import { Participant } from '../types';
 import { SocketWithUserId } from '../types/socketio';
 
 module.exports = (io: Server) => {
-    const { createRoom, joinRoom, sendRoom, checkRoom } = require('./room')(io);
+    const {
+        createRoom,
+        joinRoom,
+        sendRoom,
+        checkRoom,
+        toggleReady,
+    } = require('./room')(io);
     const { addMovie, removeMovie } = require('./movie')(io);
 
     const onConnection = (socket: SocketWithUserId) => {
@@ -12,6 +18,7 @@ module.exports = (io: Server) => {
         socket.on('room:check', checkRoom);
         socket.on('room:join', joinRoom);
         socket.on('room:send', sendRoom);
+        socket.on('room:ready', toggleReady);
         /* Movie */
         socket.on('movie:add', addMovie);
         socket.on('movie:remove', removeMovie);

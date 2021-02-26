@@ -17,7 +17,7 @@ export const FormField = styled.div<{ show: boolean }>`
 `;
 
 export const StyledSelect = styled(Select)`
-    z-index: 5;
+    z-index: 4;
 `;
 
 export const colorStyles = {

@@ -8,6 +8,7 @@ export const Subtitle = styled.h2`
     font-size: 1rem;
     font-weight: 400;
     margin-bottom: 2rem;
+    color: var(--white-muted);
 `;
 
 export const Button = styled.button`
@@ -21,4 +22,8 @@ export const Button = styled.button`
     border-radius: 4px;
     color: white;
     cursor: pointer;
+`;
+
+export const FontWeight600 = styled.span`
+    font-weight: 600;
 `;

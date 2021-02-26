@@ -13,11 +13,14 @@ export const Tab = styled.button<{ selected: boolean }>`
     background: none;
     border: none;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     font-size: 1.25rem;
     border-bottom: ${(props) => (props.selected ? '2px solid var(--white)' : '1px solid var(--white)')};
+    background: ${(props) => props.selected && 'var(--blue-active)'};
     color: var(--white);
-    padding-bottom: 0.5rem;
+    padding: 1rem;
 `;
 
 export const TabContent = styled.section<{ show: boolean }>`

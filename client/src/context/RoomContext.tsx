@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React, { useEffect, createContext, useContext, useReducer } from 'react';
 import { ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -13,7 +14,8 @@ import {
 } from '../sockets/listeners';
 import { socket } from '../sockets';
 import { Participant } from '../../../server/src/types';
-import toast from 'react-hot-toast';
+import { ToastType, useToast } from '../utils';
+import { FontWeight600 } from '../styles';
 
 type Props = {
     children: ReactNode;
@@ -100,7 +102,14 @@ const RoomProvider = ({ children }: Props) => {
 
     useEffect(() => {
         onParticipantJoin(room, (newParticipant) => {
-            toast.success(`${newParticipant.name} joined.`);
+            useToast({
+                type: ToastType.Success,
+                message: () => (
+                    <span>
+                        <FontWeight600>{newParticipant.name}</FontWeight600> {' joined.'}
+                    </span>
+                ),
+            });
             dispatch({ type: ActionType.JOIN, payload: { participant: { ...newParticipant, ready: false } } });
         });
         onParticipantLeave(({ socketId }) => {

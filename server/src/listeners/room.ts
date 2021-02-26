@@ -100,7 +100,7 @@ module.exports = (io: Server) => {
     ) {
         try {
             const socket: Socket = this;
-            io.in(data.roomId).emit('room:ready', {
+            socket.to(data.roomId).emit('room:ready', {
                 userId: data.userId,
             });
 

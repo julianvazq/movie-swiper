@@ -1,9 +1,12 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import { useRoom } from '../context/RoomContext';
 import { useUser } from '../context/UserContext';
 import { addMovie, removeMovie } from '../sockets/emitters';
 import { AddedMovie, Movie } from '../types/movies';
 import toast from 'react-hot-toast';
+import { ToastType, useToast } from '../utils';
+import { FontWeight600 } from '../styles';
 
 const useMovieManager = (movie: Movie) => {
     const { room } = useRoom();
@@ -16,13 +19,39 @@ const useMovieManager = (movie: Movie) => {
             const addedMovie: AddedMovie = { ...movie, addedByUserId: user.id, matches: [], swiped: false };
             addMovie({ roomId: room.roomId as string, movie: addedMovie }, (res) => {
                 if (res.success) {
-                    toast.success(`Added ${movie.title}.`);
+                    useToast({
+                        type: ToastType.Success,
+                        message: () => (
+                            <>
+                                <span>
+                                    Added <FontWeight600>{movie.title}</FontWeight600>.
+                                </span>
+                            </>
+                        ),
+                    });
                 } else {
+                    useToast({
+                        type: ToastType.Error,
+                        message: () => (
+                            <>
+                                <span>
+                                    There was a problem adding <FontWeight600>{movie.title}</FontWeight600>.
+                                </span>
+                            </>
+                        ),
+                    });
                     toast.error(`There was a problem adding ${movie.title}.`);
                 }
             });
         } else if (movieInList && !addedByMe) {
-            toast((t) => <span>{movie.title} can only be removed by the person who added it.</span>);
+            useToast({
+                type: ToastType.Custom,
+                message: () => (
+                    <span>
+                        <FontWeight600>{movie.title}</FontWeight600> can only be removed by the person who added it.
+                    </span>
+                ),
+            });
             return;
         } else {
             removeMovie({ roomId: room.roomId as string, movieId: movie.id }, (res) => {

@@ -57,8 +57,7 @@ export const useToast = ({ type, message }: ToastParams) => {
     };
     switch (type) {
         case 'success':
-            // return toast.success(message, successOptions);
-            return toast.error(message, errorOptions);
+            return toast.success(message, successOptions);
         case 'error':
             return toast.error(message, errorOptions);
         case 'custom':

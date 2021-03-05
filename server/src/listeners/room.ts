@@ -2,11 +2,17 @@ import { Participant } from './../types/index';
 import { Room, Server, Socket } from 'socket.io';
 import { SocketCallback } from '../types';
 import { v4 as uuid } from 'uuid';
+import { SocketWithUserId } from '../types/socketio';
 
 module.exports = (io: Server) => {
     const createRoom = function (data, callback: SocketCallback) {
         try {
-            const socket: Socket = this;
+            const socket: SocketWithUserId = this;
+            for (const roomId in socket.rooms) {
+                socket
+                    .to(roomId)
+                    .emit('room:leave', { socketId: socket.userId });
+            }
             const roomId = uuid();
             socket.join(roomId);
             console.log('new room: ', io.sockets.adapter.rooms[roomId]);
@@ -100,7 +106,7 @@ module.exports = (io: Server) => {
     ) {
         try {
             const socket: Socket = this;
-            socket.to(data.roomId).emit('room:ready', {
+            io.in(data.roomId).emit('room:ready', {
                 userId: data.userId,
             });
 

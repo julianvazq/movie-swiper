@@ -16,7 +16,7 @@ const Modal = ({ visible, onClose, width = '90%', height = 500, children }: Prop
         height,
         width,
         maxWidth: 500,
-        background: 'black',
+        background: 'var(--dark-blue-bg)',
     };
 
     return (

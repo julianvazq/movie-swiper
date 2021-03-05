@@ -11,6 +11,7 @@ module.exports = (io: Server) => {
         toggleReady,
     } = require('./room')(io);
     const { addMovie, removeMovie } = require('./movie')(io);
+    const { startSwiper } = require('./swiper')(io);
 
     const onConnection = (socket: SocketWithUserId) => {
         /* Room */
@@ -22,6 +23,8 @@ module.exports = (io: Server) => {
         /* Movie */
         socket.on('movie:add', addMovie);
         socket.on('movie:remove', removeMovie);
+        /* Swiper */
+        socket.on('swiper:start', startSwiper);
         /* Connect / Disconnect */
         socket.on('user:new', (user: Participant) => {
             socket.userId = user.id;

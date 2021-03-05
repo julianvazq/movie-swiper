@@ -1,54 +1,92 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
-import { toggleReady } from '../../../sockets/emitters';
+import { toggleReady, startSwiper } from '../../../sockets/emitters';
 import { ActionType } from '../../../types/actions';
 import { Stage } from '../../../types/room';
-import { EmptyCheckbox, FillCheckbox, FixedContainer, TinderIcon, MainButton, ReadyButton, PlayIcon } from './style';
+import { ToastType, useToast } from '../../../utils';
+import Modal from '../../shared/Modal';
+import { EmptyCheckbox, FillCheckbox, FixedContainer, MainButton, ReadyButton, PlayIcon, ModalContent } from './style';
 
 const ActionButton = () => {
     const { room, dispatch } = useRoom();
     const { user } = useUser();
-    const isOwner = room.participants.find((p) => p.owner && p.id === user.id);
+    const [visible, setVisible] = useState(false);
+    const owner = room.participants.find((p) => p.owner);
     const isReady = room.participants.find((p) => p.id === user.id)?.ready;
-    const numParticipantsReady = room.participants.reduce((acc, currValue) => {
-        if (currValue.ready) {
-            return acc + 1;
-        }
-        return acc;
-    }, 0);
+    const participantsReady = room.participants.filter((p) => p.ready && !p.owner);
+    const participantsExceptOwner = room.participants.filter((p) => !p.owner);
 
     const toggleReadyHandler = () => {
         toggleReady({ roomId: room.roomId as string, userId: user.id }, (res) => {
-            console.log(res);
+            if (res.success && !isReady) {
+                useToast({ type: ToastType.Success, message: 'The room owner has been notified.' });
+            }
         });
     };
 
     const startSwiping = () => {
-        dispatch({ type: ActionType.SET_STAGE, payload: { stage: Stage.SWIPER } });
+        startSwiper({ roomId: room.roomId as string });
     };
 
-    if (isOwner) {
-        return (
-            <FixedContainer onClick={startSwiping}>
-                <ReadyButton>
-                    <PlayIcon /> {numParticipantsReady}
-                </ReadyButton>
-                <MainButton>
-                    <TinderIcon />
-                    Start Swiping
-                </MainButton>
-            </FixedContainer>
-        );
-    }
+    const checkReady = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        setVisible(true);
+    };
 
     return (
-        <FixedContainer onClick={toggleReadyHandler}>
-            <MainButton>
-                {isReady ? <FillCheckbox /> : <EmptyCheckbox />}
-                Ready To Swipe
-            </MainButton>
-        </FixedContainer>
+        <>
+            <FixedContainer>
+                <ReadyButton onClick={checkReady}>
+                    <EmptyCheckbox /> {participantsReady.length}
+                </ReadyButton>
+                {owner && owner.id === user.id ? (
+                    <MainButton onClick={startSwiping}>
+                        <PlayIcon />
+                        Start Swiping
+                    </MainButton>
+                ) : (
+                    <MainButton onClick={toggleReadyHandler}>
+                        {isReady ? <FillCheckbox /> : <EmptyCheckbox />}
+                        Ready To Swipe
+                    </MainButton>
+                )}
+            </FixedContainer>
+            <Modal visible={visible} onClose={() => setVisible(false)} height={300}>
+                <ModalContent>
+                    <h2>Participants</h2>
+                    <ul>
+                        {participantsExceptOwner.map((p) => {
+                            if (p.ready) {
+                                return (
+                                    <li key={p.id}>
+                                        <div>
+                                            <FillCheckbox />
+                                            {p.name}
+                                        </div>
+                                        <p>Ready</p>
+                                    </li>
+                                );
+                            }
+
+                            return (
+                                <li key={p.id}>
+                                    <div>
+                                        <EmptyCheckbox /> {p.name}
+                                    </div>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                    {owner && (
+                        <>
+                            <h2>Owner</h2>
+                            <p>{owner.name}</p>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+        </>
     );
 };
 

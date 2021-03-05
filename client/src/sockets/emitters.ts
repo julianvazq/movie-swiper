@@ -44,3 +44,7 @@ export const toggleReady = (
 ) => {
     socket.emit('room:ready', data, callback);
 };
+
+export const startSwiper = (data: { roomId: string }, callback?: (res: SocketResponse<{ roomId: string }>) => void) => {
+    socket.emit('swiper:start', data, callback);
+};

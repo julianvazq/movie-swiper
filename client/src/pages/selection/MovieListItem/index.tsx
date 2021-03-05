@@ -27,9 +27,7 @@ const MovieListItem = ({ movie }: Props) => {
     const history = useHistory();
     const { room } = useRoom();
     const { movieInList, movieActionHandler, buttonBackgroundColor } = useMovieManager(movie);
-    console.log(movie);
     const genres = movie.genre_ids.map((genreId) => genreObjects.find((g) => g.id === genreId));
-    console.log(genres);
 
     const onMovieClick = () => {
         const currPathname = history.location.pathname;

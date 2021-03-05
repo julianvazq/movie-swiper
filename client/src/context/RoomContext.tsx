@@ -11,11 +11,13 @@ import {
     onMovieAdd,
     onMovieRemove,
     onToggleReady,
+    onStartSwiper,
 } from '../sockets/listeners';
 import { socket } from '../sockets';
 import { Participant } from '../../../server/src/types';
 import { ToastType, useToast } from '../utils';
 import { FontWeight600 } from '../styles';
+import { useUser } from './UserContext';
 
 type Props = {
     children: ReactNode;
@@ -87,6 +89,7 @@ const reducer = (state: Room, action: Action): Room => {
 };
 
 const RoomProvider = ({ children }: Props) => {
+    const { user } = useUser();
     const [room, dispatch] = useReducer(reducer, initialState);
     const [storedMovies, setStoredMovies] = useLocalStorage('movies', {});
 
@@ -132,8 +135,19 @@ const RoomProvider = ({ children }: Props) => {
             dispatch({ type: ActionType.REMOVE_MOVIE, payload: { id: movieId } });
         });
         onToggleReady(({ userId }) => {
-            console.log(userId, ' is ready');
+            /* Bug: toast displays for person that clicked 'Ready' */
+            // const userToToggle = room.participants.find((p) => p.id === userId);
+            // if (userToToggle && user.id !== userToToggle?.id) {
+            //     useToast({ type: ToastType.Success, message: `${userToToggle.name} is ready.` });
+            // }
             dispatch({ type: ActionType.TOGGLE_READY, payload: { id: userId } });
+        });
+        onStartSwiper(({ roomId }) => {
+            if (roomId !== room.roomId) {
+                return;
+            }
+
+            dispatch({ type: ActionType.SET_STAGE, payload: { stage: Stage.SWIPER } });
         });
 
         return () => {

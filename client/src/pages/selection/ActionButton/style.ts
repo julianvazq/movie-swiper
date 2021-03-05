@@ -15,7 +15,7 @@ export const FixedContainer = styled.div`
 
     @media screen and (min-width: 600px) {
         margin: auto;
-        width: 300px;
+        width: fit-content;
         bottom: 1rem;
     }
 `;
@@ -25,11 +25,16 @@ export const MainButton = styled(Button)`
     background: var(--blue-muted);
     outline: none;
     border-radius: 0;
+
+    @media screen and (min-width: 600px) {
+        padding: 1rem 2rem;
+        white-space: nowrap;
+    }
 `;
 
 export const ReadyButton = styled(Button)`
     flex: 30%;
-    background: pink;
+    background: var(--dark-blue-bg);
     outline: none;
     border-radius: 0;
 `;
@@ -51,4 +56,39 @@ export const TinderIcon = styled(SiTinder)`
 `;
 export const PlayIcon = styled(RiMovieFill)`
     ${iconStyles}
+`;
+
+export const ModalContent = styled.div`
+    padding: 0 1rem;
+    h2 {
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+
+    ul {
+        margin-bottom: 2rem;
+        & > * + * {
+            margin-top: 1rem;
+        }
+    }
+
+    li {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.25rem;
+
+        div {
+            display: flex;
+            align-items: center;
+        }
+
+        p {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.875rem;
+            color: var(--white-muted);
+        }
+    }
 `;

@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
 import { toggleReady, startSwiper } from '../../../sockets/emitters';
-import { ActionType } from '../../../types/actions';
-import { Stage } from '../../../types/room';
 import { ToastType, useToast } from '../../../utils';
 import Modal from '../../shared/Modal';
-import { EmptyCheckbox, FillCheckbox, FixedContainer, MainButton, ReadyButton, PlayIcon, ModalContent } from './style';
+import FixedContainer from '../../shared/FixedContainer';
+import { EmptyCheckbox, FillCheckbox, MainButton, ReadyButton, PlayIcon, ModalContent } from './style';
 
 const ActionButton = () => {
-    const { room, dispatch } = useRoom();
+    const { room } = useRoom();
     const { user } = useUser();
     const [visible, setVisible] = useState(false);
     const owner = room.participants.find((p) => p.owner);

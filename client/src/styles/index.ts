@@ -7,6 +7,7 @@ export const Title = styled.h1`
 export const Subtitle = styled.h2`
     font-size: 1rem;
     font-weight: 400;
+    line-height: 1.3;
     margin-bottom: 2rem;
     color: var(--white-muted);
 `;

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
-import { MovieDetails, Movie, AddedMovie } from '../../../types/movies';
+import { MovieDetails, Movie } from '../../../types/movies';
 import {
     ContentContainer,
     Container,
@@ -28,11 +28,6 @@ import {
     DesktopAddButton,
     MinusIcon,
 } from './style';
-import PosterUnavailable from '../../../assets/poster_unavailable.png';
-import { addMovie } from '../../../sockets/emitters';
-import toast, { dispatch } from 'react-hot-toast';
-import { useUser } from '../../../context/UserContext';
-import { ActionType } from '../../../types/actions';
 import useMovieManager from '../../../hooks/useMovieManager';
 import { generateImageUrl } from '../../../utils';
 
@@ -124,7 +119,16 @@ const MovieDetail = ({ movie }: Props) => {
                             >
                                 <DesktopAddButton onClick={movieActionHandler} backgroundColor={buttonBackgroundColor}>
                                     {' '}
-                                    <PlusIcon /> Add Movie
+                                    {!movieInList && (
+                                        <>
+                                            <PlusIcon /> Add Movie
+                                        </>
+                                    )}
+                                    {movieInList && (
+                                        <>
+                                            <MinusIcon /> Remove Movie
+                                        </>
+                                    )}
                                 </DesktopAddButton>
                                 <Title>{movieDetails.title}</Title>
                                 <Tag>{movieDetails.tagline}</Tag>

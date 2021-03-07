@@ -17,6 +17,7 @@
     "@types/react-select": "^4.0.13",
     "@types/socket.io-client": "^1.4.35",
     "@types/styled-components": "^5.1.7",
+    "@types/swiper": "^5.4.2",
     "axios": "^0.21.1",
     "framer-motion": "^3.3.0",
     "randomcolor": "^0.6.2",

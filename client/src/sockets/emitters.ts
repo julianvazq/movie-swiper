@@ -38,6 +38,13 @@ export const removeMovie = (
     socket.emit('movie:remove', data, callback);
 };
 
+export const likeMovie = (
+    data: { roomId: string; movieId: number },
+    callback?: (res: SocketResponse<{ movieId: string }>) => void,
+) => {
+    socket.emit('movie:like', data, callback);
+};
+
 export const toggleReady = (
     data: { roomId: string; userId: string },
     callback?: (res: SocketResponse<{ userId: string }>) => void,

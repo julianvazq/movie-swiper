@@ -15,6 +15,11 @@
     margin: 0;
 }
 
+body {
+    background: var(--dark-blue-bg);
+    color: var(--white);
+}
+
 a {
     color: inherit;
     text-decoration: none;
@@ -66,4 +71,9 @@ button::-moz-focus-inner {
     border-radius: 10px;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #444;
+}
+
+.swiper-pagination-progressbar-fill {
+    background: var(--blue-action) !important;
+    border-radius: 99px;
 }

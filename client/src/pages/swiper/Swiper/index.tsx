@@ -11,12 +11,13 @@ const Swiper = () => {
     const { room } = useRoom();
     const { user } = useUser();
     const numMatches = room.movies.reduce((num, movie) => {
-        const matched = movie.matches.find((match) => match.userId === user.id);
+        const matched = movie.matches.length > 1 && movie.matches.some((match) => match.userId === user.id);
         if (matched) {
             return num + 1;
         }
         return num;
     }, 0);
+
     return (
         <Container>
             <Tabs tabs={['Movie', `Matches (${numMatches})`]}>

@@ -11,6 +11,7 @@ import SwiperCore, { Pagination, A11y, EffectCoverflow, EffectFade } from 'swipe
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { PaginationOptions } from 'swiper/types/components/pagination';
 import { CoverflowEffectOptions } from 'swiper/types/components/effect-coverflow';
+import { useUser } from '../../../context/UserContext';
 SwiperCore.use([Pagination, A11y, EffectCoverflow, EffectFade]);
 
 const coverFlowEffectProps: CoverflowEffectOptions = {
@@ -18,7 +19,7 @@ const coverFlowEffectProps: CoverflowEffectOptions = {
     stretch: 0,
     depth: 200,
     modifier: 1,
-    slideShadows: true,
+    slideShadows: false,
 };
 
 const paginationProps: PaginationOptions = {
@@ -29,36 +30,39 @@ const paginationProps: PaginationOptions = {
 
 const SwipeArea = () => {
     const { room } = useRoom();
-    const moviesToSwipe = room.movies.filter((movie) => !movie.swiped);
-    const [index, setIndex] = useState(0);
+    const { user } = useUser();
     const [swiper, setSwiper] = useState<SwiperCore>();
 
-    const slideNext = () => {
-        console.log('slideNext');
+    const onLike = () => {
         if (!swiper) {
             return;
         }
-        // const index = swiperRef.current?.activeIndex;
-        // swiperRef.current.
-        // swiperRef.current?.slideTo(index + 1);
 
-        // swiper?.slideReset();
-        swiper.slideTo(index + 1);
-        setIndex((index) => index + 1);
-        swiper.update();
+        if (swiper.isEnd) {
+            console.log('navigating to results...');
+            /* Navigate to results */
+            return;
+        }
+
+        const nextIndex = swiper.activeIndex + 1;
+        swiper.slideTo(nextIndex);
         swiper.updateProgress();
-
-        // swiper.slideTo(index + 1, undefined, false);
-
-        // console.log(swiperRef.current);
-        // console.log(moviesToSwipe[index as number]);
+        // likeMovie({ roomId: room.roomId as string, movieId: movie.id });
     };
 
-    const onLike = () => {
-        slideNext();
-        // setIndex(index + 1);
-        // swiperRef.current.
+    const onSlideNextTransitionStart = (swiper: SwiperCore) => {
+        if (!swiper) {
+            return;
+        }
+
+        if (swiper.isEnd) {
+            console.log('navigating to results...');
+            /* Navigate to results */
+            return;
+        }
+
         // likeMovie({ roomId: room.roomId as string, movieId: movie.id });
+        swiper.updateProgress();
     };
 
     const onDislike = () => {
@@ -66,49 +70,74 @@ const SwipeArea = () => {
             return;
         }
 
+        if (swiper.isEnd) {
+            console.log('navigating to results...');
+            /* Navigate to results */
+            return;
+        }
+
+        console.log('dislike', swiper);
         const nextIndex = swiper.activeIndex + 1;
         swiper.slideTo(nextIndex);
+        swiper.updateProgress();
     };
 
     const onSlidePrevTransitionStart = (swiper: SwiperCore) => {
         if (!swiper) {
             return;
         }
-
-        if (swiper.isEnd) {
-            /* Do something */
+        const lastSlide = swiper.previousIndex === 4;
+        if (lastSlide) {
+            console.log('navigating to results...');
+            swiper.slideTo(swiper.activeIndex + 1);
+            /* Navigate to results */
             return;
         }
+
         const nextIndex = swiper.activeIndex + 2;
         console.log(nextIndex);
-        console.log('prev', swiper);
+        console.log('swipe prev', swiper);
         swiper.slideTo(nextIndex);
+        swiper.updateProgress();
     };
 
-    useEffect(() => {
-        if (swiper) {
-            swiper.slideTo(0);
-        }
-    }, []);
+    const onSwiperInit = (swiper: SwiperCore) => {
+        const actualProgress = 1 / room.movies.length;
+        document.documentElement.style.setProperty('--progress-bar', actualProgress.toString());
+        setSwiper(swiper);
+    };
+
+    const onProgress = (swiper: SwiperCore) => {
+        const actualProgress = (1 / room.movies.length) * swiper.activeIndex;
+        document.documentElement.style.setProperty('--progress-bar', actualProgress.toString());
+    };
 
     return (
         <>
-            <Swiper
-                onSlidePrevTransitionStart={onSlidePrevTransitionStart}
-                onSwiper={(swiper) => setSwiper(swiper)}
-                grabCursor
-                centeredSlides
-                spaceBetween={5000}
-                effect="coverflow"
-                coverflowEffect={coverFlowEffectProps}
-                pagination={paginationProps}
-            >
-                {moviesToSwipe.map((movie) => (
-                    <SwiperSlide key={movie.id}>
-                        <SwipeImage movie={movie} />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+            {!!room.movies.length && (
+                <Swiper
+                    onSlidePrevTransitionStart={onSlidePrevTransitionStart}
+                    onSlideNextTransitionStart={onSlideNextTransitionStart}
+                    onProgress={onProgress}
+                    onInit={onSwiperInit}
+                    initialSlide={1}
+                    observer
+                    grabCursor
+                    centeredSlides
+                    spaceBetween={5000}
+                    effect="coverflow"
+                    coverflowEffect={coverFlowEffectProps}
+                    pagination={paginationProps}
+                >
+                    <SwiperSlide></SwiperSlide>
+                    {room.movies.map((movie) => (
+                        <SwiperSlide key={movie.id}>
+                            <SwipeImage movie={movie} />
+                        </SwiperSlide>
+                    ))}
+                    <SwiperSlide></SwiperSlide>
+                </Swiper>
+            )}
             <FixedContainer>
                 <DislikeButton onClick={onDislike}>
                     <DislikeIcon />

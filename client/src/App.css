@@ -5,6 +5,7 @@
     --dark-blue-bg: hsl(210deg 38% 15%);
     --blue-action: hsl(213deg 40% 49%);
     --blue-muted: hsl(213deg 23% 25%);
+    --progress-var: 0;
 }
 
 *,
@@ -76,4 +77,5 @@ button::-moz-focus-inner {
 .swiper-pagination-progressbar-fill {
     background: var(--blue-action) !important;
     border-radius: 99px;
+    transform: translate3d(0px, 0px, 0px) scaleY(1) scaleX(var(--progress-bar)) !important;
 }

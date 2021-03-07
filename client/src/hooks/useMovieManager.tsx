@@ -16,7 +16,7 @@ const useMovieManager = (movie: Movie) => {
 
     const movieActionHandler = () => {
         if (!movieInList) {
-            const addedMovie: AddedMovie = { ...movie, addedByUserId: user.id, matches: [], swiped: false };
+            const addedMovie: AddedMovie = { ...movie, addedByUserId: user.id, swipes: [] };
             addMovie({ roomId: room.roomId as string, movie: addedMovie }, (res) => {
                 if (res.success) {
                     useToast({

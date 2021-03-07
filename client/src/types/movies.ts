@@ -25,8 +25,7 @@ export interface Movie {
 
 export interface AddedMovie extends Movie {
     addedByUserId: string;
-    matches: { userId: string }[];
-    swiped: boolean;
+    swipes: { userId: string; liked: boolean }[];
 }
 
 export interface Genre {

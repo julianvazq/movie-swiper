@@ -10,7 +10,7 @@ module.exports = (io: Server) => {
         checkRoom,
         toggleReady,
     } = require('./room')(io);
-    const { addMovie, removeMovie } = require('./movie')(io);
+    const { addMovie, removeMovie, swipeMovie } = require('./movie')(io);
     const { startSwiper } = require('./swiper')(io);
 
     const onConnection = (socket: SocketWithUserId) => {
@@ -23,6 +23,7 @@ module.exports = (io: Server) => {
         /* Movie */
         socket.on('movie:add', addMovie);
         socket.on('movie:remove', removeMovie);
+        socket.on('movie:swipe', swipeMovie);
         /* Swiper */
         socket.on('swiper:start', startSwiper);
         /* Connect / Disconnect */

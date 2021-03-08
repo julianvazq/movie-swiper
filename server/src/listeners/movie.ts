@@ -53,5 +53,40 @@ module.exports = (io: Server) => {
         }
     };
 
-    return { addMovie, removeMovie };
+    const swipeMovie = function (
+        data: {
+            roomId: string;
+            movieId: number;
+            userId: string;
+            liked: boolean;
+        },
+        callback: SocketCallback
+    ) {
+        try {
+            const socket: Socket = this;
+            console.log('swiped', data.liked);
+            io.in(data.roomId).emit('movie:swipe', {
+                movieId: data.movieId,
+                userId: data.userId,
+                liked: data.liked,
+            });
+
+            callback({
+                success: true,
+                data: {
+                    movieId: data.movieId,
+                    userId: data.userId,
+                    liked: data.liked,
+                },
+            });
+        } catch (error) {
+            console.log(error);
+            callback({
+                success: false,
+                message: `Failed to add movie: ${data.movieId}`,
+            });
+        }
+    };
+
+    return { addMovie, removeMovie, swipeMovie };
 };

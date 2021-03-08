@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-export const Container = styled(motion.div)`
-    position: fixed;
+export const Container = styled(motion.div)<{ position?: string }>`
+    position: ${(props) => props.position || 'fixed'};
     left: 0;
     right: 0;
     bottom: -3px;

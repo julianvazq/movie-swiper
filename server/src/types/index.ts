@@ -15,7 +15,7 @@ export interface Participant {
     color: string;
 }
 
-type Data = string | number | Room | Movie;
+type Data = string | number | boolean | Room | Movie;
 
 interface SuccessResponse {
     success: true;

@@ -5,6 +5,7 @@ import { colorStyles, FormField, StyledSelect } from './style';
 import Select, { OptionsType } from 'react-select';
 import { genres as allGenres } from './genres';
 import MovieGallery from '../MovieGallery';
+import ActionButton from '../ActionButton';
 
 const MovieSearch = () => {
     const [genres, setGenres] = useState<number[]>([]);
@@ -46,7 +47,12 @@ const MovieSearch = () => {
                 </FormField>
             </form>
             {loading && <p>Loading...</p>}
-            {!loading && <MovieGallery movies={moviesOnDisplay} />}
+            {!loading && (
+                <>
+                    <MovieGallery movies={moviesOnDisplay} />
+                    <ActionButton />
+                </>
+            )}
         </section>
     );
 };

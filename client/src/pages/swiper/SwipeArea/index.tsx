@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRoom } from '../../../context/RoomContext';
 import SwipeImage from '../SwipeImage';
 import { LikeButton, DislikeButton, LikeIcon, DislikeIcon } from './style';
 import FixedContainer from '../../shared/FixedContainer';
-import { likeMovie } from '../../../sockets/emitters';
+import { swipeMovie } from '../../../sockets/emitters';
 
 // Import Swiper styles
 import 'swiper/swiper-bundle.min.css';
@@ -12,6 +12,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { PaginationOptions } from 'swiper/types/components/pagination';
 import { CoverflowEffectOptions } from 'swiper/types/components/effect-coverflow';
 import { useUser } from '../../../context/UserContext';
+import { AddedMovie } from '../../../types/movies';
 SwiperCore.use([Pagination, A11y, EffectCoverflow, EffectFade]);
 
 const coverFlowEffectProps: CoverflowEffectOptions = {
@@ -32,8 +33,20 @@ const SwipeArea = () => {
     const { room } = useRoom();
     const { user } = useUser();
     const [swiper, setSwiper] = useState<SwiperCore>();
+    const [activeMovie, setActiveMovie] = useState<AddedMovie>();
+    const [disabled, setDisabled] = useState(false);
+
+    const enableButtons = () => {
+        setDisabled(false);
+    };
+
+    const disableButtons = () => {
+        setDisabled(true);
+    };
 
     const onLike = () => {
+        disableButtons();
+
         if (!swiper) {
             return;
         }
@@ -47,10 +60,13 @@ const SwipeArea = () => {
         const nextIndex = swiper.activeIndex + 1;
         swiper.slideTo(nextIndex);
         swiper.updateProgress();
-        // likeMovie({ roomId: room.roomId as string, movieId: movie.id });
+        console.log('LIKED', activeMovie?.title);
+        // swipeMovie({ roomId: room.roomId as string, movieId: movie.id userId: user.id, liked: true });
     };
 
     const onSlideNextTransitionStart = (swiper: SwiperCore) => {
+        disableButtons();
+
         if (!swiper) {
             return;
         }
@@ -61,11 +77,14 @@ const SwipeArea = () => {
             return;
         }
 
-        // likeMovie({ roomId: room.roomId as string, movieId: movie.id });
+        console.log('LIKED', activeMovie?.title);
+        // swipeMovie({ roomId: room.roomId as string, movieId: movie.id userId: user.id, liked: true });
         swiper.updateProgress();
     };
 
     const onDislike = () => {
+        disableButtons();
+
         if (!swiper) {
             return;
         }
@@ -76,13 +95,16 @@ const SwipeArea = () => {
             return;
         }
 
-        console.log('dislike', swiper);
+        // swiper.slideReset(5000);
+        console.log('disLIKED', activeMovie?.title);
         const nextIndex = swiper.activeIndex + 1;
         swiper.slideTo(nextIndex);
         swiper.updateProgress();
     };
 
     const onSlidePrevTransitionStart = (swiper: SwiperCore) => {
+        disableButtons();
+
         if (!swiper) {
             return;
         }
@@ -94,6 +116,8 @@ const SwipeArea = () => {
             return;
         }
 
+        // swiper.slideReset(5000);
+        console.log('disLIKED', activeMovie?.title);
         const nextIndex = swiper.activeIndex + 2;
         console.log(nextIndex);
         console.log('swipe prev', swiper);
@@ -118,6 +142,8 @@ const SwipeArea = () => {
                 <Swiper
                     onSlidePrevTransitionStart={onSlidePrevTransitionStart}
                     onSlideNextTransitionStart={onSlideNextTransitionStart}
+                    onSlidePrevTransitionEnd={enableButtons}
+                    onSlideNextTransitionEnd={enableButtons}
                     onProgress={onProgress}
                     onInit={onSwiperInit}
                     initialSlide={1}
@@ -132,18 +158,20 @@ const SwipeArea = () => {
                     <SwiperSlide></SwiperSlide>
                     {room.movies.map((movie) => (
                         <SwiperSlide key={movie.id}>
-                            <SwipeImage movie={movie} />
+                            {({ isActive }: { isActive: boolean }) => (
+                                <SwipeImage movie={movie} isActive={isActive} setActiveMovie={setActiveMovie} />
+                            )}
                         </SwiperSlide>
                     ))}
                     <SwiperSlide></SwiperSlide>
                 </Swiper>
             )}
-            <FixedContainer>
-                <DislikeButton onClick={onDislike}>
+            <FixedContainer position="fixed">
+                <DislikeButton onClick={onDislike} disabled={disabled}>
                     <DislikeIcon />
                     Dislike
                 </DislikeButton>
-                <LikeButton onClick={onLike}>
+                <LikeButton onClick={onLike} disabled={disabled}>
                     <LikeIcon />
                     Like
                 </LikeButton>

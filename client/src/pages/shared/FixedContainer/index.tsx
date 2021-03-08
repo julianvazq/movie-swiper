@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { Container } from './style';
 
 interface Props {
+    position: string;
     children: ReactNode | ReactNode[];
 }
 
@@ -17,9 +18,9 @@ const animation = {
     },
 };
 
-const FixedContainer = ({ children }: Props) => {
+const FixedContainer = ({ position, children }: Props) => {
     return (
-        <Container variants={animation} initial="initial" animate="animate">
+        <Container variants={animation} initial="initial" animate="animate" position={position}>
             {children}
         </Container>
     );

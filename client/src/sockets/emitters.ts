@@ -24,6 +24,13 @@ export const joinRoom = (
     socket.emit('room:join', data, callback);
 };
 
+export const toggleReady = (
+    data: { roomId: string; userId: string },
+    callback?: (res: SocketResponse<{ userId: string }>) => void,
+) => {
+    socket.emit('room:ready', data, callback);
+};
+
 export const addMovie = (
     data: { roomId: string; movie: AddedMovie },
     callback: (res: SocketResponse<{ movieId: string }>) => void,
@@ -38,18 +45,11 @@ export const removeMovie = (
     socket.emit('movie:remove', data, callback);
 };
 
-export const likeMovie = (
-    data: { roomId: string; movieId: number },
+export const swipeMovie = (
+    data: { roomId: string; movieId: number; userId: string; liked: boolean },
     callback?: (res: SocketResponse<{ movieId: string }>) => void,
 ) => {
-    socket.emit('movie:like', data, callback);
-};
-
-export const toggleReady = (
-    data: { roomId: string; userId: string },
-    callback?: (res: SocketResponse<{ userId: string }>) => void,
-) => {
-    socket.emit('room:ready', data, callback);
+    socket.emit('movie:swipe', data, callback);
 };
 
 export const startSwiper = (data: { roomId: string }, callback?: (res: SocketResponse<{ roomId: string }>) => void) => {

@@ -8,6 +8,7 @@ export enum ActionType {
     LEAVE = 'leave',
     ADD_MOVIE = 'add_movie',
     REMOVE_MOVIE = 'remove_movie',
+    SWIPE_MOVIE = 'swipe_movie',
     TOGGLE_READY = 'toggle_ready',
     SET_STAGE = 'set_stage',
 }
@@ -42,6 +43,11 @@ export interface RemoveMovieAction {
     payload: { id: number };
 }
 
+export interface SwipeMovieAction {
+    type: ActionType.SWIPE_MOVIE;
+    payload: { id: number; userId: string; liked: boolean };
+}
+
 export interface ToggleReadyAction {
     type: ActionType.TOGGLE_READY;
     payload: { id: string };
@@ -57,6 +63,7 @@ export type Action =
     | LeaveAction
     | AddMovieAction
     | RemoveMovieAction
+    | SwipeMovieAction
     | InitializeRoomAction
     | GetRoomAction
     | ToggleReadyAction

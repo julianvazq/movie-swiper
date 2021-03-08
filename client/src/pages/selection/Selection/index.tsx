@@ -9,7 +9,6 @@ import { Container } from './style';
 import { Movie } from '../../../types/movies';
 import MovieDetail from '../MovieDetail';
 import { AnimatePresence } from 'framer-motion';
-import ActionButton from '../ActionButton';
 
 interface Props {
     isExact: boolean;
@@ -48,7 +47,6 @@ const Selection = ({ location }: Props) => {
                 {/* {status === 'error' && <p>Sorry, something went wrong. Try refreshing the page.</p>} */}
                 <MovieSelection />
             </Container>
-            <ActionButton />
         </>
     );
 };

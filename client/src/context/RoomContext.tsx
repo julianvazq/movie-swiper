@@ -12,12 +12,14 @@ import {
     onMovieRemove,
     onToggleReady,
     onStartSwiper,
+    onMovieSwipe,
 } from '../sockets/listeners';
 import { socket } from '../sockets';
 import { Participant } from '../../../server/src/types';
 import { ToastType, useToast } from '../utils';
 import { FontWeight600 } from '../styles';
 import { useUser } from './UserContext';
+import { AddedMovie } from '../types/movies';
 
 type Props = {
     children: ReactNode;
@@ -74,6 +76,17 @@ const reducer = (state: Room, action: Action): Room => {
             };
         case ActionType.REMOVE_MOVIE:
             return { ...state, movies: state.movies.filter((movie) => movie.id !== action.payload.id) };
+        case ActionType.SWIPE_MOVIE:
+            const swipedMovie = state.movies.find((movie) => movie.id !== action.payload.id) as AddedMovie;
+            const updatedSwipes = [
+                ...swipedMovie.swipes,
+                { userId: action.payload.userId, liked: action.payload.liked },
+            ];
+            const updatedMovie: AddedMovie = { ...swipedMovie, swipes: updatedSwipes };
+            return {
+                ...state,
+                movies: [...state.movies, updatedMovie],
+            };
         case ActionType.SET_STAGE:
             return { ...state, stage: action.payload.stage };
         case ActionType.TOGGLE_READY:
@@ -134,6 +147,10 @@ const RoomProvider = ({ children }: Props) => {
         onMovieRemove(({ movieId }) => {
             dispatch({ type: ActionType.REMOVE_MOVIE, payload: { id: movieId } });
         });
+        onMovieSwipe(({ movieId, userId, liked }) => {
+            console.log('swiped', liked);
+            dispatch({ type: ActionType.SWIPE_MOVIE, payload: { id: movieId, userId, liked } });
+        });
         onToggleReady(({ userId }) => {
             /* Bug: toast displays for person that clicked 'Ready' */
             // const userToToggle = room.participants.find((p) => p.id === userId);
@@ -146,7 +163,6 @@ const RoomProvider = ({ children }: Props) => {
             if (roomId !== room.roomId) {
                 return;
             }
-
             dispatch({ type: ActionType.SET_STAGE, payload: { stage: Stage.SWIPER } });
         });
 

@@ -8,6 +8,7 @@ module.exports = (io: Server) => {
     const createRoom = function (data, callback: SocketCallback) {
         try {
             const socket: SocketWithUserId = this;
+            socket.leaveAll();
             for (const roomId in socket.rooms) {
                 socket
                     .to(roomId)
@@ -17,10 +18,12 @@ module.exports = (io: Server) => {
             socket.join(roomId);
             console.log('new room: ', io.sockets.adapter.rooms[roomId]);
 
-            const resData = {
-                roomId,
-            };
-            callback({ success: true, data: resData });
+            callback({
+                success: true,
+                data: {
+                    roomId,
+                },
+            });
         } catch (error) {
             console.log(error);
             callback({ success: false, message: 'Failed to create room.' });

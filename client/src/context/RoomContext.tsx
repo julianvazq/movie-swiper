@@ -49,7 +49,7 @@ const reducer = (state: Room, action: Action): Room => {
     switch (action.type) {
         case ActionType.INITIALIZE_ROOM:
             return {
-                ...state,
+                ...initialState,
                 roomName: action.payload.roomName,
                 roomId: action.payload.roomId,
                 participants: [action.payload.participant],

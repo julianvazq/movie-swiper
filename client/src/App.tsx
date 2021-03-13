@@ -12,7 +12,6 @@ import Expired from './pages/expired/Expired';
 import Swiper from './pages/swiper/Swiper';
 import { Toaster } from 'react-hot-toast';
 import { AnimateSharedLayout } from 'framer-motion';
-import Movie from './pages/selection/MovieDetail';
 
 const App = () => {
     return (

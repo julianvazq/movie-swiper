@@ -36,7 +36,7 @@ export const InfoContainer = styled.article`
     overflow: hidden;
     position: relative;
 
-    &:after {
+    /* &:after {
         content: '';
         position: absolute;
         width: 100%;
@@ -64,7 +64,7 @@ export const InfoContainer = styled.article`
             hsla(210, 38%, 15%, 0.93) 85.3%,
             hsl(210, 38%, 15%) 100%
         );
-    }
+    } */
 `;
 
 export const Title = styled.h3`
@@ -96,6 +96,37 @@ export const SmallGenre = styled(Genre)`
 
 export const Overview = styled.p`
     line-height: 1.3;
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+            to bottom,
+            hsla(210, 38%, 15%, 0) 0%,
+            hsla(210, 38%, 15%, 0.106) 8.1%,
+            hsla(210, 38%, 15%, 0.2) 14.7%,
+            hsla(210, 38%, 15%, 0.284) 20%,
+            hsla(210, 38%, 15%, 0.358) 24.4%,
+            hsla(210, 38%, 15%, 0.426) 28.1%,
+            hsla(210, 38%, 15%, 0.487) 31.6%,
+            hsla(210, 38%, 15%, 0.544) 35.1%,
+            hsla(210, 38%, 15%, 0.598) 38.8%,
+            hsla(210, 38%, 15%, 0.649) 43.2%,
+            hsla(210, 38%, 15%, 0.701) 48.5%,
+            hsla(210, 38%, 15%, 0.753) 55.1%,
+            hsla(210, 38%, 15%, 0.808) 63.2%,
+            hsla(210, 38%, 15%, 0.866) 73.2%,
+            hsla(210, 38%, 15%, 0.93) 85.3%,
+            hsl(210, 38%, 15%) 100%
+        );
+    }
 `;
 
 export const SeeMoreButton = styled(Button)`

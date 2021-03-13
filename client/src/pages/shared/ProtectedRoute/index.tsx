@@ -34,7 +34,6 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
                 /* If username is already set, join room */
                 if (user.name) {
                     joinRoom({ roomId, user }, (res) => {
-                        console.log('join res', res);
                         if (res.success) {
                             // setTimeout(() => setStatus('success'), 1000);
                             setStatus('success');

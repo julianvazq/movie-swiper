@@ -20,6 +20,7 @@ import { ToastType, useToast } from '../utils';
 import { FontWeight600 } from '../styles';
 import { useUser } from './UserContext';
 import { AddedMovie } from '../types/movies';
+import { swipeMovie } from '../sockets/emitters';
 
 type Props = {
     children: ReactNode;
@@ -77,15 +78,20 @@ const reducer = (state: Room, action: Action): Room => {
         case ActionType.REMOVE_MOVIE:
             return { ...state, movies: state.movies.filter((movie) => movie.id !== action.payload.id) };
         case ActionType.SWIPE_MOVIE:
-            const swipedMovie = state.movies.find((movie) => movie.id !== action.payload.id) as AddedMovie;
-            const updatedSwipes = [
-                ...swipedMovie.swipes,
-                { userId: action.payload.userId, liked: action.payload.liked },
-            ];
+            const swipedMovie = state.movies.find((movie) => movie.id === action.payload.id) as AddedMovie;
+            console.log('swiped movie:', swipedMovie);
+            const alreadySwiped = swipedMovie.swipes.find((swipe) => swipe.userId === action.payload.userId);
+            const updatedSwipes = alreadySwiped
+                ? swipedMovie.swipes.map((swipe) =>
+                      swipe.userId === action.payload.userId
+                          ? { userId: action.payload.userId, liked: action.payload.liked }
+                          : swipe,
+                  )
+                : [...swipedMovie.swipes, { userId: action.payload.userId, liked: action.payload.liked }];
             const updatedMovie: AddedMovie = { ...swipedMovie, swipes: updatedSwipes };
             return {
                 ...state,
-                movies: [...state.movies, updatedMovie],
+                movies: state.movies.map((movie) => (movie.id === updatedMovie.id ? updatedMovie : movie)),
             };
         case ActionType.SET_STAGE:
             return { ...state, stage: action.payload.stage };

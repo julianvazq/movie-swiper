@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRoom } from '../../../context/RoomContext';
+import { useUser } from '../../../context/UserContext';
 import SwipeImage from '../SwipeImage';
 import { LikeButton, DislikeButton, LikeIcon, DislikeIcon } from './style';
 import FixedContainer from '../../shared/FixedContainer';
 import { swipeMovie } from '../../../sockets/emitters';
+import { AddedMovie } from '../../../types/movies';
 
-// Import Swiper styles
+// Swiper imports
 import 'swiper/swiper-bundle.min.css';
 import SwiperCore, { Pagination, A11y, EffectCoverflow, EffectFade } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { PaginationOptions } from 'swiper/types/components/pagination';
 import { CoverflowEffectOptions } from 'swiper/types/components/effect-coverflow';
-import { useUser } from '../../../context/UserContext';
-import { AddedMovie } from '../../../types/movies';
 SwiperCore.use([Pagination, A11y, EffectCoverflow, EffectFade]);
 
 const coverFlowEffectProps: CoverflowEffectOptions = {
@@ -42,7 +42,7 @@ const SwipeArea = () => {
 
     useEffect(() => {
         movies.current = room.movies.map((movie) => ({ ...movie, swiped: false }));
-    }, [room.movies]);
+    }, [room.movies.length]);
 
     const enableButtons = () => {
         setDisabled(false);
@@ -92,7 +92,7 @@ const SwipeArea = () => {
         const movieIndex = swiper.activeIndex - 1;
         handleSwipeEmit({ index: movieIndex, liked: false });
         const nextIndex = swiper.activeIndex + 1;
-        swiper.slideTo(nextIndex);
+        swiper.slideTo(nextIndex, 200);
     };
 
     const onSlidePrevTransitionStart = (swiper: SwiperCore) => {
@@ -117,16 +117,6 @@ const SwipeArea = () => {
         }
     };
 
-    const handleSwipeEmit = ({ index, liked }: { index: number; liked: boolean }) => {
-        const movie = movies.current[index];
-        if (!movie || movie.swiped) {
-            return;
-        }
-
-        console.log(movie.title, liked);
-        movies.current = movies.current.map((m) => (m.id === movie.id ? { ...m, swiped: true } : m));
-    };
-
     const onSwiperInit = (swiper: SwiperCore) => {
         const actualProgress = 1 / room.movies.length;
         document.documentElement.style.setProperty('--progress-bar', actualProgress.toString());
@@ -136,6 +126,17 @@ const SwipeArea = () => {
     const onProgress = (swiper: SwiperCore) => {
         const actualProgress = (1 / room.movies.length) * swiper.activeIndex;
         document.documentElement.style.setProperty('--progress-bar', actualProgress.toString());
+    };
+
+    const handleSwipeEmit = ({ index, liked }: { index: number; liked: boolean }) => {
+        const movie = movies.current[index];
+        if (!movie || movie.swiped) {
+            return;
+        }
+
+        console.log(movie.title, liked);
+        movies.current = movies.current.map((m) => (m.id === movie.id ? { ...m, swiped: true } : m));
+        swipeMovie({ roomId: room.roomId as string, userId: user.id, movieId: movie.id, liked });
     };
 
     return (
@@ -157,13 +158,13 @@ const SwipeArea = () => {
                     coverflowEffect={coverFlowEffectProps}
                     pagination={paginationProps}
                 >
-                    <SwiperSlide></SwiperSlide>
+                    <SwiperSlide key="firstSlide"></SwiperSlide>
                     {room.movies.map((movie) => (
                         <SwiperSlide key={movie.id}>
                             <SwipeImage movie={movie} />
                         </SwiperSlide>
                     ))}
-                    <SwiperSlide></SwiperSlide>
+                    <SwiperSlide key="lastSlide"></SwiperSlide>
                 </Swiper>
             )}
             <FixedContainer position="fixed">

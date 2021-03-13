@@ -71,20 +71,20 @@ module.exports = (io: Server) => {
                 liked: data.liked,
             });
 
-            callback({
-                success: true,
-                data: {
-                    movieId: data.movieId,
-                    userId: data.userId,
-                    liked: data.liked,
-                },
-            });
+            // callback({
+            //     success: true,
+            //     data: {
+            //         movieId: data.movieId,
+            //         userId: data.userId,
+            //         liked: data.liked,
+            //     },
+            // });
         } catch (error) {
             console.log(error);
-            callback({
-                success: false,
-                message: `Failed to add movie: ${data.movieId}`,
-            });
+            // callback({
+            //     success: false,
+            //     message: `Failed to add movie: ${data.movieId}`,
+            // });
         }
     };
 

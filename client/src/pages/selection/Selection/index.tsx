@@ -1,5 +1,6 @@
 import React from 'react';
 import { Subtitle, Title } from '../../../styles';
+import ActionButton from '../ActionButton';
 import MovieSelection from '../MovieSelection';
 import { Container } from './style';
 
@@ -15,6 +16,7 @@ const Selection = () => {
             {/* {status === 'loading' && <p>Loading...</p>} */}
             {/* {status === 'error' && <p>Sorry, something went wrong. Try refreshing the page.</p>} */}
             <MovieSelection />
+            <ActionButton />
         </Container>
     );
 };

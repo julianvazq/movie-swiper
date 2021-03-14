@@ -3,22 +3,18 @@ import { useHistory } from 'react-router-dom';
 import { Movie } from '../../../../../server/src/types/movies';
 import { Container, ContentContainer, Card, Title, Image, PlusIcon, ButtonContainer, MinusIcon } from './styled';
 import { useRoom } from '../../../context/RoomContext';
-import { addMovie, removeMovie } from '../../../sockets/emitters';
-import { AddedMovie } from '../../../types/movies';
-import { useUser } from '../../../context/UserContext';
-import toast from 'react-hot-toast';
 import useMovieManager from '../../../hooks/useMovieManager';
 import { generateImageUrl } from '../../../utils';
-import { useMovieDetail } from '../../../context/MovieDetailContext';
+import { useMoviePreview } from '../../../context/MoviePreviewContext';
 
 interface Props {
     movie: Movie;
 }
 
 const MovieCard = ({ movie }: Props) => {
-    const { setMovieDetail } = useMovieDetail();
-    const { room } = useRoom();
     const history = useHistory();
+    const { setMoviePreview: setMovieDetail } = useMoviePreview();
+    const { room } = useRoom();
     const [zIndex, setZIndex] = useState(0);
     const imageUrl = generateImageUrl(movie.poster_path, 'w342');
     const { movieActionHandler, buttonBackgroundColor, movieInList } = useMovieManager(movie);
@@ -30,7 +26,6 @@ const MovieCard = ({ movie }: Props) => {
         } else {
             setZIndex(2);
             setMovieDetail(movie);
-            // history.push({ pathname: `${currPathname}/${movie.id}`, state: { movie } });
         }
     };
 

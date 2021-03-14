@@ -30,23 +30,27 @@ import {
 } from './style';
 import useMovieManager from '../../../hooks/useMovieManager';
 import { generateImageUrl } from '../../../utils';
-import { useMovieDetail } from '../../../context/MovieDetailContext';
+import { useMoviePreview } from '../../../context/MoviePreviewContext';
+import { Stage } from '../../../types/room';
 
 interface Props {
     movie: Movie;
 }
 
 const MovieDetail = ({ movie }: Props) => {
+    const history = useHistory();
     const { room } = useRoom();
-    const { setMovieDetail } = useMovieDetail();
+    const { movieActionHandler, buttonBackgroundColor, movieInList } = useMovieManager(movie);
+    const { setMoviePreview: setMovieDetail } = useMoviePreview();
+
     const [details, setDetails] = useState<MovieDetails | null>(null);
     const [loading, setLoading] = useState(false);
-    const history = useHistory();
+
     const imageUrl = generateImageUrl(movie.poster_path, 'w500');
     const trailerData =
         details && details?.videos?.results?.find((video) => video.type === 'Trailer' && video.site === 'YouTube');
     const trailerUrl = `https://www.youtube.com/embed/${trailerData?.key}`;
-    const { movieActionHandler, buttonBackgroundColor, movieInList } = useMovieManager(movie);
+    const inSelection = history.location.pathname.includes(Stage.SELECTION);
 
     const onOverlayClick = (e: any) => {
         if (e.target.attributes['data-overlay']) {
@@ -117,19 +121,24 @@ const MovieDetail = ({ movie }: Props) => {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.2, delay: 0.25 }}
                             >
-                                <DesktopAddButton onClick={movieActionHandler} backgroundColor={buttonBackgroundColor}>
-                                    {' '}
-                                    {!movieInList && (
-                                        <>
-                                            <PlusIcon /> Add Movie
-                                        </>
-                                    )}
-                                    {movieInList && (
-                                        <>
-                                            <MinusIcon /> Remove Movie
-                                        </>
-                                    )}
-                                </DesktopAddButton>
+                                {inSelection && (
+                                    <DesktopAddButton
+                                        onClick={movieActionHandler}
+                                        backgroundColor={buttonBackgroundColor}
+                                    >
+                                        {' '}
+                                        {!movieInList && (
+                                            <>
+                                                <PlusIcon /> Add Movie
+                                            </>
+                                        )}
+                                        {movieInList && (
+                                            <>
+                                                <MinusIcon /> Remove Movie
+                                            </>
+                                        )}
+                                    </DesktopAddButton>
+                                )}
                                 <Title>{details.title}</Title>
                                 <Tag>{details.tagline}</Tag>
 
@@ -181,18 +190,20 @@ const MovieDetail = ({ movie }: Props) => {
                                         <BackIcon />
                                         Go Back
                                     </BackButton>
-                                    <AddButton onClick={movieActionHandler} backgroundColor={buttonBackgroundColor}>
-                                        {!movieInList && (
-                                            <>
-                                                <PlusIcon /> Add Movie
-                                            </>
-                                        )}
-                                        {movieInList && (
-                                            <>
-                                                <MinusIcon /> Remove
-                                            </>
-                                        )}
-                                    </AddButton>
+                                    {inSelection && (
+                                        <AddButton onClick={movieActionHandler} backgroundColor={buttonBackgroundColor}>
+                                            {!movieInList && (
+                                                <>
+                                                    <PlusIcon /> Add Movie
+                                                </>
+                                            )}
+                                            {movieInList && (
+                                                <>
+                                                    <MinusIcon /> Remove
+                                                </>
+                                            )}
+                                        </AddButton>
+                                    )}
                                 </ButtonContainer>
                             </motion.div>
                         )}

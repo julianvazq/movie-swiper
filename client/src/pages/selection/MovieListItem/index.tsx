@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useMovieDetail } from '../../../context/MovieDetailContext';
+import { useMoviePreview } from '../../../context/MoviePreviewContext';
 import useMovieManager from '../../../hooks/useMovieManager';
 import { AddedMovie } from '../../../types/movies';
 import { generateImageUrl } from '../../../utils';
@@ -24,7 +24,7 @@ interface Props {
 }
 
 const MovieListItem = ({ movie }: Props) => {
-    const { setMovieDetail } = useMovieDetail();
+    const { setMoviePreview: setMovieDetail } = useMoviePreview();
     const history = useHistory();
     const { movieInList, movieActionHandler, buttonBackgroundColor } = useMovieManager(movie);
     const genres = movie.genre_ids.map((genreId) => genreObjects.find((g) => g.id === genreId));

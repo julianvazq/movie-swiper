@@ -13,16 +13,16 @@ import Swiper from './pages/swiper/Swiper';
 import { Toaster } from 'react-hot-toast';
 import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import MovieDetail from './pages/selection/MovieDetail';
-import { useMovieDetail } from './context/MovieDetailContext';
+import { useMoviePreview } from './context/MoviePreviewContext';
 
 const App = () => {
-    const { movieDetail } = useMovieDetail();
+    const { moviePreview } = useMoviePreview();
 
     return (
         <Router>
             <AppContainer>
                 <AnimateSharedLayout type="crossfade">
-                    <AnimatePresence>{movieDetail && <MovieDetail movie={movieDetail} />}</AnimatePresence>
+                    <AnimatePresence>{moviePreview && <MovieDetail movie={moviePreview} />}</AnimatePresence>
                     <Toaster />
                     <Nav />
                     <Switch>

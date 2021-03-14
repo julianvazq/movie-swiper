@@ -35,7 +35,7 @@ const ActionButton = () => {
 
     return (
         <>
-            <FixedContainer position="sticky">
+            <FixedContainer position="fixed">
                 <ReadyButton onClick={checkReady}>
                     <EmptyCheckbox /> {participantsReady.length}
                 </ReadyButton>

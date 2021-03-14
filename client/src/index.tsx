@@ -4,15 +4,15 @@ import './index.css';
 import App from './App';
 import RoomProvider from './context/RoomContext';
 import UserProvider from './context/UserContext';
-import MovieDetailProvider from './context/MovieDetailContext';
+import MoviePreviewProvider from './context/MoviePreviewContext';
 
 ReactDOM.render(
     <React.StrictMode>
         <RoomProvider>
             <UserProvider>
-                <MovieDetailProvider>
+                <MoviePreviewProvider>
                     <App />
-                </MovieDetailProvider>
+                </MoviePreviewProvider>
             </UserProvider>
         </RoomProvider>
     </React.StrictMode>,

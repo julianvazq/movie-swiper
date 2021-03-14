@@ -9,12 +9,14 @@ import { useUser } from '../../../context/UserContext';
 import toast from 'react-hot-toast';
 import useMovieManager from '../../../hooks/useMovieManager';
 import { generateImageUrl } from '../../../utils';
+import { useMovieDetail } from '../../../context/MovieDetailContext';
 
 interface Props {
     movie: Movie;
 }
 
 const MovieCard = ({ movie }: Props) => {
+    const { setMovieDetail } = useMovieDetail();
     const { room } = useRoom();
     const history = useHistory();
     const [zIndex, setZIndex] = useState(0);
@@ -27,7 +29,8 @@ const MovieCard = ({ movie }: Props) => {
             history.push(`/selection/${room.roomId}`);
         } else {
             setZIndex(2);
-            history.push({ pathname: `${currPathname}/${movie.id}`, state: { movie } });
+            setMovieDetail(movie);
+            // history.push({ pathname: `${currPathname}/${movie.id}`, state: { movie } });
         }
     };
 

@@ -1,53 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useRoom } from '../../../context/RoomContext';
-import { useUser } from '../../../context/UserContext';
+import React from 'react';
 import { Subtitle, Title } from '../../../styles';
-import { checkIfIncluded } from '../../../utils';
 import MovieSelection from '../MovieSelection';
-import { RouteProps } from 'react-router';
 import { Container } from './style';
-import { Movie } from '../../../types/movies';
-import MovieDetail from '../MovieDetail';
-import { AnimatePresence } from 'framer-motion';
-
-interface Props {
-    isExact: boolean;
-    location: { state: { movie: Movie } | undefined };
-    params: { [key: string]: any };
-    path: RouteProps['path'];
-    url: string;
-}
 
 type Status = 'loading' | 'error' | 'success';
 
-const Selection = ({ location }: Props) => {
-    const { room } = useRoom();
-    const { user } = useUser();
+const Selection = () => {
     // const [status, setStatus] = useState<Status>('loading');
 
-    useEffect(() => {
-        if (!user.id) {
-            return;
-        }
-        const inRoom = checkIfIncluded(room.participants, { id: user.id });
-        if (!inRoom) {
-            console.log('new user!');
-        }
-    }, []);
-
-    const movie = location?.state?.movie;
-
     return (
-        <>
-            <AnimatePresence>{movie && <MovieDetail movie={movie} />}</AnimatePresence>
-            <Container>
-                <Title>Pick Your Movies</Title>
-                <Subtitle>Add movies you and your friends may want to watch.</Subtitle>
-                {/* {status === 'loading' && <p>Loading...</p>} */}
-                {/* {status === 'error' && <p>Sorry, something went wrong. Try refreshing the page.</p>} */}
-                <MovieSelection />
-            </Container>
-        </>
+        <Container>
+            <Title>Pick Your Movies</Title>
+            <Subtitle>Add movies to the list for you and your group to vote on.</Subtitle>
+            {/* {status === 'loading' && <p>Loading...</p>} */}
+            {/* {status === 'error' && <p>Sorry, something went wrong. Try refreshing the page.</p>} */}
+            <MovieSelection />
+        </Container>
     );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useRoom } from '../../../context/RoomContext';
+import { useMovieDetail } from '../../../context/MovieDetailContext';
 import useMovieManager from '../../../hooks/useMovieManager';
 import { AddedMovie } from '../../../types/movies';
 import { generateImageUrl } from '../../../utils';
@@ -24,17 +24,17 @@ interface Props {
 }
 
 const MovieListItem = ({ movie }: Props) => {
+    const { setMovieDetail } = useMovieDetail();
     const history = useHistory();
-    const { room } = useRoom();
     const { movieInList, movieActionHandler, buttonBackgroundColor } = useMovieManager(movie);
     const genres = movie.genre_ids.map((genreId) => genreObjects.find((g) => g.id === genreId));
 
     const onMovieClick = () => {
-        const currPathname = history.location.pathname;
-        if (currPathname.includes(movie.id.toString())) {
-            history.push(`/selection/${room.roomId}`);
+        const { pathname } = history.location;
+        if (pathname.includes(movie.id.toString())) {
+            setMovieDetail(null);
         } else {
-            history.push({ pathname: `${currPathname}/${movie.id}`, state: { movie } });
+            setMovieDetail(movie);
         }
     };
 

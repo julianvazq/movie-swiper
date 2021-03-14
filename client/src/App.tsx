@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Home from './pages/home/Home';
 import Nav from './pages/shared/Nav';
@@ -11,13 +11,18 @@ import Join from './pages/join/Join';
 import Expired from './pages/expired/Expired';
 import Swiper from './pages/swiper/Swiper';
 import { Toaster } from 'react-hot-toast';
-import { AnimateSharedLayout } from 'framer-motion';
+import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import MovieDetail from './pages/selection/MovieDetail';
+import { useMovieDetail } from './context/MovieDetailContext';
 
 const App = () => {
+    const { movieDetail } = useMovieDetail();
+
     return (
         <Router>
             <AppContainer>
                 <AnimateSharedLayout type="crossfade">
+                    <AnimatePresence>{movieDetail && <MovieDetail movie={movieDetail} />}</AnimatePresence>
                     <Toaster />
                     <Nav />
                     <Switch>
@@ -26,7 +31,7 @@ const App = () => {
                         <Route path="/join/:id" component={Join} />
                         <Route path="/expired" component={Expired} />
                         <ProtectedRoute path={['/selection/:id/:movieId', '/selection/:id']} component={Selection} />
-                        <ProtectedRoute path="/swiper/:id" component={Swiper} />
+                        <ProtectedRoute path={['/swiper/:id/:movieId', '/swiper/:id']} component={Swiper} />
                         {/* <Route path="/results/:id" component={} /> */}
                         <Route component={Home} />
                     </Switch>

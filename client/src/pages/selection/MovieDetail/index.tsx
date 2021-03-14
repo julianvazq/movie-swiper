@@ -30,6 +30,7 @@ import {
 } from './style';
 import useMovieManager from '../../../hooks/useMovieManager';
 import { generateImageUrl } from '../../../utils';
+import { useMovieDetail } from '../../../context/MovieDetailContext';
 
 interface Props {
     movie: Movie;
@@ -37,24 +38,24 @@ interface Props {
 
 const MovieDetail = ({ movie }: Props) => {
     const { room } = useRoom();
-    const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
+    const { setMovieDetail } = useMovieDetail();
+    const [details, setDetails] = useState<MovieDetails | null>(null);
     const [loading, setLoading] = useState(false);
     const history = useHistory();
     const imageUrl = generateImageUrl(movie.poster_path, 'w500');
     const trailerData =
-        movieDetails &&
-        movieDetails?.videos?.results?.find((video) => video.type === 'Trailer' && video.site === 'YouTube');
+        details && details?.videos?.results?.find((video) => video.type === 'Trailer' && video.site === 'YouTube');
     const trailerUrl = `https://www.youtube.com/embed/${trailerData?.key}`;
     const { movieActionHandler, buttonBackgroundColor, movieInList } = useMovieManager(movie);
 
     const onOverlayClick = (e: any) => {
         if (e.target.attributes['data-overlay']) {
-            history.push(`/selection/${room.roomId}`);
+            setMovieDetail(null);
         }
     };
 
     const backToSelection = () => {
-        history.push(`/selection/${room.roomId}`);
+        setMovieDetail(null);
     };
 
     useEffect(() => {
@@ -88,7 +89,7 @@ const MovieDetail = ({ movie }: Props) => {
                 cancelToken: cancelToken.token,
             });
             if (res.status === 200) {
-                setMovieDetails(res.data);
+                setDetails(res.data);
             }
             setLoading(false);
         } catch (error) {
@@ -105,13 +106,12 @@ const MovieDetail = ({ movie }: Props) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0 } }}
-            // transition={{ duration: 0.2, delay: 0.15 }}
         >
             <Container>
                 <ContentContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} layoutId={`image-${movie.id}`}>
                     <Image src={imageUrl} />
                     <AnimatePresence>
-                        {movieDetails && (
+                        {details && (
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -130,35 +130,35 @@ const MovieDetail = ({ movie }: Props) => {
                                         </>
                                     )}
                                 </DesktopAddButton>
-                                <Title>{movieDetails.title}</Title>
-                                <Tag>{movieDetails.tagline}</Tag>
+                                <Title>{details.title}</Title>
+                                <Tag>{details.tagline}</Tag>
 
                                 <WrapContainer>
-                                    {movieDetails.genres?.map((genre) => (
+                                    {details.genres?.map((genre) => (
                                         <Genre key={genre.id}>{genre.name}</Genre>
                                     ))}
                                 </WrapContainer>
                                 <Label>Overview</Label>
-                                <Overview>{movieDetails.overview}</Overview>
+                                <Overview>{details.overview}</Overview>
                                 <Divider>Details</Divider>
                                 <Grid>
                                     <GridCell>
                                         <Label>Rating</Label>
                                         <p>
-                                            {movieDetails.vote_average} <Star />
+                                            {details.vote_average} <Star />
                                         </p>
                                     </GridCell>
                                     <GridCell>
                                         <Label>Runtime</Label>
-                                        <p>{movieDetails.runtime} min</p>
+                                        <p>{details.runtime} min</p>
                                     </GridCell>
                                     <GridCell>
                                         <Label>Released</Label>
-                                        <p>{movieDetails.release_date}</p>
+                                        <p>{details.release_date}</p>
                                     </GridCell>
                                     <GridCell>
                                         <Label>Language</Label>
-                                        <p>{movieDetails.original_language.toUpperCase()}</p>
+                                        <p>{details.original_language.toUpperCase()}</p>
                                     </GridCell>
                                 </Grid>
                                 {trailerData && (

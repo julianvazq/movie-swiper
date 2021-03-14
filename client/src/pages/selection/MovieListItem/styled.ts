@@ -36,7 +36,7 @@ export const InfoContainer = styled.article`
     overflow: hidden;
     position: relative;
 
-    /* &:after {
+    &:after {
         content: '';
         position: absolute;
         width: 100%;
@@ -46,25 +46,25 @@ export const InfoContainer = styled.article`
         left: 0;
         right: 0;
         background: linear-gradient(
-            to bottom,
-            hsla(210, 38%, 15%, 0) 0%,
-            hsla(210, 38%, 15%, 0.106) 8.1%,
-            hsla(210, 38%, 15%, 0.2) 14.7%,
-            hsla(210, 38%, 15%, 0.284) 20%,
-            hsla(210, 38%, 15%, 0.358) 24.4%,
-            hsla(210, 38%, 15%, 0.426) 28.1%,
-            hsla(210, 38%, 15%, 0.487) 31.6%,
-            hsla(210, 38%, 15%, 0.544) 35.1%,
-            hsla(210, 38%, 15%, 0.598) 38.8%,
-            hsla(210, 38%, 15%, 0.649) 43.2%,
-            hsla(210, 38%, 15%, 0.701) 48.5%,
-            hsla(210, 38%, 15%, 0.753) 55.1%,
-            hsla(210, 38%, 15%, 0.808) 63.2%,
-            hsla(210, 38%, 15%, 0.866) 73.2%,
-            hsla(210, 38%, 15%, 0.93) 85.3%,
-            hsl(210, 38%, 15%) 100%
+            to top,
+            hsl(210, 38%, 15%) 0%,
+            hsla(210, 38%, 15%, 0.941) 25%,
+            hsla(210, 38%, 15%, 0.881) 28%,
+            hsla(210, 38%, 15%, 0.819) 32%,
+            hsla(210, 38%, 15%, 0.756) 36%,
+            hsla(210, 38%, 15%, 0.692) 41.3%,
+            hsla(210, 38%, 15%, 0.626) 45.7%,
+            hsla(210, 38%, 15%, 0.56) 49.6%,
+            hsla(210, 38%, 15%, 0.492) 53.3%,
+            hsla(210, 38%, 15%, 0.424) 57.2%,
+            hsla(210, 38%, 15%, 0.355) 61.4%,
+            hsla(210, 38%, 15%, 0.285) 66.4%,
+            hsla(210, 38%, 15%, 0.214) 72.4%,
+            hsla(210, 38%, 15%, 0.143) 79.8%,
+            hsla(210, 38%, 15%, 0.072) 88.9%,
+            hsla(210, 38%, 15%, 0) 100%
         );
-    } */
+    }
 `;
 
 export const Title = styled.h3`
@@ -98,7 +98,7 @@ export const Overview = styled.p`
     line-height: 1.3;
     position: relative;
 
-    &:after {
+    /* &:after {
         content: '';
         position: absolute;
         width: 100%;
@@ -108,6 +108,26 @@ export const Overview = styled.p`
         left: 0;
         right: 0;
         background: linear-gradient(
+            to top,
+            hsl(210, 38%, 15%) 0%,
+            hsla(210, 38%, 15%, 1) 18.7%,
+            hsla(210, 38%, 15%, 1) 34.8%,
+            hsla(210, 38%, 15%, 1) 48.6%,
+            hsla(210, 38%, 15%, 1) 60.3%,
+            hsla(210, 38%, 15%, 1) 69.9%,
+            hsla(210, 38%, 15%, 0.626) 77.8%,
+            hsla(210, 38%, 15%, 0.562) 84.1%,
+            hsla(210, 38%, 15%, 0.497) 89%,
+            hsla(210, 38%, 15%, 0.431) 92.7%,
+            hsla(210, 38%, 15%, 0.364) 95.4%,
+            hsla(210, 38%, 15%, 0.295) 97.2%,
+            hsla(210, 38%, 15%, 0.224) 98.4%,
+            hsla(210, 38%, 15%, 0.151) 99.2%,
+            hsla(210, 38%, 15%, 0.077) 99.6%,
+            hsla(210, 38%, 15%, 0) 100%
+        );
+
+        linear-gradient(
             to bottom,
             hsla(210, 38%, 15%, 0) 0%,
             hsla(210, 38%, 15%, 0.106) 8.1%,
@@ -126,7 +146,7 @@ export const Overview = styled.p`
             hsla(210, 38%, 15%, 0.93) 85.3%,
             hsl(210, 38%, 15%) 100%
         );
-    }
+    } */
 `;
 
 export const SeeMoreButton = styled(Button)`

@@ -9,3 +9,7 @@ export const List = styled.section`
         gap: 4rem;
     }
 `;
+
+export const Empty = styled.p`
+    text-align: center;
+`;

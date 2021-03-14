@@ -1,7 +1,7 @@
 import React from 'react';
 import { AddedMovie } from '../../../types/movies';
 import MovieListItem from '../MovieListItem';
-import { List } from './styled';
+import { List, Empty } from './styled';
 
 interface Props {
     movies: AddedMovie[];
@@ -9,7 +9,7 @@ interface Props {
 
 const MovieList = ({ movies }: Props) => {
     if (!movies.length) {
-        return <p>No movies added to your list yet.</p>;
+        return <Empty>Nothing to see here.</Empty>;
     }
 
     return (

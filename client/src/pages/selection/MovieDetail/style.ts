@@ -82,7 +82,7 @@ export const Title = styled(motion.h3)`
 `;
 
 export const Tag = styled.p`
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 `;
 
 export const WrapContainer = styled.div`

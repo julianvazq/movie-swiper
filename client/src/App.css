@@ -5,7 +5,9 @@
     --dark-blue-bg: hsl(210deg 38% 15%);
     --blue-action: hsl(213deg 40% 49%);
     --blue-muted: hsl(213deg 23% 25%);
-    --progress-var: 0;
+    --accent: hsl(293deg 50% 30%);
+    --red: #6e3030;
+    --progress-bar: 0;
 }
 
 *,

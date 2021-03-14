@@ -4,7 +4,7 @@ import { RiCloseFill } from 'react-icons/ri';
 import { HiHeart } from 'react-icons/hi';
 
 export const LikeButton = styled(Button)`
-    background: var(--blue-action);
+    background: var(--blue-active);
     outline: none;
     border-radius: 0;
 
@@ -15,7 +15,7 @@ export const LikeButton = styled(Button)`
 `;
 
 export const DislikeButton = styled(Button)`
-    background: var(--blue-muted);
+    background: var(--red);
     outline: none;
     border-radius: 0;
 

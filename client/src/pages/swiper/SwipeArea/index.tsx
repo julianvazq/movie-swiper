@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
-import SwipeImage from '../SwipeImage';
+import SwipeItem from '../SwipeItem';
 import { LikeButton, DislikeButton, LikeIcon, DislikeIcon } from './style';
 import FixedContainer from '../../shared/FixedContainer';
 import { swipeMovie } from '../../../sockets/emitters';
@@ -92,7 +92,7 @@ const SwipeArea = () => {
         const movieIndex = swiper.activeIndex - 1;
         handleSwipeEmit({ index: movieIndex, liked: false });
         const nextIndex = swiper.activeIndex + 1;
-        swiper.slideTo(nextIndex, 200);
+        swiper.slideTo(nextIndex, 400);
     };
 
     const onSlidePrevTransitionStart = (swiper: SwiperCore) => {
@@ -150,6 +150,7 @@ const SwipeArea = () => {
                     onProgress={onProgress}
                     onInit={onSwiperInit}
                     initialSlide={1}
+                    speed={400}
                     observer
                     grabCursor
                     centeredSlides
@@ -161,7 +162,7 @@ const SwipeArea = () => {
                     <SwiperSlide key="firstSlide"></SwiperSlide>
                     {room.movies.map((movie) => (
                         <SwiperSlide key={movie.id}>
-                            <SwipeImage movie={movie} />
+                            <SwipeItem movie={movie} />
                         </SwiperSlide>
                     ))}
                     <SwiperSlide key="lastSlide"></SwiperSlide>

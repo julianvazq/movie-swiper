@@ -14,6 +14,7 @@ import { Toaster } from 'react-hot-toast';
 import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import MovieDetail from './pages/selection/MovieDetail';
 import { useMoviePreview } from './context/MoviePreviewContext';
+import Results from './pages/results/Results';
 
 const App = () => {
     const { moviePreview } = useMoviePreview();
@@ -32,7 +33,7 @@ const App = () => {
                         <Route path="/expired" component={Expired} />
                         <ProtectedRoute path={['/selection/:id/:movieId', '/selection/:id']} component={Selection} />
                         <ProtectedRoute path={['/swiper/:id/:movieId', '/swiper/:id']} component={Swiper} />
-                        {/* <Route path="/results/:id" component={} /> */}
+                        <Route path={['/results/:id/:movieId', '/results/:id']} component={Results} />
                         <Route component={Home} />
                     </Switch>
                 </AnimateSharedLayout>

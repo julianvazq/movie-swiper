@@ -79,7 +79,6 @@ const reducer = (state: Room, action: Action): Room => {
             return { ...state, movies: state.movies.filter((movie) => movie.id !== action.payload.id) };
         case ActionType.SWIPE_MOVIE:
             const swipedMovie = state.movies.find((movie) => movie.id === action.payload.id) as AddedMovie;
-            console.log('swiped movie:', swipedMovie);
             const alreadySwiped = swipedMovie.swipes.find((swipe) => swipe.userId === action.payload.userId);
             const updatedSwipes = alreadySwiped
                 ? swipedMovie.swipes.map((swipe) =>
@@ -154,7 +153,6 @@ const RoomProvider = ({ children }: Props) => {
             dispatch({ type: ActionType.REMOVE_MOVIE, payload: { id: movieId } });
         });
         onMovieSwipe(({ movieId, userId, liked }) => {
-            console.log('swiped', liked);
             dispatch({ type: ActionType.SWIPE_MOVIE, payload: { id: movieId, userId, liked } });
         });
         onToggleReady(({ userId }) => {

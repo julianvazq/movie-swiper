@@ -4,6 +4,7 @@ import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
 import { checkRoom, joinRoom } from '../../../sockets/emitters';
 import { Title } from '../../../styles';
+import { Stage } from '../../../types/room';
 
 interface Props {
     component: React.ElementType;
@@ -56,6 +57,15 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
     }, [computedMatch.params.id, user]);
 
     useEffect(() => {
+        const swipedAll =
+            room.movies.length > 0 &&
+            room.movies.every((movie) => movie.swipes.find((swipe) => swipe.userId === user.id));
+        if (room.roomId && swipedAll) {
+            history.replace(`/${Stage.RESULTS}/${roomId}`);
+            console.log('hereee');
+            return;
+        }
+
         if (room.roomId && path !== room.stage) {
             history.replace(`/${room.stage}/${roomId}`);
         }

@@ -6,7 +6,6 @@ import { AddedMovie } from '../../../types/movies';
 import MovieList from '../../selection/MovieList';
 
 const Matches = () => {
-    const location = useLocation();
     const { room } = useRoom();
     const { user } = useUser();
 
@@ -22,7 +21,7 @@ const Matches = () => {
         return matches;
     }, []);
 
-    return <MovieList movies={matches} />;
+    return <MovieList movies={matches} allowActions={false} />;
 };
 
 export default Matches;

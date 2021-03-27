@@ -9,7 +9,7 @@ const MovieSelection = () => {
     return (
         <Tabs tabs={['Selection', `List (${room.movies.length})`]}>
             <MovieSearch />
-            <MovieList movies={room.movies} />
+            <MovieList movies={room.movies} allowActions />
         </Tabs>
     );
 };

@@ -1,18 +1,32 @@
 import React from 'react';
+import { useRoom } from '../../../context/RoomContext';
 import { AddedMovie } from '../../../types/movies';
 import { generateImageUrl } from '../../../utils';
-import { Card, Image } from './style';
+import LikeCountBar from '../LikeCountBar';
+import { Card, ResultsArea, Image, ResultsContainer, MovieTitle, Votes } from './style';
 
 interface Props {
     movie: AddedMovie;
 }
 
 const ResultCard = ({ movie }: Props) => {
-    const imageUrl = generateImageUrl(movie.poster_path, 'w500');
+    const { room } = useRoom();
+    const userLikes = movie.swipes.filter((swipe) => swipe.liked);
+    const fullUsers = userLikes.map((user) => {
+        return room.participants.find((p) => p.id === user.userId);
+    });
+    const colors = fullUsers.map((user) => user?.color) as string[];
+
     return (
         <Card>
-            {movie.title}
-            <Image src={imageUrl} alt={movie.title} />
+            <ResultsArea>
+                <Image src={generateImageUrl(movie.poster_path, 'w500')} />
+                <ResultsContainer>
+                    <Votes></Votes>
+                    <MovieTitle>{movie.title}</MovieTitle>
+                </ResultsContainer>
+            </ResultsArea>
+            <LikeCountBar colors={colors} />
         </Card>
     );
 };

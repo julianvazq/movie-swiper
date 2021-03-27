@@ -7,13 +7,7 @@ import { HiOutlinePlus, HiMinus } from 'react-icons/hi';
 export const Item = styled.article`
     display: flex;
     position: relative;
-    padding-bottom: 2rem;
     height: 250px;
-    border-bottom: 1px solid hsl(212deg 22% 43% / 38%);
-
-    &:last-of-type {
-        border: none;
-    }
 
     @media screen and (min-width: 800px) {
         height: 300px;
@@ -21,7 +15,7 @@ export const Item = styled.article`
 `;
 
 export const Image = styled(motion.img)`
-    width: 30%;
+    max-width: 30%;
     object-fit: cover;
     display: block;
     border-radius: 4px;

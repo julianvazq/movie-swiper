@@ -13,7 +13,7 @@ export const checkIfIncluded = (list: any[], object: { [key: string]: number | s
     return Boolean(list.find((element) => element[key] === object[key]));
 };
 
-export const generateImageUrl = (imageSrc: string | null, width: string): string => {
+export const generateImageUrl = (imageSrc: string | null, width: 'w342' | 'w500'): string => {
     if (!imageSrc) {
         return PosterUnavailable;
     }

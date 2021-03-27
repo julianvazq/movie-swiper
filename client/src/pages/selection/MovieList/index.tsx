@@ -5,9 +5,10 @@ import { List, Empty } from './styled';
 
 interface Props {
     movies: AddedMovie[];
+    allowActions: boolean;
 }
 
-const MovieList = ({ movies }: Props) => {
+const MovieList = ({ movies, allowActions }: Props) => {
     if (!movies.length) {
         return <Empty>Nothing to see here.</Empty>;
     }
@@ -15,7 +16,7 @@ const MovieList = ({ movies }: Props) => {
     return (
         <List>
             {movies.map((movie) => (
-                <MovieListItem key={movie.id} movie={movie} />
+                <MovieListItem key={movie.id} movie={movie} allowActions={allowActions} />
             ))}
         </List>
     );

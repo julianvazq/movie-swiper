@@ -33,7 +33,7 @@ const App = () => {
                         <Route path="/expired" component={Expired} />
                         <ProtectedRoute path={['/selection/:id/:movieId', '/selection/:id']} component={Selection} />
                         <ProtectedRoute path={['/swiper/:id/:movieId', '/swiper/:id']} component={Swiper} />
-                        <Route path={['/results/:id/:movieId', '/results/:id']} component={Results} />
+                        <ProtectedRoute path={['/results/:id/:movieId', '/results/:id']} component={Results} />
                         <Route component={Home} />
                     </Switch>
                 </AnimateSharedLayout>

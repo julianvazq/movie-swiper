@@ -5,7 +5,7 @@ import { toggleReady, startSwiper } from '../../../sockets/emitters';
 import { ToastType, useToast } from '../../../utils';
 import Modal from '../../shared/Modal';
 import FixedContainer from '../../shared/FixedContainer';
-import { EmptyCheckbox, FillCheckbox, MainButton, ReadyButton, PlayIcon, ModalContent } from './style';
+import { EmptyCheckbox, FillCheckbox, UserCheck, MainButton, ReadyButton, PlayIcon, ModalContent } from './style';
 
 const ActionButton = () => {
     const { room } = useRoom();
@@ -37,7 +37,7 @@ const ActionButton = () => {
         <>
             <FixedContainer position="fixed">
                 <ReadyButton onClick={checkReady}>
-                    <EmptyCheckbox /> {participantsReady.length}
+                    <UserCheck /> {participantsReady.length}
                 </ReadyButton>
                 {owner && owner.id === user.id ? (
                     <MainButton onClick={startSwiping}>

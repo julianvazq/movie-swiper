@@ -9,7 +9,7 @@ interface Props {
 
 const ResultList = ({ movies }: Props) => {
     if (!movies.length) {
-        return <Empty>Wow, no matches!</Empty>;
+        return <Empty>No matches yet.</Empty>;
     }
 
     return (

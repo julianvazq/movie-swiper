@@ -59,7 +59,7 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
     useEffect(() => {
         const swipedAll =
             room.movies.length > 0 &&
-            room.movies.every((movie) => movie.swipes.find((swipe) => swipe.userId === user.id));
+            room.movies.every((movie) => movie.swipes.find((swipe) => swipe.user.id === user.id));
         if (room.roomId && swipedAll) {
             history.replace(`/${Stage.RESULTS}/${roomId}`);
             console.log('hereee');

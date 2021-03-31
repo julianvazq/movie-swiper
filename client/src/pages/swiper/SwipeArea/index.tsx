@@ -107,13 +107,13 @@ const SwipeArea = () => {
 
     const onSwiperInit = (swiper: SwiperCore) => {
         const actualProgress = 1 / room.movies.length;
-        document.documentElement.style.setProperty('--progress-bar', actualProgress.toString());
+        document.documentElement.style.setProperty('--swipe-progress', actualProgress.toString());
         setSwiper(swiper);
     };
 
     const onProgress = (swiper: SwiperCore) => {
         const actualProgress = (1 / room.movies.length) * swiper.activeIndex;
-        document.documentElement.style.setProperty('--progress-bar', actualProgress.toString());
+        document.documentElement.style.setProperty('--swipe-progress', actualProgress.toString());
     };
 
     const handleSwipeEmit = ({ index, liked }: { index: number; liked: boolean }) => {
@@ -124,7 +124,7 @@ const SwipeArea = () => {
 
         console.log(movie.title, liked);
         movies.current = movies.current.map((m) => (m.id === movie.id ? { ...m, swiped: true } : m));
-        swipeMovie({ roomId: room.roomId as string, userId: user.id, movieId: movie.id, liked });
+        swipeMovie({ roomId: room.roomId as string, movieId: movie.id, liked, user });
     };
 
     const onSlideNextTransitionEnd = (swiper: SwiperCore) => {

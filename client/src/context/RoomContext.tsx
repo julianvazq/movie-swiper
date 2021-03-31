@@ -20,7 +20,6 @@ import { ToastType, useToast } from '../utils';
 import { FontWeight600 } from '../styles';
 import { useUser } from './UserContext';
 import { AddedMovie } from '../types/movies';
-import { swipeMovie } from '../sockets/emitters';
 
 type Props = {
     children: ReactNode;
@@ -79,14 +78,12 @@ const reducer = (state: Room, action: Action): Room => {
             return { ...state, movies: state.movies.filter((movie) => movie.id !== action.payload.id) };
         case ActionType.SWIPE_MOVIE:
             const swipedMovie = state.movies.find((movie) => movie.id === action.payload.id) as AddedMovie;
-            const alreadySwiped = swipedMovie.swipes.find((swipe) => swipe.userId === action.payload.userId);
+            const alreadySwiped = swipedMovie.swipes.find((swipe) => swipe.user.id === action.payload.user.id);
             const updatedSwipes = alreadySwiped
                 ? swipedMovie.swipes.map((swipe) =>
-                      swipe.userId === action.payload.userId
-                          ? { userId: action.payload.userId, liked: action.payload.liked }
-                          : swipe,
+                      swipe.user.id === action.payload.user.id ? { ...swipe, liked: action.payload.liked } : swipe,
                   )
-                : [...swipedMovie.swipes, { userId: action.payload.userId, liked: action.payload.liked }];
+                : [...swipedMovie.swipes, { user: action.payload.user, liked: action.payload.liked }];
             const updatedMovie: AddedMovie = { ...swipedMovie, swipes: updatedSwipes };
             return {
                 ...state,
@@ -152,8 +149,8 @@ const RoomProvider = ({ children }: Props) => {
         onMovieRemove(({ movieId }) => {
             dispatch({ type: ActionType.REMOVE_MOVIE, payload: { id: movieId } });
         });
-        onMovieSwipe(({ movieId, userId, liked }) => {
-            dispatch({ type: ActionType.SWIPE_MOVIE, payload: { id: movieId, userId, liked } });
+        onMovieSwipe(({ movieId, liked, user }) => {
+            dispatch({ type: ActionType.SWIPE_MOVIE, payload: { id: movieId, liked, user } });
         });
         onToggleReady(({ userId }) => {
             /* Bug: toast displays for person that clicked 'Ready' */

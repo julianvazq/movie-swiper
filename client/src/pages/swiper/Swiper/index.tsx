@@ -11,8 +11,8 @@ const Swiper = () => {
     const { user } = useUser();
     const numMatches = room.movies.reduce((num, movie) => {
         const matched =
-            movie.swipes.find((swipe) => swipe.userId === user.id && swipe.liked) &&
-            movie.swipes.find((swipe) => swipe.liked && swipe.userId !== user.id);
+            movie.swipes.find((swipe) => swipe.user.id === user.id && swipe.liked) &&
+            movie.swipes.find((swipe) => swipe.liked && swipe.user.id !== user.id);
         if (matched) {
             return num + 1;
         }

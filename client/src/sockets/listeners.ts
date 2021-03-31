@@ -39,7 +39,7 @@ export const onMovieRemove = (callback: (data: { movieId: number }) => void) => 
     return socket.on('movie:remove', callback);
 };
 
-export const onMovieSwipe = (callback: (data: { movieId: number; userId: string; liked: boolean }) => void) => {
+export const onMovieSwipe = (callback: (data: { movieId: number; liked: boolean; user: Participant }) => void) => {
     return socket.on('movie:swipe', callback);
 };
 

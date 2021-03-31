@@ -1,5 +1,5 @@
 import { Server, Socket } from 'socket.io';
-import { SocketCallback } from '../types';
+import { Participant, SocketCallback } from '../types';
 import { AddedMovie } from '../types/movies';
 
 module.exports = (io: Server) => {
@@ -53,38 +53,22 @@ module.exports = (io: Server) => {
         }
     };
 
-    const swipeMovie = function (
-        data: {
-            roomId: string;
-            movieId: number;
-            userId: string;
-            liked: boolean;
-        },
-        callback: SocketCallback
-    ) {
+    const swipeMovie = function (data: {
+        roomId: string;
+        movieId: number;
+        liked: boolean;
+        user: Participant;
+    }) {
         try {
             const socket: Socket = this;
-            console.log('swiped', data.liked);
+            console.log('swiped', data.liked, data.user.name);
             io.in(data.roomId).emit('movie:swipe', {
                 movieId: data.movieId,
-                userId: data.userId,
                 liked: data.liked,
+                user: data.user,
             });
-
-            // callback({
-            //     success: true,
-            //     data: {
-            //         movieId: data.movieId,
-            //         userId: data.userId,
-            //         liked: data.liked,
-            //     },
-            // });
         } catch (error) {
             console.log(error);
-            // callback({
-            //     success: false,
-            //     message: `Failed to add movie: ${data.movieId}`,
-            // });
         }
     };
 

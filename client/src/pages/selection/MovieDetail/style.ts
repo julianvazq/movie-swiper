@@ -177,6 +177,7 @@ export const BackButton = styled(Button)``;
 
 export const AddButton = styled(Button)<{ backgroundColor: string }>`
     background: ${(props) => props.backgroundColor || 'var(--blue-action)'};
+    border-top-left-radius: 0;
 `;
 
 const iconStyles = css`

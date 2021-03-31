@@ -2,6 +2,7 @@ import { Button } from '../../../styles/index';
 import styled, { css } from 'styled-components';
 import { RiCheckboxCircleFill, RiCheckboxCircleLine, RiMovieFill } from 'react-icons/ri';
 import { SiTinder } from 'react-icons/si';
+import { FaUserCheck } from 'react-icons/fa';
 
 export const FixedContainer = styled.div`
     position: fixed;
@@ -34,7 +35,7 @@ export const MainButton = styled(Button)`
 
 export const ReadyButton = styled(Button)`
     flex: 30%;
-    background: var(--dark-blue-bg);
+    background: var(--blue-dark-bg);
     outline: none;
     border-radius: 0;
 `;
@@ -42,6 +43,10 @@ export const ReadyButton = styled(Button)`
 const iconStyles = css`
     font-size: 1.5rem;
     margin-right: 1rem;
+`;
+
+export const UserCheck = styled(FaUserCheck)`
+    ${iconStyles}
 `;
 
 export const FillCheckbox = styled(RiCheckboxCircleFill)`
@@ -56,6 +61,7 @@ export const TinderIcon = styled(SiTinder)`
 `;
 export const PlayIcon = styled(RiMovieFill)`
     ${iconStyles}
+    color: var(--accent-light);
 `;
 
 export const ModalContent = styled.div`

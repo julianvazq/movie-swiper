@@ -46,7 +46,7 @@ export const removeMovie = (
 };
 
 export const swipeMovie = (
-    data: { roomId: string; movieId: number; userId: string; liked: boolean },
+    data: { roomId: string; movieId: number; liked: boolean; user: Participant },
     callback?: (res: SocketResponse<{ movieId: string }>) => void,
 ) => {
     socket.emit('movie:swipe', data, callback);

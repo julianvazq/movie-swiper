@@ -45,7 +45,7 @@ export interface RemoveMovieAction {
 
 export interface SwipeMovieAction {
     type: ActionType.SWIPE_MOVIE;
-    payload: { id: number; userId: string; liked: boolean };
+    payload: { id: number; liked: boolean; user: Participant };
 }
 
 export interface ToggleReadyAction {

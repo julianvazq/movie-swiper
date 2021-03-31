@@ -2,12 +2,19 @@
     --white: #fff;
     --white-muted: #eae9e9;
     --blue-active: hsl(211deg 28% 25%);
-    --dark-blue-bg: hsl(210deg 38% 15%);
+    --blue-active-90: hsl(211deg 28% 25% / 90%);
+    --blue-dark-bg: hsl(210deg 38% 15%);
     --blue-action: hsl(213deg 40% 49%);
+    --blue-action-90: hsl(213deg 40% 49% / 90%);
     --blue-muted: hsl(213deg 23% 25%);
-    --accent: hsl(293deg 50% 30%);
-    --red: #6e3030;
-    --progress-bar: 0;
+    --blue-dark: hsl(211deg 43% 10%);
+    /* --accent: hsl(293deg 50% 30%); */
+    --accent: hsl(340deg 75% 23% / 50%);
+    --accent-light: hsl(340deg 53% 42%);
+    --accent-active: hsl(340deg 71% 39% / 50%);
+    --accent-dark: hsl(340deg 79% 25%);
+    --accent-dark-90: hsl(340deg 79% 25% / 90%);
+    --swipe-progress: 0;
 }
 
 *,
@@ -19,7 +26,7 @@
 }
 
 body {
-    background: var(--dark-blue-bg);
+    background: var(--blue-dark-bg);
     color: var(--white);
 }
 
@@ -79,5 +86,5 @@ button::-moz-focus-inner {
 .swiper-pagination-progressbar-fill {
     background: var(--blue-action) !important;
     border-radius: 99px;
-    transform: translate3d(0px, 0px, 0px) scaleY(1) scaleX(var(--progress-bar)) !important;
+    transform: translate3d(0px, 0px, 0px) scaleY(1) scaleX(var(--swipe-progress)) !important;
 }

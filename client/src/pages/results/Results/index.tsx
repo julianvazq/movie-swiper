@@ -16,8 +16,8 @@ const Results = () => {
 
     return (
         <Container>
-            <Title>Results</Title>
-            <Subtitle>View your results.</Subtitle>
+            <Title>Final Results</Title>
+            <Subtitle>Only movies that 2 or more participants liked will show up here.</Subtitle>
             <ResultList movies={filteredMovies} />
         </Container>
     );

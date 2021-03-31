@@ -66,9 +66,9 @@ const useMovieManager = (movie: Movie) => {
         if (!movieInList) {
             return 'hsl(213deg 40% 49%)';
         } else if (movieInList && !addedByMe) {
-            return '#5a5f65';
+            return 'hsl(213deg 6% 37% / 90%)';
         } else {
-            return 'var(--red)';
+            return 'var(--accent-dark-90)';
         }
     };
 

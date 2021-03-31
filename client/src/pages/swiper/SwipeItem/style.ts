@@ -32,7 +32,7 @@ export const Title = styled(motion.h3)`
     line-height: 1.3;
     width: 100%;
     text-transform: none;
-    background: hsl(211deg 43% 10%);
+    background: var(--blue-dark);
 `;
 
 export const PreviewButton = styled(Button)`

@@ -11,8 +11,8 @@ const Matches = () => {
 
     const matches = room.movies.reduce((matches: AddedMovie[], movie: AddedMovie) => {
         const matched =
-            movie.swipes.find((swipe) => swipe.userId === user.id && swipe.liked) &&
-            movie.swipes.find((swipe) => swipe.liked && swipe.userId !== user.id);
+            movie.swipes.find((swipe) => swipe.user.id === user.id && swipe.liked) &&
+            movie.swipes.find((swipe) => swipe.liked && swipe.user.id !== user.id);
 
         if (matched) {
             matches.push(movie);

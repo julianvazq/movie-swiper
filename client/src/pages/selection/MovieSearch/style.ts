@@ -21,12 +21,12 @@ export const StyledSelect = styled(Select)`
 `;
 
 export const colorStyles = {
-    control: (styles: any) => ({ ...styles, backgroundColor: 'white', color: 'var(--dark-blue-bg)' }),
+    control: (styles: any) => ({ ...styles, backgroundColor: 'white', color: 'var(--blue-dark-bg)' }),
     option: (styles: { [x: string]: any }, { data, isDisabled, isFocused, isSelected }: any) => {
         return {
             ...styles,
             backgroundColor: 'white',
-            color: 'var(--dark-blue-bg)',
+            color: 'var(--blue-dark-bg)',
             cursor: isDisabled ? 'not-allowed' : 'default',
         };
     },
@@ -39,7 +39,7 @@ export const colorStyles = {
     multiValueLabel: (styles: any, { data }: any) => ({
         ...styles,
         color: 'white',
-        backgroundColor: 'var(--dark-blue-bg)',
+        backgroundColor: 'var(--blue-dark-bg)',
         padding: '4px 8px',
         borderRadius: '4px',
     }),
@@ -48,7 +48,7 @@ export const colorStyles = {
         color: data.color,
         ':hover': {
             backgroundColor: 'white',
-            color: 'var(--dark-blue-bg)',
+            color: 'var(--blue-dark-bg)',
         },
     }),
 };

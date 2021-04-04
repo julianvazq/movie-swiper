@@ -1,31 +1,58 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+import { useMoviePreview } from '../../../context/MoviePreviewContext';
 import { AddedMovie } from '../../../types/movies';
 import { generateImageUrl } from '../../../utils';
 import LikeCountBar from '../LikeCountBar';
 import LikeList from '../LikeList';
-import { Card, ResultsArea, Image, ResultsContainer, MovieTitle, TotalLikes, DetailButton } from './style';
+import {
+    Card,
+    ResultsArea,
+    Image,
+    ResultsContainer,
+    MovieTitle,
+    TotalLikes,
+    DetailButton,
+    ImageContainer,
+    ExpandIcon,
+} from './style';
 
 interface Props {
     movie: AddedMovie;
 }
 
 const ResultCard = ({ movie }: Props) => {
+    const { setMoviePreview } = useMoviePreview();
+    const { pathname } = useLocation();
     const usersWhoLiked = movie.swipes.filter((swipe) => swipe.liked).map((swipe) => swipe.user);
     const colors = usersWhoLiked.map((user) => user?.color) as string[];
 
+    const onMovieClick = () => {
+        if (pathname.includes(movie.id.toString())) {
+            setMoviePreview(null);
+        } else {
+            setMoviePreview(movie);
+        }
+    };
+
     return (
         <Card>
-            <MovieTitle>{movie.title}</MovieTitle>
             <ResultsArea>
-                <Image src={generateImageUrl(movie.poster_path, 'w500')} />
-                <ResultsContainer>
+                <ImageContainer layoutId={`image-${movie.id}`}>
                     <TotalLikes>
                         {usersWhoLiked.length} <span>likes</span>
                     </TotalLikes>
+                    <Image src={generateImageUrl(movie.poster_path, 'w500')} />
+                </ImageContainer>
+                <ResultsContainer>
+                    <MovieTitle>{movie.title}</MovieTitle>
                     <LikeList users={usersWhoLiked} />
                 </ResultsContainer>
             </ResultsArea>
-            <DetailButton>Movie Details</DetailButton>
+            <DetailButton onClick={onMovieClick}>
+                <ExpandIcon />
+                Movie Details
+            </DetailButton>
             {/* <LikeCountBar colors={colors} /> */}
         </Card>
     );

@@ -16,7 +16,14 @@ const JoinForm = () => {
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newUser = { ...user, name, color: randomColor() };
+        const newUser = {
+            ...user,
+            name,
+            color: randomColor({
+                luminosity: 'light',
+                hue: 'blue',
+            }),
+        };
         setUser(newUser);
         history.push(`/selection/${roomId}`);
     };

@@ -23,7 +23,7 @@ const MoviePreviewProvider = ({ children }: Props) => {
     const [moviePreview, setMoviePreview] = useState<Movie | null>(null);
 
     return (
-        <MoviePreviewContext.Provider value={{ moviePreview: moviePreview, setMoviePreview: setMoviePreview }}>
+        <MoviePreviewContext.Provider value={{ moviePreview, setMoviePreview }}>
             {children}
         </MoviePreviewContext.Provider>
     );

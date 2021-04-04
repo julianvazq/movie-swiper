@@ -1,6 +1,7 @@
 :root {
     --white: #fff;
     --white-muted: #eae9e9;
+    --gray: #e3e3e3;
     --blue-active: hsl(211deg 28% 25%);
     --blue-active-90: hsl(211deg 28% 25% / 90%);
     --blue-dark-bg: hsl(210deg 38% 15%);

@@ -25,7 +25,7 @@ interface Props {
 }
 
 const MovieListItem = ({ movie, allowActions }: Props) => {
-    const { setMoviePreview: setMovieDetail } = useMoviePreview();
+    const { setMoviePreview } = useMoviePreview();
     const history = useHistory();
     const { movieInList, movieActionHandler, buttonBackgroundColor } = useMovieManager(movie);
     const genres = movie.genre_ids.map((genreId) => genreObjects.find((g) => g.id === genreId));
@@ -33,9 +33,9 @@ const MovieListItem = ({ movie, allowActions }: Props) => {
     const onMovieClick = () => {
         const { pathname } = history.location;
         if (pathname.includes(movie.id.toString())) {
-            setMovieDetail(null);
+            setMoviePreview(null);
         } else {
-            setMovieDetail(movie);
+            setMoviePreview(movie);
         }
     };
 

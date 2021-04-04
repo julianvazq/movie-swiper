@@ -62,7 +62,6 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
             room.movies.every((movie) => movie.swipes.find((swipe) => swipe.user.id === user.id));
         if (room.roomId && swipedAll) {
             history.replace(`/${Stage.RESULTS}/${roomId}`);
-            console.log('hereee');
             return;
         }
 

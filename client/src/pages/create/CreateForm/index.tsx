@@ -5,7 +5,6 @@ import { Button } from '../../../styles';
 import { StyledForm } from './style';
 import randomColor from 'randomcolor';
 import { ActionType } from '../../../types/actions';
-import { socket } from '../../../sockets';
 import { useHistory } from 'react-router-dom';
 import { createRoom } from '../../../sockets/emitters';
 
@@ -18,7 +17,15 @@ const CreateForm = () => {
 
     const initializeRoomAndUser = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newUser = { ...user, name, owner: true, color: randomColor() };
+        const newUser = {
+            ...user,
+            name,
+            owner: true,
+            color: randomColor({
+                luminosity: 'light',
+                hue: 'blue',
+            }),
+        };
         setUser(newUser);
         createRoom((res) => {
             if (!res.success) {

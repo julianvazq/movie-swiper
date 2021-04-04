@@ -18,7 +18,7 @@ const LikeList = ({ users }: Props) => {
                     {users.slice(0, maxNumber).map((user) => (
                         <Item key={user.id}>
                             <Color color={user.color} />
-                            <Name wrap={false}>{user.name}</Name>
+                            <Name wrap={0}>{user.name}</Name>
                         </Item>
                     ))}
                     <Item>
@@ -36,7 +36,7 @@ const LikeList = ({ users }: Props) => {
                             {users.map((user) => (
                                 <Item key={user.id}>
                                     <Color color={user.color} />
-                                    <Name wrap>{user.name}</Name>
+                                    <Name wrap={1}>{user.name}</Name>
                                 </Item>
                             ))}
                         </List>
@@ -51,7 +51,7 @@ const LikeList = ({ users }: Props) => {
             {users.map((user) => (
                 <Item key={user.id}>
                     <Color color={user.color} />
-                    <Name wrap={false}>{user.name}</Name>
+                    <Name wrap={0}>{user.name}</Name>
                 </Item>
             ))}
         </List>

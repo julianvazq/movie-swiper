@@ -119,7 +119,7 @@ export const Divider = styled.p`
     letter-spacing: 1px;
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
-    color: #e3e3e3;
+    color: var(--gray);
     border-bottom: 1px solid;
     font-size: 0.875rem;
 `;

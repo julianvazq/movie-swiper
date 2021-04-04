@@ -1,49 +1,65 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { Button } from '../../../styles';
+import { RiInformationLine } from 'react-icons/ri';
 
 export const Card = styled.article`
-    /* max-height: 300px; */
     border-right: 1px solid var(--blue-dark);
     background: var(--blue-dark);
 `;
 
 export const ResultsArea = styled.div`
     display: flex;
+    position: relative;
 `;
 
-export const TotalLikes = styled.p`
-    font-weight: 700;
-    font-size: 2.25rem;
-    text-align: center;
-    padding: 0.5rem 1rem;
-    background: hsl(213deg 45% 36% / 90%);
-
-    span {
-        font-size: 1.25rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-`;
-
-export const MovieTitle = styled.h3`
-    font-weight: 400;
-    padding: 1rem;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    text-align: center;
+export const ImageContainer = styled(motion.div)`
+    position: relative;
 `;
 
 export const Image = styled(motion.img)`
-    height: 280px;
+    height: 230px;
     object-fit: cover;
     display: block;
     border-radius: 4px;
 `;
 
+export const TotalLikes = styled.p`
+    font-weight: 600;
+    font-size: 1.25rem;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    background: var(--blue-action);
+    position: absolute;
+    top: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: baseline;
+    border-radius: 4px;
+
+    span {
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-left: 0.5rem;
+    }
+`;
+
+export const MovieTitle = styled.h3`
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom: 1px solid var(--gray);
+    padding-bottom: 0.5rem;
+`;
+
 export const ResultsContainer = styled.div`
     width: 100%;
     background: var(--blue-dark);
+    padding: 1rem;
 `;
 
 export const DetailButton = styled(Button)`
@@ -52,4 +68,9 @@ export const DetailButton = styled(Button)`
     padding: 1rem;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+`;
+
+export const ExpandIcon = styled(RiInformationLine)`
+    font-size: 1rem;
+    margin-right: 0.5rem;
 `;

@@ -3,16 +3,17 @@ import styled, { css } from 'styled-components';
 export const List = styled.ul`
     list-style: none;
     margin-top: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0;
 
     & > * + * {
-        margin-top: 0.25rem;
+        margin-top: 0.5rem;
     }
 `;
 
 export const Item = styled.li`
     display: flex;
     align-items: center;
+    color: var(--white-muted);
 `;
 
 export const Color = styled.div<{ color: string }>`
@@ -24,15 +25,11 @@ export const Color = styled.div<{ color: string }>`
     flex-shrink: 0;
 `;
 
-const wrapStyles = css`
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 110px;
-`;
-
-export const Name = styled.p<{ wrap: boolean }>`
-    ${(props) => (props.wrap ? wrapStyles : '')};
+export const Name = styled.p<{ wrap: number }>`
+    white-space: ${(props) => props.wrap === 0 && 'nowrap'};
+    overflow: ${(props) => props.wrap === 0 && 'hidden'};
+    text-overflow: ${(props) => props.wrap === 0 && 'ellipsis'};
+    max-width: ${(props) => props.wrap === 0 && '110px'}; ;
 `;
 
 export const MoreItems = styled.p`

@@ -26,6 +26,8 @@ export const MainButton = styled(Button)`
     background: var(--blue-muted);
     outline: none;
     border-radius: 0;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 
     @media screen and (min-width: 600px) {
         padding: 1rem 2rem;
@@ -38,6 +40,8 @@ export const ReadyButton = styled(Button)`
     background: var(--blue-dark-bg);
     outline: none;
     border-radius: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
 `;
 
 const iconStyles = css`
@@ -61,7 +65,11 @@ export const TinderIcon = styled(SiTinder)`
 `;
 export const PlayIcon = styled(RiMovieFill)`
     ${iconStyles}
-    color: var(--accent-light);
+    color: hsl(213deg 19% 50%);
+`;
+
+export const NoParticipants = styled.p`
+    margin-bottom: 1rem;
 `;
 
 export const ModalContent = styled.div`

@@ -5,7 +5,16 @@ import { toggleReady, startSwiper } from '../../../sockets/emitters';
 import { ToastType, useToast } from '../../../utils';
 import Modal from '../../shared/Modal';
 import FixedContainer from '../../shared/FixedContainer';
-import { EmptyCheckbox, FillCheckbox, UserCheck, MainButton, ReadyButton, PlayIcon, ModalContent } from './style';
+import {
+    EmptyCheckbox,
+    FillCheckbox,
+    UserCheck,
+    MainButton,
+    ReadyButton,
+    PlayIcon,
+    ModalContent,
+    NoParticipants,
+} from './style';
 
 const ActionButton = () => {
     const { room } = useRoom();
@@ -54,29 +63,33 @@ const ActionButton = () => {
             <Modal visible={visible} onClose={() => setVisible(false)} height={300}>
                 <ModalContent>
                     <h2>Participants</h2>
-                    <ul>
-                        {participantsExceptOwner.map((p) => {
-                            if (p.ready) {
+                    {participantsExceptOwner.length > 0 ? (
+                        <ul>
+                            {participantsExceptOwner.map((p) => {
+                                if (p.ready) {
+                                    return (
+                                        <li key={p.id}>
+                                            <div>
+                                                <FillCheckbox />
+                                                {p.name}
+                                            </div>
+                                            <p>Ready</p>
+                                        </li>
+                                    );
+                                }
+
                                 return (
                                     <li key={p.id}>
                                         <div>
-                                            <FillCheckbox />
-                                            {p.name}
+                                            <EmptyCheckbox /> {p.name}
                                         </div>
-                                        <p>Ready</p>
                                     </li>
                                 );
-                            }
-
-                            return (
-                                <li key={p.id}>
-                                    <div>
-                                        <EmptyCheckbox /> {p.name}
-                                    </div>
-                                </li>
-                            );
-                        })}
-                    </ul>
+                            })}
+                        </ul>
+                    ) : (
+                        <NoParticipants>No participants in the room.</NoParticipants>
+                    )}
                     {owner && (
                         <>
                             <h2>Owner</h2>

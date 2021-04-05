@@ -36,6 +36,10 @@ a {
     text-decoration: none;
 }
 
+input {
+    border: 0;
+}
+
 button {
     border: none;
     margin: 0;

@@ -21,6 +21,8 @@ export const Tab = styled.button<{ selected: boolean }>`
     background: ${(props) => props.selected && 'var(--blue-active)'};
     color: var(--white);
     padding: 1rem;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 `;
 
 export const TabContent = styled.section<{ show: boolean }>`

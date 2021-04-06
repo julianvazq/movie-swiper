@@ -2,7 +2,7 @@ import { Button } from '../../../styles/index';
 import styled, { css } from 'styled-components';
 import { RiCheckboxCircleFill, RiCheckboxCircleLine, RiMovieFill } from 'react-icons/ri';
 import { SiTinder } from 'react-icons/si';
-import { FaUserCheck } from 'react-icons/fa';
+import { FaUserCheck, FaCrown, FaUsers } from 'react-icons/fa';
 
 export const FixedContainer = styled.div`
     position: fixed;
@@ -19,29 +19,6 @@ export const FixedContainer = styled.div`
         width: fit-content;
         bottom: 1rem;
     }
-`;
-
-export const MainButton = styled(Button)`
-    flex: 70%;
-    background: var(--blue-muted);
-    outline: none;
-    border-radius: 0;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-
-    @media screen and (min-width: 600px) {
-        padding: 1rem 2rem;
-        white-space: nowrap;
-    }
-`;
-
-export const ReadyButton = styled(Button)`
-    flex: 30%;
-    background: var(--blue-dark-bg);
-    outline: none;
-    border-radius: 0;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
 `;
 
 const iconStyles = css`
@@ -65,18 +42,69 @@ export const TinderIcon = styled(SiTinder)`
 `;
 export const PlayIcon = styled(RiMovieFill)`
     ${iconStyles}
-    color: hsl(213deg 19% 50%);
+`;
+
+export const CrownIcon = styled(FaCrown)`
+    ${iconStyles}
+`;
+
+export const UsersIcon = styled(FaUsers)`
+    font-size: 1.75rem;
+    color: var(--white-muted);
+    margin-right: 0.75rem;
+`;
+
+export const MainButton = styled(Button)<{ disable?: boolean }>`
+    background: ${(props) => (props.disable ? '#565656' : 'var(--accent-dark)')};
+    color: ${(props) => (props.disable ? '#a9a9a9' : 'var(--white)')};
+    transition: all ease-in 250ms;
+    flex: 70%;
+    outline: none;
+    border-radius: 0;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+
+    & ${PlayIcon} {
+        transition: all ease-in 250ms;
+        color: ${(props) => props.disable && '#a9a9a9'};
+    }
+
+    @media screen and (min-width: 600px) {
+        padding: 1rem 2rem;
+        white-space: nowrap;
+    }
+`;
+
+export const ToggleReadyButton = styled(MainButton)`
+    background: var(--blue-active);
+`;
+
+export const ReadyButton = styled(Button)`
+    flex: 30%;
+    background: var(--blue-dark-bg);
+    outline: none;
+    border-radius: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+
+    span {
+        width: 20px;
+    }
 `;
 
 export const NoParticipants = styled.p`
     margin-bottom: 1rem;
+    color: var(--white-muted);
 `;
 
 export const ModalContent = styled.div`
     padding: 0 1rem;
     h2 {
-        font-weight: 500;
+        font-size: 1.5rem;
+        font-weight: 600;
         margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
     }
 
     ul {
@@ -91,7 +119,7 @@ export const ModalContent = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 1.25rem;
+        font-size: 1.125rem;
 
         div {
             display: flex;

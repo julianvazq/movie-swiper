@@ -18,20 +18,23 @@ const Results = () => {
 
     const getInfoBoxProps = () => {
         const participantIds = room.participants.map((p) => p.id);
-        const allSwiped = room.movies.every((movie) => {
-            return (
-                movie.swipes.length >= participantIds.length &&
-                movie.swipes.every((swipe) => participantIds.includes(swipe.user.id))
-            );
-        });
+        const allSwiped = room.movies.reduce((allSwiped, movie) => {
+            const swipeIds = movie.swipes.map((swipe) => swipe.user.id);
+            allSwiped =
+                movie.swipes.length >= participantIds.length && participantIds.every((id) => swipeIds.includes(id));
+            return allSwiped;
+        }, true);
 
         if (!allSwiped) {
-            return { text: 'Others are still swiping. Results may change.', backgroundColor: 'var(--accent-active)' };
+            return {
+                text: 'Others are still swiping. Results may change.',
+                backgroundColor: 'hsla(0, 0%, 49.4%, 0.5)',
+            };
         }
 
         return {
-            text: "Everyone's done swiping. Below are the final results.",
-            backgroundColor: 'hsl(127deg 48% 21%)',
+            text: "Everyone's done swiping. See the final results below.",
+            backgroundColor: 'hsl(127deg 26% 36%)',
         };
     };
     const { text, backgroundColor } = getInfoBoxProps();

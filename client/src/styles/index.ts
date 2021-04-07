@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const MaxWidthContainer = styled.section`
+    max-width: 1100px;
+    margin: 0 auto;
+`;
+
 export const Title = styled.h1`
     font-size: 2rem;
     margin: 0 0 1rem;

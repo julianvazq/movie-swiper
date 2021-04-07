@@ -1,16 +1,12 @@
 import React from 'react';
-import { Background, Container } from './style';
+import { Background } from './style';
 
 type Props = {
     children: React.ReactNode | React.ReactNode[];
 };
 
 const AppContainer = ({ children }: Props) => {
-    return (
-        <Background>
-            <Container>{children}</Container>
-        </Background>
-    );
+    return <Background>{children}</Background>;
 };
 
 export default AppContainer;

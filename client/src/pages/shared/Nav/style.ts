@@ -1,14 +1,21 @@
 import styled from 'styled-components';
 
 export const Container = styled.section`
+    background: #141d26;
+    padding: 1.5rem;
+`;
+
+export const InnerContainer = styled.div`
+    max-width: 1100px;
+    margin: auto;
     display: flex;
     justify-content: space-between;
-    background: #141d26;
-    padding: 1rem;
 `;
 
 export const Logo = styled.div`
     color: var(--white);
+    font-size: 1.25rem;
+    font-family: 'Merienda One', cursive;
 `;
 
 export const NavContainer = styled.nav``;

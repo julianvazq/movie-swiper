@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, MainTitle } from './style';
+import { Container, MainTitle, Cursive, BR, GetStartedButton } from './style';
 
 const Home = () => {
     const history = useHistory();
@@ -9,8 +9,13 @@ const Home = () => {
     };
     return (
         <Container>
-            <MainTitle>Landing Page</MainTitle>
-            <button onClick={navigate}>Get Started</button>
+            <MainTitle>
+                <span>
+                    Find out <BR /> what you are
+                </span>{' '}
+                <Cursive>watching tonight</Cursive>
+            </MainTitle>
+            <GetStartedButton onClick={navigate}>Get Started</GetStartedButton>
         </Container>
     );
 };

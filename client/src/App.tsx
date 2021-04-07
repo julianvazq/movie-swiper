@@ -15,17 +15,18 @@ import { AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import MovieDetail from './pages/selection/MovieDetail';
 import { useMoviePreview } from './context/MoviePreviewContext';
 import Results from './pages/results/Results';
+import Footer from './pages/shared/Footer';
 
 const App = () => {
     const { moviePreview } = useMoviePreview();
 
     return (
         <Router>
-            <AppContainer>
-                <AnimateSharedLayout type="crossfade">
-                    <AnimatePresence>{moviePreview && <MovieDetail movie={moviePreview} />}</AnimatePresence>
-                    <Toaster />
-                    <Nav />
+            <AnimateSharedLayout type="crossfade">
+                <AnimatePresence>{moviePreview && <MovieDetail movie={moviePreview} />}</AnimatePresence>
+                <Toaster />
+                <Nav />
+                <AppContainer>
                     <Switch>
                         <Route path="/" exact component={Home} />
                         <Route path="/create" component={Create} />
@@ -36,8 +37,9 @@ const App = () => {
                         <ProtectedRoute path={['/results/:id/:movieId', '/results/:id']} component={Results} />
                         <Route component={Home} />
                     </Switch>
-                </AnimateSharedLayout>
-            </AppContainer>
+                </AppContainer>
+                <Footer />
+            </AnimateSharedLayout>
         </Router>
     );
 };

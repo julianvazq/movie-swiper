@@ -13,11 +13,11 @@ export const Tab = styled.button<{ selected: boolean }>`
     background: none;
     border: none;
     cursor: pointer;
-    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-size: 1rem;
-    border-bottom: ${(props) => (props.selected ? '2px solid var(--white)' : '1px solid var(--white)')};
+    font-size: 0.875rem;
+    font-weight: ${(props) => (props.selected ? 500 : 400)};
+    border-bottom: ${(props) => !props.selected && '2px solid var(--blue-active)'};
     background: ${(props) => props.selected && 'var(--blue-active)'};
     color: var(--white);
     padding: 1rem;

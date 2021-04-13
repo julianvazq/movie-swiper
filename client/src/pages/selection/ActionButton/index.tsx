@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
-import { toggleReady, startSwiper } from '../../../sockets/emitters';
+import { startSwiper, toggleReady } from '../../../sockets/emitters';
 import { ToastType, useToast } from '../../../utils';
-import Modal from '../../shared/Modal';
 import FixedContainer from '../../shared/FixedContainer';
+import Modal from '../../shared/Modal';
 import {
+    CrownIcon,
     EmptyCheckbox,
     FillCheckbox,
-    UserCheck,
     MainButton,
-    ToggleReadyButton,
-    ReadyButton,
-    PlayIcon,
-    CrownIcon,
-    UsersIcon,
     ModalContent,
+    PlayIcon,
+    ReadyButton,
+    ToggleReadyButton,
+    UserCheck,
+    UserIcon,
 } from './style';
 
 const ActionButton = () => {
@@ -67,11 +67,9 @@ const ActionButton = () => {
                     </ToggleReadyButton>
                 )}
             </FixedContainer>
-            <Modal visible={visible} onClose={() => setVisible(false)} height={300}>
+            <Modal visible={visible} onClose={() => setVisible(false)} height={300} maxWidth={400}>
                 <ModalContent>
-                    <h2>
-                        <UsersIcon /> Participants
-                    </h2>
+                    <h2>Participants</h2>
                     <ul>
                         {room.participants.map((p) => {
                             if (p.owner) {
@@ -86,23 +84,12 @@ const ActionButton = () => {
                                 );
                             }
 
-                            if (p.ready) {
-                                return (
-                                    <li key={p.id}>
-                                        <div>
-                                            <FillCheckbox />
-                                            {p.name}
-                                        </div>
-                                        <p>Ready</p>
-                                    </li>
-                                );
-                            }
-
                             return (
                                 <li key={p.id}>
                                     <div>
-                                        <EmptyCheckbox /> {p.name}
+                                        <UserIcon /> {p.name}
                                     </div>
+                                    {p.ready && <p>Ready</p>}
                                 </li>
                             );
                         })}

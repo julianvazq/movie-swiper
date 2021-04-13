@@ -1,8 +1,8 @@
-import { Button } from '../../../styles/index';
-import styled, { css } from 'styled-components';
+import { FaCrown, FaUserAlt, FaUserCheck } from 'react-icons/fa';
 import { RiCheckboxCircleFill, RiCheckboxCircleLine, RiMovieFill } from 'react-icons/ri';
 import { SiTinder } from 'react-icons/si';
-import { FaUserCheck, FaCrown, FaUsers } from 'react-icons/fa';
+import styled, { css } from 'styled-components';
+import { Button } from '../../../styles/index';
 
 export const FixedContainer = styled.div`
     position: fixed;
@@ -22,8 +22,9 @@ export const FixedContainer = styled.div`
 `;
 
 const iconStyles = css`
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     margin-right: 1rem;
+    width: 20px;
 `;
 
 export const UserCheck = styled(FaUserCheck)`
@@ -48,10 +49,9 @@ export const CrownIcon = styled(FaCrown)`
     ${iconStyles}
 `;
 
-export const UsersIcon = styled(FaUsers)`
-    font-size: 1.75rem;
-    color: var(--white-muted);
-    margin-right: 0.75rem;
+export const UserIcon = styled(FaUserAlt)`
+    ${iconStyles}
+    font-size: 1rem;
 `;
 
 export const MainButton = styled(Button)<{ disable?: boolean }>`

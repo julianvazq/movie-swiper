@@ -5,6 +5,20 @@ export const MaxWidthContainer = styled.section`
     margin: 0 auto;
 `;
 
+export const FormPageContainer = styled.section`
+    padding: 2rem 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+
+    h2 {
+        margin-bottom: 4rem;
+    }
+
+    @media (min-width: 600px) {
+        padding: 4rem 1rem;
+    }
+`;
+
 export const StyledForm = styled.form`
     label {
         margin-bottom: 0.5rem;

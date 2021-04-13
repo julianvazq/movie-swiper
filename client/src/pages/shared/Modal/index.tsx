@@ -1,5 +1,4 @@
-import React, { ReactNode } from 'react';
-import { Container } from './style';
+import React from 'react';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 
@@ -8,15 +7,16 @@ interface Props {
     visible: boolean;
     onClose?: () => void;
     width?: number | string;
+    maxWidth?: number | string;
     height?: number | string;
 }
 
-const Modal = ({ visible, onClose, width = '90%', height = 500, children }: Props) => {
+const Modal = ({ visible, onClose, width = '90%', maxWidth = 500, height = 500, children }: Props) => {
     const styles = {
         height,
         width,
-        maxWidth: 500,
-        background: 'var(--blue-dark-bg)',
+        maxWidth,
+        background: 'var(--blue-active)',
     };
 
     return (

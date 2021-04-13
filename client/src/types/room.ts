@@ -1,4 +1,4 @@
-import { AddedMovie, Movie } from './movies';
+import { AddedMovie } from './movies';
 
 export enum Stage {
     SELECTION = 'selection',

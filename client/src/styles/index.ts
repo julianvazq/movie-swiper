@@ -5,6 +5,25 @@ export const MaxWidthContainer = styled.section`
     margin: 0 auto;
 `;
 
+export const StyledForm = styled.form`
+    label {
+        margin-bottom: 0.5rem;
+    }
+
+    input {
+        padding: 0.5rem;
+        border-radius: 4px;
+    }
+`;
+
+export const ErrorMessage = styled.div`
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background: var(--accent-light);
+    border-radius: 4px;
+    font-size: 0.875rem;
+`;
+
 export const Title = styled.h1`
     font-size: 2rem;
     margin: 0 0 1rem;
@@ -29,6 +48,12 @@ export const Button = styled.button`
     border-radius: 4px;
     color: white;
     cursor: pointer;
+`;
+
+export const FormButton = styled(Button)`
+    width: 100%;
+    background: var(--blue-action);
+    padding: 1rem 1.5rem;
 `;
 
 export const FontWeight600 = styled.span`

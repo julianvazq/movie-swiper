@@ -2,7 +2,7 @@ import React from 'react';
 import { useMoviePreview } from '../../../context/MoviePreviewContext';
 import { AddedMovie } from '../../../types/movies';
 import { generateImageUrl } from '../../../utils';
-import { Image, Container, Title, PreviewButton, ExpandIcon, Details } from './style';
+import { Container, Details, ExpandIcon, Image, PreviewButton, Title } from './style';
 
 interface Props {
     movie: AddedMovie;
@@ -17,7 +17,7 @@ const SwipeItem = ({ movie }: Props) => {
     };
 
     return (
-        <Container>
+        <Container onClick={showPreview}>
             <PreviewButton onClick={showPreview}>
                 <Title>{movie.title}</Title>
                 <Details>

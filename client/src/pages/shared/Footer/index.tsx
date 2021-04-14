@@ -1,10 +1,19 @@
 import React from 'react';
-import { Attribution, Container, InnerContainer, TheMovieDB } from './style';
+import { useLocation } from 'react-router';
 import TheMovieDBLogo from '../../../assets/themoviedb-logo.svg';
+import { Stage } from '../../../types/room';
+import { Attribution, Container, InnerContainer, TheMovieDB } from './style';
 
 const Footer = () => {
+    const { pathname } = useLocation();
+    const showFooter =
+        pathname === '/' ||
+        pathname.includes('/create') ||
+        pathname.includes('/join') ||
+        pathname.includes(Stage.RESULTS);
+
     return (
-        <Container>
+        <Container display={showFooter}>
             <InnerContainer>
                 <Attribution>
                     Powered by

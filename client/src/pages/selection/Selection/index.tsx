@@ -13,7 +13,7 @@ const Selection = () => {
     return (
         <Container>
             <Title>Pick Your Movies</Title>
-            <Subtitle>Add movies to the list for you and your group to vote on.</Subtitle>
+            <Subtitle>Add movies to the shared list for you and your group to vote on.</Subtitle>
             <InviteLink />
             {/* {status === 'loading' && <p>Loading...</p>} */}
             {/* {status === 'error' && <p>Sorry, something went wrong. Try refreshing the page.</p>} */}

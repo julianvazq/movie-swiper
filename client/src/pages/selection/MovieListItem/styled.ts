@@ -1,8 +1,8 @@
+import { motion } from 'framer-motion';
+import { HiMinus, HiOutlinePlus } from 'react-icons/hi';
+import styled from 'styled-components';
 import { Button } from './../../../styles/index';
 import { Genre } from './../MovieDetail/style';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { HiOutlinePlus, HiMinus } from 'react-icons/hi';
 
 export const Item = styled.article`
     display: flex;
@@ -144,7 +144,7 @@ export const Overview = styled.p`
 `;
 
 export const SeeMoreButton = styled(Button)`
-    font-size: 1.125rem;
+    font-size: 1rem;
     width: 100%;
     padding: 0.5rem 1rem;
     background: #445970;

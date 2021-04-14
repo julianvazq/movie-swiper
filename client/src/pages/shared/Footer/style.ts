@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 
-export const Container = styled.section`
+export const Container = styled.section<{ display: boolean }>`
     background: #141d26;
     padding: 2rem;
+    display: ${(props) => (props.display ? 'block' : 'none')};
+
+    @media (min-width: 600px) {
+        display: block;
+    }
 `;
 
 export const InnerContainer = styled.div`

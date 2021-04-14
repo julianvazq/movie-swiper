@@ -7,7 +7,7 @@ import MovieSearch from '../MovieSearch';
 const MovieSelection = () => {
     const { room } = useRoom();
     return (
-        <Tabs tabs={['Search', `Your List (${room.movies.length})`]}>
+        <Tabs tabs={['Search', `Group List (${room.movies.length})`]}>
             <MovieSearch />
             <MovieList movies={room.movies} allowActions />
         </Tabs>

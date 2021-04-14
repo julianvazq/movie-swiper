@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import styled, { css } from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
+import { HiMinus, HiOutlinePlus } from 'react-icons/hi';
 import { IoIosArrowBack } from 'react-icons/io';
-import { HiOutlinePlus, HiMinus } from 'react-icons/hi';
+import styled, { css } from 'styled-components';
 import { Button } from '../../../styles';
 
 export const Overlay = styled(motion.div)`
@@ -55,6 +55,10 @@ export const Image = styled(motion.img)`
     object-fit: cover;
     filter: brightness(0.25);
     z-index: -1;
+
+    @media screen and (min-width: 600px) {
+        height: auto;
+    }
 `;
 
 export const ContentContainer = styled(motion.article)`
@@ -70,7 +74,6 @@ export const ContentContainer = styled(motion.article)`
         left: 0;
         right: 0;
         margin: auto;
-        background: rgba(0, 0, 0, 0.5);
         border-radius: 4px;
         padding: 3rem;
     }

@@ -3,18 +3,17 @@ import { useLocation } from 'react-router-dom';
 import { useMoviePreview } from '../../../context/MoviePreviewContext';
 import { AddedMovie } from '../../../types/movies';
 import { generateImageUrl } from '../../../utils';
-import LikeCountBar from '../LikeCountBar';
 import LikeList from '../LikeList';
 import {
     Card,
-    ResultsArea,
-    Image,
-    ResultsContainer,
-    MovieTitle,
-    TotalLikes,
     DetailButton,
-    ImageContainer,
     ExpandIcon,
+    Image,
+    ImageContainer,
+    MovieTitle,
+    ResultsArea,
+    ResultsContainer,
+    TotalLikes,
 } from './style';
 
 interface Props {
@@ -38,7 +37,7 @@ const ResultCard = ({ movie }: Props) => {
     return (
         <Card>
             <ResultsArea>
-                <ImageContainer layoutId={`image-${movie.id}`}>
+                <ImageContainer>
                     <TotalLikes>
                         {usersWhoLiked.length} <span>likes</span>
                     </TotalLikes>

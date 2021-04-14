@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRoom } from '../../../context/RoomContext';
 import { Subtitle, Title } from '../../../styles';
-import { AddedMovie } from '../../../types/movies';
 import InfoBox from '../../shared/InfoBox';
 import ResultList from '../ResultList';
 import { Container } from './style';
@@ -34,7 +33,7 @@ const Results = () => {
 
         return {
             text: "Everyone's done swiping. See the final results below.",
-            backgroundColor: 'hsl(127deg 26% 36%)',
+            backgroundColor: 'var(--green-start)',
         };
     };
     const { text, backgroundColor } = getInfoBoxProps();

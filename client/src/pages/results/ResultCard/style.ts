@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
+import { RiInformationLine } from 'react-icons/ri';
 import styled from 'styled-components';
 import { Button } from '../../../styles';
-import { RiInformationLine } from 'react-icons/ri';
 
 export const Card = styled.article`
     border-right: 1px solid var(--blue-dark);
@@ -59,7 +59,7 @@ export const MovieTitle = styled.h3`
 export const ResultsContainer = styled.div`
     width: 100%;
     background: var(--blue-dark);
-    padding: 1rem;
+    padding: 1rem 1.5rem;
 `;
 
 export const DetailButton = styled(Button)`

@@ -13,6 +13,8 @@ import {
     ModalContent,
     PlayIcon,
     ReadyButton,
+    ReadyText,
+    StartButton,
     ToggleReadyButton,
     UserCheck,
     UserIcon,
@@ -21,11 +23,12 @@ import {
 const ActionButton = () => {
     const { room } = useRoom();
     const { user } = useUser();
-    const [visible, setVisible] = useState(false);
+    const [groupModalVisible, setGroupModalVisible] = useState(false);
+    const [swipeModalVisible, setSwipeModalVisible] = useState(false);
     const owner = room.participants.find((p) => p.owner);
     const isReady = room.participants.find((p) => p.id === user.id)?.ready;
     const participantsReady = room.participants.filter((p) => p.ready && !p.owner);
-    const disableSwiping = !room.movies.length;
+    const disableSwiping = !room.movies.length || !participantsReady.length;
 
     const toggleReadyHandler = () => {
         toggleReady({ roomId: room.roomId as string, userId: user.id }, (res) => {
@@ -35,18 +38,27 @@ const ActionButton = () => {
         });
     };
 
+    const confirmSwipeAction = () => startSwiper({ roomId: room.roomId as string });
+
     const startSwiping = () => {
-        if (disableSwiping) {
+        if (!disableSwiping) {
+            setSwipeModalVisible(true);
+            return;
+        }
+
+        if (!room.movies.length) {
             useToast({ type: ToastType.Custom, message: 'Add movies to your list to start swiping.' });
             return;
         }
 
-        startSwiper({ roomId: room.roomId as string });
+        if (!participantsReady.length) {
+            useToast({ type: ToastType.Custom, message: 'Wait for participants to be ready.' });
+        }
     };
 
     const checkReady = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
-        setVisible(true);
+        setGroupModalVisible(true);
     };
 
     return (
@@ -67,7 +79,7 @@ const ActionButton = () => {
                     </ToggleReadyButton>
                 )}
             </FixedContainer>
-            <Modal visible={visible} onClose={() => setVisible(false)} height={300} maxWidth={400}>
+            <Modal visible={groupModalVisible} onClose={() => setGroupModalVisible(false)} height={300} maxWidth={400}>
                 <ModalContent>
                     <h2>Participants</h2>
                     <ul>
@@ -94,6 +106,16 @@ const ActionButton = () => {
                             );
                         })}
                     </ul>
+                </ModalContent>
+            </Modal>
+            <Modal visible={swipeModalVisible} onClose={() => setSwipeModalVisible(false)} height={215} maxWidth={400}>
+                <ModalContent>
+                    <h2>Start Swiping?</h2>
+                    <ReadyText>
+                        This action will move everyone to the swiping stage. Once in this stage, group members
+                        won&apos;t be allowed to go back and add more movies.
+                    </ReadyText>
+                    <StartButton onClick={confirmSwipeAction}>Start</StartButton>
                 </ModalContent>
             </Modal>
         </>

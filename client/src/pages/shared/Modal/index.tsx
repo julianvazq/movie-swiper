@@ -17,6 +17,7 @@ const Modal = ({ visible, onClose, width = '90%', maxWidth = 500, height = 500, 
         width,
         maxWidth,
         background: 'var(--blue-active)',
+        borderRadius: '8px',
     };
 
     return (

@@ -55,7 +55,7 @@ export const UserIcon = styled(FaUserAlt)`
 `;
 
 export const MainButton = styled(Button)<{ disable?: boolean }>`
-    background: ${(props) => (props.disable ? '#565656' : 'var(--accent-dark)')};
+    background: ${(props) => (props.disable ? '#565656' : 'var(--green-start)')};
     color: ${(props) => (props.disable ? '#a9a9a9' : 'var(--white)')};
     transition: all ease-in 250ms;
     flex: 70%;
@@ -133,4 +133,14 @@ export const ModalContent = styled.div`
             color: var(--white-muted);
         }
     }
+`;
+
+export const ReadyText = styled.p`
+    line-height: 1.3;
+    margin-bottom: 1rem;
+`;
+
+export const StartButton = styled(Button)`
+    background: var(--green-start);
+    padding: 0.5rem 1rem;
 `;

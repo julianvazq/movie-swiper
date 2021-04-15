@@ -29,7 +29,7 @@ export const TotalLikes = styled.p`
     font-size: 1.25rem;
     text-align: center;
     padding: 0.5rem 1rem;
-    background: var(--blue-action);
+    background: hsl(213deg 47% 48% / 90%);
     position: absolute;
     top: -1rem;
     left: 50%;

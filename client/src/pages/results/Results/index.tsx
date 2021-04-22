@@ -33,7 +33,7 @@ const Results = () => {
 
         return {
             text: "Everyone's done swiping. See the final results below.",
-            backgroundColor: 'var(--green-start)',
+            backgroundColor: 'var(--accent-purple)',
         };
     };
     const { text, backgroundColor } = getInfoBoxProps();

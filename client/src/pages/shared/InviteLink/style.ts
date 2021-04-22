@@ -3,7 +3,10 @@ import { Button } from '../../../styles';
 
 export const Container = styled.aside`
     margin-bottom: 2rem;
-    max-width: 400px;
+
+    @media (min-width: 800px) {
+        max-width: 400px;
+    }
 `;
 
 export const Label = styled.label`
@@ -29,7 +32,7 @@ export const InputContainer = styled.div`
 `;
 
 export const CopyButton = styled(Button)`
-    background: var(--accent-active);
+    background: var(--blue-action);
     padding: 0.5rem 1.25rem;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;

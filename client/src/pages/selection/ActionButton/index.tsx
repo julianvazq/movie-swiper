@@ -13,7 +13,6 @@ import {
     ModalContent,
     PlayIcon,
     ReadyButton,
-    ReadyText,
     StartButton,
     ToggleReadyButton,
     UserCheck,
@@ -108,13 +107,14 @@ const ActionButton = () => {
                     </ul>
                 </ModalContent>
             </Modal>
-            <Modal visible={swipeModalVisible} onClose={() => setSwipeModalVisible(false)} height={215} maxWidth={400}>
+            <Modal visible={swipeModalVisible} onClose={() => setSwipeModalVisible(false)} height={280} maxWidth={400}>
                 <ModalContent>
                     <h2>Start Swiping?</h2>
-                    <ReadyText>
-                        This action will move everyone to the swiping stage. Once in this stage, group members
-                        won&apos;t be allowed to go back and add more movies.
-                    </ReadyText>
+                    <ol>
+                        <li>This action will move everyone in the group to the swiping stage.</li>
+                        <br />
+                        <li>Once in this stage, group members won&apos;t be allowed to go back and add more movies.</li>
+                    </ol>
                     <StartButton onClick={confirmSwipeAction}>Start</StartButton>
                 </ModalContent>
             </Modal>

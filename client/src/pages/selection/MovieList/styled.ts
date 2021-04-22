@@ -13,6 +13,11 @@ export const List = styled.section`
     @media screen and (min-width: 800px) {
         grid-template-columns: repeat(2, 1fr);
         gap: 4rem;
+
+        & > *:not(:last-child) {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
     }
 `;
 

@@ -16,12 +16,12 @@ export const InnerContainer = styled.div`
 `;
 
 export const TheMovieDB = styled.img`
-    height: 11.5px;
+    height: 10.5px;
     margin-left: 0.5rem;
 `;
 
 export const Attribution = styled.p`
-    font-size: 1rem;
+    font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--white-muted);

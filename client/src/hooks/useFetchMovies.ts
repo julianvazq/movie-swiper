@@ -1,6 +1,5 @@
-import { Movie } from './../../../server/src/types/movies';
-import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { MovieResponse } from '../types/movies';
 
 interface Props {

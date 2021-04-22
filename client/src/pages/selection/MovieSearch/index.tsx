@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
+import { OptionsType } from 'react-select';
 import useFetchMovies from '../../../hooks/useFetchMovies';
 import { Genre } from '../../../types/movies';
-import { colorStyles, FormField, StyledSelect } from './style';
-import Select, { OptionsType } from 'react-select';
-import { genres as allGenres } from './genres';
 import MovieGallery from '../MovieGallery';
-import ActionButton from '../ActionButton';
+import { genres as allGenres } from './genres';
+import { colorStyles, FormField, StyledSelect } from './style';
 
 const MovieSearch = () => {
     const [genres, setGenres] = useState<number[]>([]);
@@ -46,8 +45,7 @@ const MovieSearch = () => {
                     />
                 </FormField>
             </form>
-            {loading && <p>Loading...</p>}
-            {!loading && <MovieGallery movies={moviesOnDisplay} />}
+            <MovieGallery movies={moviesOnDisplay} loading={loading} />
         </section>
     );
 };

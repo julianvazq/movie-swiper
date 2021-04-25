@@ -1,8 +1,18 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Container, InnerContainer, Link, Logo, NavContainer, NavLinks } from './style';
 
-const Nav = () => {
+interface Props {
+    forceShow?: boolean;
+}
+
+const Nav = ({ forceShow: show }: Props) => {
+    const { pathname } = useLocation();
+
+    if (pathname === '/' && !show) {
+        return null;
+    }
+
     return (
         <Container>
             <InnerContainer>

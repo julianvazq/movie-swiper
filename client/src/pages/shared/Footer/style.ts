@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.section<{ display: boolean }>`
-    background: #141d26;
+    /* background: #141d26; */
+    background: rgb(0 0 0 / 25%);
     padding: 2rem;
     display: ${(props) => (props.display ? 'block' : 'none')};
 

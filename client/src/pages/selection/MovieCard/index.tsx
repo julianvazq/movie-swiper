@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Movie } from '../../../../../server/src/types/movies';
-import { Container, ContentContainer, Card, Title, Image, PlusIcon, ButtonContainer, MinusIcon } from './styled';
+import { useMoviePreview } from '../../../context/MoviePreviewContext';
 import { useRoom } from '../../../context/RoomContext';
 import useMovieManager from '../../../hooks/useMovieManager';
 import { generateImageUrl } from '../../../utils';
-import { useMoviePreview } from '../../../context/MoviePreviewContext';
+import { ButtonContainer, Card, Container, ContentContainer, Image, MinusIcon, PlusIcon, Title } from './styled';
 
 interface Props {
     movie: Movie;
@@ -33,7 +33,7 @@ const MovieCard = ({ movie }: Props) => {
         <Container>
             <Card onClick={onMovieClick} layoutId={`image-${movie.id}`} zIndex={zIndex}>
                 <ContentContainer>
-                    <Image src={imageUrl} />
+                    <Image src={imageUrl} alt={`Movie poster for ${movie.title}.`} />
                     <Title>{movie.title}</Title>
                 </ContentContainer>
             </Card>

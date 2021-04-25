@@ -1,6 +1,6 @@
 import express from 'express';
-const router = express.Router();
 import fetch from 'node-fetch';
+const router = express.Router();
 
 /**
  * @route POST /movies/genre
@@ -15,6 +15,29 @@ router.post('/genres', async (req, res) => {
         const data = await fetch(url);
         const movies = await data.json();
         res.send(movies);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({ error: 'Request failed!' });
+    }
+});
+
+/**
+ * @route POST /movies/random
+ * @desc Get individual random movie details
+ */
+router.get('/random', async (req, res) => {
+    try {
+        const url = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}&language=en-US&page=1`;
+        const response = await fetch(url);
+        console.log(response);
+        const data = await response.json();
+        const numResults = data.results.length;
+        if (!numResults) {
+            res.send(null);
+            return;
+        }
+        const movie = data.results[Math.floor(Math.random() * numResults) + 1];
+        res.send(movie);
     } catch (err) {
         console.log(err);
         res.status(500).send({ error: 'Request failed!' });

@@ -24,9 +24,9 @@ const ActionButton = () => {
     const { user } = useUser();
     const [groupModalVisible, setGroupModalVisible] = useState(false);
     const [swipeModalVisible, setSwipeModalVisible] = useState(false);
-    const owner = room.participants.find((p) => p.owner);
+    const owner = room.participants.find((p) => p.id === room.ownerId);
     const isReady = room.participants.find((p) => p.id === user.id)?.ready;
-    const participantsReady = room.participants.filter((p) => p.ready && !p.owner);
+    const participantsReady = room.participants.filter((p) => p.ready && p.id !== room.ownerId);
     const disableSwiping = !room.movies.length || !participantsReady.length;
 
     const toggleReadyHandler = () => {
@@ -83,7 +83,7 @@ const ActionButton = () => {
                     <h2>Participants</h2>
                     <ul>
                         {room.participants.map((p) => {
-                            if (p.owner) {
+                            if (p.id === room.ownerId) {
                                 return (
                                     <li key={p.id}>
                                         <div>

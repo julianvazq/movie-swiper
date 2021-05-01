@@ -2,7 +2,6 @@ import fetch from 'node-fetch';
 
 const getMovieById = async (req, res) => {
     try {
-        // Destructure data from client
         const { id } = req.params;
 
         const data = await fetch(

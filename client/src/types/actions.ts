@@ -1,5 +1,5 @@
-import { Participant, Room, Stage } from './room';
 import { AddedMovie } from './movies';
+import { Participant, Room, Stage } from './room';
 
 export enum ActionType {
     INITIALIZE_ROOM = 'initialize_room',
@@ -20,7 +20,7 @@ export interface GetRoomAction {
 
 export interface InitializeRoomAction {
     type: ActionType.INITIALIZE_ROOM;
-    payload: { roomName: string; roomId: string; participant: Participant };
+    payload: { roomName: string; roomId: string; ownerId: string; participant: Participant };
 }
 
 export interface JoinAction {

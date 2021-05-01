@@ -82,7 +82,7 @@ export const Subtitle = styled.h2`
     text-transform: uppercase;
     font-size: 1rem;
     font-weight: 500;
-    color: #cecece6e;
+    color: #cececea3;
     margin-bottom: 1rem;
     letter-spacing: 2px;
     margin-right: auto;
@@ -92,7 +92,7 @@ export const Subtitle = styled.h2`
         content: '';
         position: absolute;
         height: 2px;
-        background: #cecece33;
+        background: #cecece54;
         width: 100%;
         bottom: -0.5rem;
         left: 0;

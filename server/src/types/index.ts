@@ -3,6 +3,7 @@ import { Movie } from './movies';
 export interface Room {
     roomName: string | null;
     roomId: string | null;
+    ownerId: string | null;
     participants: Participant[];
     viewers: Participant[];
     movies: Movie[];
@@ -13,6 +14,7 @@ export interface Participant {
     name: string;
     id: string;
     color: string;
+    ready?: boolean;
 }
 
 type Data = string | number | boolean | Room | Movie;

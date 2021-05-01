@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
+import { socket } from '../../../sockets';
 import { createRoom } from '../../../sockets/emitters';
 import { ErrorMessage, FormButton, StyledForm } from '../../../styles';
 import { ActionType } from '../../../types/actions';
@@ -20,7 +21,7 @@ const initialInputs = {
 
 const CreateForm = () => {
     const history = useHistory();
-    const { dispatch } = useRoom();
+    const { room, dispatch } = useRoom();
     const { user, setUser } = useUser();
     const [inputs, setInputs] = useState(initialInputs);
     const [touched, setTouched] = useState<Errors>({});
@@ -35,10 +36,14 @@ const CreateForm = () => {
 
         if (!isFormValid) return;
 
+        if (room.roomId) {
+            socket.disconnect();
+            socket.connect();
+        }
+
         const newUser = {
             ...user,
             name: inputs.name,
-            owner: true,
             color: randomColor({
                 luminosity: 'light',
                 hue: 'blue',
@@ -53,7 +58,7 @@ const CreateForm = () => {
             const roomId = res.data.roomId;
             dispatch({
                 type: ActionType.INITIALIZE_ROOM,
-                payload: { roomName: inputs.roomName, roomId, participant: newUser },
+                payload: { roomName: inputs.roomName, roomId, ownerId: newUser.id, participant: newUser },
             });
             history.push(`/selection/${roomId}`);
         });

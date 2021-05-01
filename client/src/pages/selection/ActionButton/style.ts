@@ -29,6 +29,7 @@ const iconStyles = css`
 
 export const UserCheck = styled(FaUserCheck)`
     ${iconStyles}
+    margin-right: 0.5rem;
 `;
 
 export const FillCheckbox = styled(RiCheckboxCircleFill)`

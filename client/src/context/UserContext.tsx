@@ -1,5 +1,4 @@
-import React, { useEffect, createContext, useContext } from 'react';
-import { ReactNode } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { socket } from '../sockets';
 import { onConnection } from '../sockets/listeners';
@@ -25,7 +24,7 @@ const UserProvider = ({ children }: Props) => {
     useEffect(() => {
         onConnection(() => {
             if (!user.id) {
-                setUser({ ...user, id: socket.id });
+                setUser({ name: user.name, color: user.color, id: socket.id });
                 socket.emit('user:new', { ...user, id: socket.id });
             } else {
                 socket.emit('user:new', user);

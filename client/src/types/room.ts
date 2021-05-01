@@ -10,6 +10,7 @@ export enum Stage {
 export interface Room {
     roomName: string | null;
     roomId: string | null;
+    ownerId: string | null;
     participants: Participant[];
     movies: AddedMovie[];
     stage: Stage;
@@ -20,5 +21,4 @@ export interface Participant {
     id: string;
     color: string;
     ready?: boolean;
-    owner?: boolean;
 }

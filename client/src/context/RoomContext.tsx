@@ -1,25 +1,24 @@
 /* eslint-disable react/display-name */
-import React, { useEffect, createContext, useContext, useReducer } from 'react';
-import { ReactNode } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useReducer } from 'react';
+import { Participant } from '../../../server/src/types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { Action, ActionType } from '../types/actions';
-import { Room, Stage } from '../types/room';
+import { socket } from '../sockets';
 import {
-    onParticipantJoin,
-    onParticipantLeave,
     onGetRoom,
     onMovieAdd,
     onMovieRemove,
-    onToggleReady,
-    onStartSwiper,
     onMovieSwipe,
+    onParticipantJoin,
+    onParticipantLeave,
+    onStartSwiper,
+    onToggleReady,
 } from '../sockets/listeners';
-import { socket } from '../sockets';
-import { Participant } from '../../../server/src/types';
-import { ToastType, useToast } from '../utils';
 import { FontWeight600 } from '../styles';
-import { useUser } from './UserContext';
+import { Action, ActionType } from '../types/actions';
 import { AddedMovie } from '../types/movies';
+import { Room, Stage } from '../types/room';
+import { ToastType, useToast } from '../utils';
+import { useUser } from './UserContext';
 
 type Props = {
     children: ReactNode;
@@ -28,6 +27,7 @@ type Props = {
 const initialState: Room = {
     roomName: null,
     roomId: null,
+    ownerId: null,
     participants: [],
     movies: [],
     stage: Stage.NULL,
@@ -51,6 +51,7 @@ const reducer = (state: Room, action: Action): Room => {
                 ...initialState,
                 roomName: action.payload.roomName,
                 roomId: action.payload.roomId,
+                ownerId: action.payload.ownerId,
                 participants: [action.payload.participant],
                 stage: Stage.SELECTION,
             };

@@ -19,6 +19,7 @@ import { Action, ActionType } from '../types/actions';
 import { AddedMovie } from '../types/movies';
 import { Room, Stage } from '../types/room';
 import { ToastType, useToast } from '../utils';
+import { useUser } from './UserContext';
 
 type Props = {
     children: ReactNode;
@@ -112,6 +113,7 @@ const reducer = (state: Room, action: Action): Room => {
 };
 
 const RoomProvider = ({ children }: Props) => {
+    const { user } = useUser();
     const [room, dispatch] = useReducer(reducer, initialState);
     const [storedMovies, setStoredMovies] = useLocalStorage('movies', {});
 
@@ -159,11 +161,11 @@ const RoomProvider = ({ children }: Props) => {
             dispatch({ type: ActionType.SWIPE_MOVIE, payload: { id: movieId, liked, user } });
         });
         onToggleReady(({ userId }) => {
-            /* Bug: toast displays for person that clicked 'Ready' */
-            // const userToToggle = room.participants.find((p) => p.id === userId);
-            // if (userToToggle && user.id !== userToToggle?.id) {
-            //     useToast({ type: ToastType.Success, message: `${userToToggle.name} is ready.` });
-            // }
+            const userToToggle = room.participants.find((p) => p.id === userId);
+            if (userToToggle && !userToToggle.ready && user.id !== userToToggle.id) {
+                console.log(userToToggle, user);
+                useToast({ type: ToastType.Success, message: `${userToToggle.name} is ready.` });
+            }
             dispatch({ type: ActionType.TOGGLE_READY, payload: { id: userId } });
         });
         onStartSwiper(({ roomId }) => {

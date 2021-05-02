@@ -1,8 +1,8 @@
-import { Participant } from './../types/index';
 import { Room, Server, Socket } from 'socket.io';
-import { SocketCallback } from '../types';
 import { v4 as uuid } from 'uuid';
+import { SocketCallback } from '../types';
 import { SocketWithUserId } from '../types/socketio';
+import { Participant } from './../types/index';
 
 module.exports = (io: Server) => {
     const createRoom = function (data, callback: SocketCallback) {
@@ -65,7 +65,6 @@ module.exports = (io: Server) => {
 
     const sendRoom = function (data: { socketId: string; room: Room }) {
         try {
-            const socket: Socket = this;
             io.to(data.socketId).emit('room:get', { room: data.room });
         } catch (error) {
             console.log(error);
@@ -77,7 +76,6 @@ module.exports = (io: Server) => {
         callback: SocketCallback
     ) {
         try {
-            const socket: Socket = this;
             const clientsInRoom =
                 (io.sockets.adapter.rooms[data.roomId] &&
                     io.sockets.adapter.rooms[data.roomId].length) ||
@@ -103,31 +101,10 @@ module.exports = (io: Server) => {
         }
     };
 
-    const toggleReady = function (
-        data: { roomId: string; userId: string },
-        callback: SocketCallback
-    ) {
-        try {
-            const socket: Socket = this;
-            io.in(data.roomId).emit('room:ready', {
-                userId: data.userId,
-            });
-
-            callback({ success: true, data: { userId: data.userId } });
-        } catch (error) {
-            console.log(error);
-            callback({
-                success: false,
-                message: 'Failed to toggle ready state.',
-            });
-        }
-    };
-
     return {
         createRoom,
         joinRoom,
         sendRoom,
         checkRoom,
-        toggleReady,
     };
 };

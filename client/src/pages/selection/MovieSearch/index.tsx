@@ -31,11 +31,11 @@ const MovieSearch = () => {
             {' '}
             <form>
                 <FormField show={true}>
-                    <label>Search By Name</label>
+                    <label>Search by name</label>
                     <input type="text" value={movieQuery} onChange={onQueryChange} />
                 </FormField>
                 <FormField show={movieQuery === ''}>
-                    <label>Search By Genre</label>
+                    <label>Search by genre</label>
                     <StyledSelect
                         isMulti
                         name="genres"

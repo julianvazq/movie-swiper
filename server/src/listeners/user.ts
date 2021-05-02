@@ -1,6 +1,26 @@
 import { Server, Socket } from 'socket.io';
+import { SocketCallback } from '../types';
 
 module.exports = (io: Server) => {
+    const toggleReady = function (
+        data: { roomId: string; userId: string },
+        callback: SocketCallback
+    ) {
+        try {
+            io.in(data.roomId).emit('user:ready', {
+                userId: data.userId,
+            });
+
+            callback({ success: true, data: { userId: data.userId } });
+        } catch (error) {
+            console.log(error);
+            callback({
+                success: false,
+                message: 'Failed to toggle ready state.',
+            });
+        }
+    };
+
     const changeUserName = function (data: {
         roomId: string;
         userId: string;
@@ -17,5 +37,5 @@ module.exports = (io: Server) => {
         }
     };
 
-    return { changeUserName };
+    return { changeUserName, toggleReady };
 };

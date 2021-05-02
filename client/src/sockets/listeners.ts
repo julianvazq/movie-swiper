@@ -44,7 +44,7 @@ export const onMovieSwipe = (callback: (data: { movieId: number; liked: boolean;
 };
 
 export const onToggleReady = (callback: (data: { userId: string }) => void) => {
-    return socket.on('room:ready', callback);
+    return socket.on('user:ready', callback);
 };
 
 export const onStartSwiper = (callback: (data: { roomId: string }) => void) => {

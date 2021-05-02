@@ -1,4 +1,4 @@
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
 import { Participant, SocketCallback } from '../types';
 import { AddedMovie } from '../types/movies';
 
@@ -8,7 +8,6 @@ module.exports = (io: Server) => {
         callback: SocketCallback
     ) {
         try {
-            const socket: Socket = this;
             console.log('added movie: ', data.movie.title, data.movie.id);
 
             io.in(data.roomId).emit('movie:add', {
@@ -33,7 +32,6 @@ module.exports = (io: Server) => {
         callback: SocketCallback
     ) {
         try {
-            const socket: Socket = this;
             console.log('removed movie: ', data.movieId);
 
             io.in(data.roomId).emit('movie:remove', {
@@ -60,7 +58,6 @@ module.exports = (io: Server) => {
         user: Participant;
     }) {
         try {
-            const socket: Socket = this;
             console.log('swiped', data.liked, data.user.name);
             io.in(data.roomId).emit('movie:swipe', {
                 movieId: data.movieId,

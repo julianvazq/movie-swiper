@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Button } from '../../../styles';
 
 export const Container = styled.section`
-    /* background: #141d26; */
     background: rgb(0 0 0 / 25%);
     padding: 1.5rem;
 `;
@@ -13,12 +12,14 @@ export const InnerContainer = styled.div`
     margin: auto;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `;
 
 export const Logo = styled.div`
     color: var(--white);
     font-size: 1.25rem;
-    font-family: 'Merienda One', cursive;
+    font-family: 'Merienda One', 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+        'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 `;
 
 export const NavContainer = styled.section``;

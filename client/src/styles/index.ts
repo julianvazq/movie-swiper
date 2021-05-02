@@ -41,6 +41,8 @@ export const ErrorMessage = styled.div`
 export const Title = styled.h1`
     font-size: 2rem;
     margin: 0 0 1rem;
+    font-family: 'Merienda One', 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+        'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 `;
 
 export const Subtitle = styled.h2`

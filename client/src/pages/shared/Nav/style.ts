@@ -4,7 +4,7 @@ import { Button } from '../../../styles';
 
 export const Container = styled.section`
     background: rgb(0 0 0 / 25%);
-    padding: 1.5rem;
+    padding: 1rem;
 `;
 
 export const InnerContainer = styled.div`

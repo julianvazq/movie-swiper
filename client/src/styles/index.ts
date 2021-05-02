@@ -3,19 +3,23 @@ import styled from 'styled-components';
 export const MaxWidthContainer = styled.section`
     max-width: 1100px;
     margin: 0 auto;
+    padding: 2rem 1rem;
+
+    @media (min-width: 600px) {
+        padding: 4rem 1rem;
+    }
+
+    @media (min-width: 1100px) {
+        padding: 4rem 0rem;
+    }
 `;
 
-export const FormPageContainer = styled.section`
-    padding: 2rem 1rem;
+export const FormPageContainer = styled(MaxWidthContainer)`
     max-width: 600px;
     margin: 0 auto;
 
     h2 {
         margin-bottom: 4rem;
-    }
-
-    @media (min-width: 600px) {
-        padding: 4rem 1rem;
     }
 `;
 
@@ -66,9 +70,10 @@ export const Button = styled.button`
     cursor: pointer;
 `;
 
-export const FormButton = styled(Button)`
+export const FormButton = styled(Button)<{ $disabled?: boolean }>`
     width: 100%;
-    background: var(--blue-action);
+    background: ${(props) => (props.$disabled ? '#808080' : 'var(--blue-action)')};
+    color: ${(props) => props.$disabled && '#cbc8c8'};
     padding: 1rem 1.5rem;
 `;
 

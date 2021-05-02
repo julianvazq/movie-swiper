@@ -15,7 +15,7 @@ interface Props {
 
 const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props) => {
     const { room } = useRoom();
-    const { user, setUser } = useUser();
+    const { user } = useUser();
     const history = useHistory();
     const [status, setStatus] = useState<'loading' | 'error' | 'success'>('loading');
     const roomId = computedMatch.params.id;

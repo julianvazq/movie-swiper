@@ -23,6 +23,7 @@ const CreateForm = () => {
     const history = useHistory();
     const { room, dispatch } = useRoom();
     const { user, setUser } = useUser();
+    const [disabled, setDisabled] = useState(false);
     const [inputs, setInputs] = useState(initialInputs);
     const [touched, setTouched] = useState<Errors>({});
     const [submitted, setSubmitted] = useState(false);
@@ -36,6 +37,7 @@ const CreateForm = () => {
 
         if (!isFormValid) return;
 
+        setDisabled(true);
         if (room.roomId) {
             socket.disconnect();
             socket.connect();
@@ -101,7 +103,9 @@ const CreateForm = () => {
                 />
                 {(touched.roomName || submitted) && errors.roomName && <ErrorMessage>{errors.roomName}</ErrorMessage>}
             </InputGroup>
-            <FormButton>Get Started</FormButton>
+            <FormButton $disabled={disabled} disabled={disabled}>
+                Get Started
+            </FormButton>
         </StyledForm>
     );
 };

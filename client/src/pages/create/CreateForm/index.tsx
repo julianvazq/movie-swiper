@@ -85,13 +85,20 @@ const CreateForm = () => {
     return (
         <StyledForm onSubmit={initializeRoomAndUser}>
             <InputGroup>
-                <label>Your Name</label>
-                <input type="text" name="name" value={inputs.name} onChange={onChange} onBlur={onBlur} />
+                <label htmlFor="name">Your name</label>
+                <input type="text" name="name" id="name" value={inputs.name} onChange={onChange} onBlur={onBlur} />
                 {(touched.name || submitted) && errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
             </InputGroup>
             <InputGroup>
-                <label>Group Name</label>
-                <input type="text" name="roomName" value={inputs.roomName} onChange={onChange} onBlur={onBlur} />
+                <label htmlFor="roomName">Group name</label>
+                <input
+                    type="text"
+                    name="roomName"
+                    id="roomName"
+                    value={inputs.roomName}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                />
                 {(touched.roomName || submitted) && errors.roomName && <ErrorMessage>{errors.roomName}</ErrorMessage>}
             </InputGroup>
             <FormButton>Get Started</FormButton>

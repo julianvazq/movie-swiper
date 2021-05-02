@@ -8,6 +8,7 @@ import {
     onMovieAdd,
     onMovieRemove,
     onMovieSwipe,
+    onNameChange,
     onParticipantJoin,
     onParticipantLeave,
     onStartSwiper,
@@ -18,7 +19,6 @@ import { Action, ActionType } from '../types/actions';
 import { AddedMovie } from '../types/movies';
 import { Room, Stage } from '../types/room';
 import { ToastType, useToast } from '../utils';
-import { useUser } from './UserContext';
 
 type Props = {
     children: ReactNode;
@@ -68,17 +68,17 @@ const reducer = (state: Room, action: Action): Room => {
         case ActionType.LEAVE:
             return {
                 ...state,
-                participants: state.participants.filter((participant) => participant.id !== action.payload.id),
+                participants: state.participants.filter((p) => p.id !== action.payload.id),
             };
         case ActionType.ADD_MOVIE:
             return {
                 ...state,
-                movies: [...state.movies.filter((movie) => movie.id !== action.payload.movie.id), action.payload.movie],
+                movies: [...state.movies.filter((m) => m.id !== action.payload.movie.id), action.payload.movie],
             };
         case ActionType.REMOVE_MOVIE:
-            return { ...state, movies: state.movies.filter((movie) => movie.id !== action.payload.id) };
+            return { ...state, movies: state.movies.filter((m) => m.id !== action.payload.id) };
         case ActionType.SWIPE_MOVIE:
-            const swipedMovie = state.movies.find((movie) => movie.id === action.payload.id) as AddedMovie;
+            const swipedMovie = state.movies.find((m) => m.id === action.payload.id) as AddedMovie;
             const alreadySwiped = swipedMovie.swipes.find((swipe) => swipe.user.id === action.payload.user.id);
             const updatedSwipes = alreadySwiped
                 ? swipedMovie.swipes.map((swipe) =>
@@ -88,15 +88,22 @@ const reducer = (state: Room, action: Action): Room => {
             const updatedMovie: AddedMovie = { ...swipedMovie, swipes: updatedSwipes };
             return {
                 ...state,
-                movies: state.movies.map((movie) => (movie.id === updatedMovie.id ? updatedMovie : movie)),
+                movies: state.movies.map((m) => (m.id === updatedMovie.id ? updatedMovie : m)),
             };
         case ActionType.SET_STAGE:
             return { ...state, stage: action.payload.stage };
         case ActionType.TOGGLE_READY:
             return {
                 ...state,
-                participants: state.participants.map((participant) =>
-                    participant.id === action.payload.id ? { ...participant, ready: !participant.ready } : participant,
+                participants: state.participants.map((p) =>
+                    p.id === action.payload.id ? { ...p, ready: !p.ready } : p,
+                ),
+            };
+        case ActionType.USER_NAME_CHANGE:
+            return {
+                ...state,
+                participants: state.participants.map((p) =>
+                    p.id === action.payload.userId ? { ...p, name: action.payload.name } : p,
                 ),
             };
         default:
@@ -105,7 +112,6 @@ const reducer = (state: Room, action: Action): Room => {
 };
 
 const RoomProvider = ({ children }: Props) => {
-    const { user } = useUser();
     const [room, dispatch] = useReducer(reducer, initialState);
     const [storedMovies, setStoredMovies] = useLocalStorage('movies', {});
 
@@ -132,7 +138,6 @@ const RoomProvider = ({ children }: Props) => {
             dispatch({ type: ActionType.JOIN, payload: { participant: { ...newParticipant, ready: false } } });
         });
         onParticipantLeave(({ socketId }) => {
-            console.log(socketId, ' left');
             dispatch({ type: ActionType.LEAVE, payload: { id: socketId } });
         });
         onGetRoom(({ room }) => {
@@ -166,6 +171,22 @@ const RoomProvider = ({ children }: Props) => {
                 return;
             }
             dispatch({ type: ActionType.SET_STAGE, payload: { stage: Stage.SWIPER } });
+        });
+        onNameChange(({ userId, name }) => {
+            const user = room.participants.find((p) => p.id === userId);
+            if (user) {
+                const oldName = user?.name;
+                useToast({
+                    type: ToastType.Success,
+                    message: () => (
+                        <span>
+                            <FontWeight600>{oldName}</FontWeight600> {' has changed their name to '}{' '}
+                            <FontWeight600>{name}.</FontWeight600>
+                        </span>
+                    ),
+                });
+            }
+            dispatch({ type: ActionType.USER_NAME_CHANGE, payload: { userId, name } });
         });
 
         return () => {

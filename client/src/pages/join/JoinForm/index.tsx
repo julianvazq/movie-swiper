@@ -62,7 +62,7 @@ const JoinForm = () => {
     return (
         <StyledForm onSubmit={onSubmit}>
             <InputGroup>
-                <label>Your Name</label>
+                <label>Your name</label>
                 <input type="text" name="name" onChange={onChange} onBlur={onBlur} />
                 {(touched.name || submitted) && errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
             </InputGroup>

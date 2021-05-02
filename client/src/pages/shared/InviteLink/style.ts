@@ -23,7 +23,7 @@ export const InputContainer = styled.div`
 
     input {
         padding: 0.5rem;
-        border-radius: 6px;
+        border-radius: 4px;
         flex-basis: 65%;
         text-overflow: ellipsis;
         border-top-right-radius: 0;

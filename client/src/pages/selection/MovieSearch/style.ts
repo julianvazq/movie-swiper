@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import Select from 'react-select';
+import styled from 'styled-components';
 
 export const FormField = styled.div<{ show: boolean }>`
     display: ${(props) => (props.show ? 'flex' : 'none')};
@@ -12,7 +12,7 @@ export const FormField = styled.div<{ show: boolean }>`
 
     input {
         padding: 0.5rem;
-        border-radius: 6px;
+        border-radius: 4px;
     }
 `;
 

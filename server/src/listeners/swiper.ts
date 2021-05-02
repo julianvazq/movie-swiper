@@ -1,6 +1,4 @@
-import { Server, Socket } from 'socket.io';
-import { SocketCallback } from '../types';
-import { AddedMovie } from '../types/movies';
+import { Server } from 'socket.io';
 
 module.exports = (io: Server) => {
     const startSwiper = function (data: { roomId: string }) {

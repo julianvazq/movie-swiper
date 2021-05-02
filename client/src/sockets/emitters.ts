@@ -1,7 +1,7 @@
-import { Participant } from './../../../server/src/types/index';
 import { socket } from '.';
-import { SocketResponse } from '../types/socket';
 import { AddedMovie } from '../types/movies';
+import { SocketResponse } from '../types/socket';
+import { Participant } from './../../../server/src/types/index';
 
 export const emitTest = (arg: any) => {
     socket.emit('test', arg, () => {
@@ -54,4 +54,8 @@ export const swipeMovie = (
 
 export const startSwiper = (data: { roomId: string }, callback?: (res: SocketResponse<{ roomId: string }>) => void) => {
     socket.emit('swiper:start', data, callback);
+};
+
+export const changeName = (data: { roomId: string; userId: string; name: string }) => {
+    socket.emit('user:name-change', data);
 };

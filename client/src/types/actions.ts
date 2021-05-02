@@ -11,6 +11,7 @@ export enum ActionType {
     SWIPE_MOVIE = 'swipe_movie',
     TOGGLE_READY = 'toggle_ready',
     SET_STAGE = 'set_stage',
+    USER_NAME_CHANGE = 'user_name_change',
 }
 
 export interface GetRoomAction {
@@ -58,6 +59,11 @@ export interface SetStageAction {
     payload: { stage: Stage.SELECTION | Stage.SWIPER };
 }
 
+export interface UserNameChangeAction {
+    type: ActionType.USER_NAME_CHANGE;
+    payload: { userId: string; name: string };
+}
+
 export type Action =
     | JoinAction
     | LeaveAction
@@ -67,4 +73,5 @@ export type Action =
     | InitializeRoomAction
     | GetRoomAction
     | ToggleReadyAction
-    | SetStageAction;
+    | SetStageAction
+    | UserNameChangeAction;

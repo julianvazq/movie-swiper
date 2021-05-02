@@ -1,7 +1,7 @@
-import { Participant } from './../../../server/src/types/index';
 import { socket } from '.';
-import { Room } from '../types/room';
 import { AddedMovie } from '../types/movies';
+import { Room } from '../types/room';
+import { Participant } from './../../../server/src/types/index';
 
 export const onTest = () => {
     return socket.on('test', () => {
@@ -49,4 +49,8 @@ export const onToggleReady = (callback: (data: { userId: string }) => void) => {
 
 export const onStartSwiper = (callback: (data: { roomId: string }) => void) => {
     return socket.on('swiper:start', callback);
+};
+
+export const onNameChange = (callback: (data: { userId: string; name: string }) => void) => {
+    return socket.on('user:name-change', callback);
 };

@@ -101,10 +101,24 @@ module.exports = (io: Server) => {
         }
     };
 
+    const changeRoomOwner = function (data: {
+        roomId: string;
+        userId: string;
+    }) {
+        try {
+            io.to(data.roomId).emit('room:owner-change', {
+                newOwnerId: data.userId,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return {
         createRoom,
         joinRoom,
         sendRoom,
         checkRoom,
+        changeRoomOwner,
     };
 };

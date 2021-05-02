@@ -18,6 +18,10 @@ export const joinRoom = (
     socket.emit('room:join', data, callback);
 };
 
+export const changeRoomOwner = (data: { roomId: string; userId: string }) => {
+    socket.emit('room:owner-change', data);
+};
+
 export const addMovie = (
     data: { roomId: string; movie: AddedMovie },
     callback: (res: SocketResponse<{ movieId: string }>) => void,

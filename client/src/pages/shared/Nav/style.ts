@@ -77,4 +77,5 @@ export const InputGroup = styled.div`
 export const ChangeButton = styled(Button)`
     background: var(--blue-action);
     padding: 0.75rem 1rem;
+    width: 100%;
 `;

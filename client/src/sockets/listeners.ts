@@ -21,8 +21,12 @@ export const onParticipantJoin = (room: Room, callback: (user: Participant) => v
     });
 };
 
-export const onParticipantLeave = (callback: (data: { socketId: string }) => void) => {
+export const onParticipantLeave = (callback: (data: { socketId: string; newOwnerSocketId: string }) => void) => {
     return socket.on('room:leave', callback);
+};
+
+export const onRoomOwnerChange = (callback: (data: { newOwnerId: string }) => void) => {
+    return socket.on('room:owner-change', callback);
 };
 
 export const onGetRoom = (callback: (data: { room: Room }) => void) => {

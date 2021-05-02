@@ -3,6 +3,7 @@ import React, { createContext, ReactNode, useContext, useEffect, useReducer } fr
 import { Participant } from '../../../server/src/types';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { socket } from '../sockets';
+import { changeRoomOwner } from '../sockets/emitters';
 import {
     onGetRoom,
     onMovieAdd,
@@ -11,6 +12,7 @@ import {
     onNameChange,
     onParticipantJoin,
     onParticipantLeave,
+    onRoomOwnerChange,
     onStartSwiper,
     onToggleReady,
 } from '../sockets/listeners';
@@ -70,6 +72,11 @@ const reducer = (state: Room, action: Action): Room => {
             return {
                 ...state,
                 participants: state.participants.filter((p) => p.id !== action.payload.id),
+            };
+        case ActionType.CHANGE_OWNER:
+            return {
+                ...state,
+                ownerId: action.payload.ownerId,
             };
         case ActionType.ADD_MOVIE:
             return {
@@ -139,8 +146,20 @@ const RoomProvider = ({ children }: Props) => {
             });
             dispatch({ type: ActionType.JOIN, payload: { participant: { ...newParticipant, ready: false } } });
         });
-        onParticipantLeave(({ socketId }) => {
+        onParticipantLeave(({ socketId, newOwnerSocketId }) => {
             dispatch({ type: ActionType.LEAVE, payload: { id: socketId } });
+            if (socketId === room.ownerId && newOwnerSocketId === socket.id) {
+                changeRoomOwner({ roomId: room.roomId as string, userId: user.id });
+            }
+        });
+        onRoomOwnerChange(({ newOwnerId }) => {
+            dispatch({ type: ActionType.CHANGE_OWNER, payload: { ownerId: newOwnerId } });
+            if (newOwnerId === user.id) {
+                useToast({
+                    type: ToastType.Custom,
+                    message: 'You are the new room owner.',
+                });
+            }
         });
         onGetRoom(({ room }) => {
             const user: Participant = JSON.parse(localStorage.getItem('user') || '');
@@ -182,9 +201,9 @@ const RoomProvider = ({ children }: Props) => {
             dispatch({ type: ActionType.SET_STAGE, payload: { stage: Stage.SWIPER } });
         });
         onNameChange(({ userId, name }) => {
-            const user = room.participants.find((p) => p.id === userId);
-            if (user) {
-                const oldName = user?.name;
+            const affectedUser = room.participants.find((p) => p.id === userId);
+            if (affectedUser && affectedUser.id !== user.id) {
+                const oldName = affectedUser?.name;
                 useToast({
                     type: ToastType.Success,
                     message: () => (

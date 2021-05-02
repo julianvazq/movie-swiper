@@ -37,11 +37,15 @@ const Nav = ({ forceShow: show }: Props) => {
         return null;
     }
 
+    const closeModal = () => {
+        setVisible(false);
+        setNewName('');
+    };
+
     const confirmNameChange = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setUser({ ...user, name: newName });
-        setNewName('');
-        setVisible(false);
+        closeModal();
         useToast({
             type: ToastType.Success,
             message: () => (
@@ -74,7 +78,7 @@ const Nav = ({ forceShow: show }: Props) => {
                     </NavLinks>
                 </NavContainer>
             </InnerContainer>
-            <Modal visible={visible} onClose={() => setVisible(false)} height={280} maxWidth={400}>
+            <Modal visible={visible} onClose={closeModal} height={280} maxWidth={400}>
                 <ModalContent>
                     <h2>Change name</h2>
                     <CurrentName>Current name</CurrentName>

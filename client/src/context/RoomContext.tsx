@@ -164,7 +164,14 @@ const RoomProvider = ({ children }: Props) => {
             const userToToggle = room.participants.find((p) => p.id === userId);
             if (userToToggle && !userToToggle.ready && user.id !== userToToggle.id) {
                 console.log(userToToggle, user);
-                useToast({ type: ToastType.Success, message: `${userToToggle.name} is ready.` });
+                useToast({
+                    type: ToastType.Success,
+                    message: () => (
+                        <span>
+                            <FontWeight600>{userToToggle.name}</FontWeight600> is ready.
+                        </span>
+                    ),
+                });
             }
             dispatch({ type: ActionType.TOGGLE_READY, payload: { id: userId } });
         });

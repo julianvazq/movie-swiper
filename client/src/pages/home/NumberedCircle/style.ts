@@ -12,7 +12,7 @@ export const Number = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--blue-active);
+    background: hsl(212deg 30% 40%);
     font-family: 'Merienda One', 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
         'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     font-size: 2rem;

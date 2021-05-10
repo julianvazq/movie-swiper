@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Nav from '../../shared/Nav';
 import Explainer from '../Explainer';
-import { Bold, BR, Container, CTA, GetStartedButton, MainTitle, Subtitle } from './style';
+import { Bold, Container, CTA, GetStartedButton, MainTitle, Subtitle } from './style';
 
 const Home = () => {
     const history = useHistory();
@@ -16,11 +16,11 @@ const Home = () => {
                 <CTA>
                     {/* <MovieCardDisplay /> */}
                     <div>
-                        <Subtitle>Undecided? Don&apos;t be</Subtitle>
                         <MainTitle>
-                            Find out <BR /> what you are
-                            <Bold>watching tonight</Bold>
+                            Movie night?
+                            <Bold>Put it to a vote</Bold>
                         </MainTitle>
+                        <Subtitle>Find the right movie</Subtitle>
                         <GetStartedButton onClick={navigate}>Get Started</GetStartedButton>
                     </div>
                 </CTA>

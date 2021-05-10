@@ -9,13 +9,13 @@ import { Container } from './style';
 
 const ownerText = (
     <>
-        Add movies that you&apos;d want to watch. Once the list is complete and members are ready, click on &quot;
+        Add movies you&apos;d want to watch. Once the list is complete and members are ready, click on &quot;
         <FontWeight600>Start Swiping</FontWeight600>.&quot;
     </>
 );
 const participantText = (
     <>
-        Add movies that you&apos;d want to watch. Once you&apos;re ready to start, click on &quot;
+        Add movies you&apos;d want to watch. Once you&apos;re ready to start, click on &quot;
         <FontWeight600>Ready to Swipe</FontWeight600>.&quot;
     </>
 );

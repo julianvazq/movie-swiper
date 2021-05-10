@@ -5,10 +5,11 @@ import styled from 'styled-components';
 export const Container = styled.article`
     position: relative;
     border-radius: 4px;
+    height: 100%;
 `;
 
 export const Card = styled(motion.button)<{ zIndex: number }>`
-    height: 100%;
+    height: 100% !important;
     width: 100%;
     cursor: pointer;
     z-index: ${(props) => props.zIndex || 0};

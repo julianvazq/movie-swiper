@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
 import { startSwiper, toggleReady } from '../../../sockets/emitters';
@@ -28,11 +29,22 @@ const ActionButton = () => {
     const isReady = room.participants.find((p) => p.id === user.id)?.ready;
     const participantsReady = room.participants.filter((p) => p.ready && p.id !== room.ownerId);
     const disableSwiping = !room.movies.length || !participantsReady.length;
+    const toastId = useRef<string>();
 
     const toggleReadyHandler = () => {
+        toast.dismiss(toastId.current);
         toggleReady({ roomId: room.roomId as string, userId: user.id }, (res) => {
             if (res.success && !isReady) {
-                useToast({ type: ToastType.Success, message: 'The room owner has been notified.' });
+                useToast({ type: ToastType.Success, message: 'The room owner has been notified.', duration: 2500 });
+                setTimeout(
+                    () =>
+                        (toastId.current = useToast({
+                            type: ToastType.Loading,
+                            message: 'Waiting for room owner to start.',
+                            duration: 99999,
+                        })),
+                    2500,
+                );
             }
         });
     };
@@ -59,6 +71,15 @@ const ActionButton = () => {
         e.stopPropagation();
         setGroupModalVisible(true);
     };
+
+    useEffect(() => {
+        return () => {
+            if (toastId.current) {
+                toast.dismiss(toastId.current);
+                toastId.current = undefined;
+            }
+        };
+    }, []);
 
     return (
         <>
@@ -109,7 +130,7 @@ const ActionButton = () => {
             </Modal>
             <Modal visible={swipeModalVisible} onClose={() => setSwipeModalVisible(false)} height={280} maxWidth={400}>
                 <ModalContent>
-                    <h2>Start Swiping?</h2>
+                    <h2>Start Swiping</h2>
                     <ol>
                         <li>This action will move everyone in the group to the swiping stage.</li>
                         <br />

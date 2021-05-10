@@ -56,8 +56,8 @@ export const UserIcon = styled(FaUserAlt)`
 `;
 
 export const MainButton = styled(Button)<{ disable?: boolean }>`
-    background: ${(props) => (props.disable ? '#565656' : 'var(--accent-purple)')};
-    color: ${(props) => (props.disable ? '#a9a9a9' : 'var(--white)')};
+    background: ${(props) => (props.disable ? '#808080' : 'var(--accent-purple)')};
+    color: ${(props) => (props.disable ? '#cbc8c8' : 'var(--white)')};
     transition: all ease-in 250ms;
     flex: 70%;
     outline: none;

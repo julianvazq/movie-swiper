@@ -8,8 +8,6 @@ module.exports = (io: Server) => {
         callback: SocketCallback
     ) {
         try {
-            console.log('added movie: ', data.movie.title, data.movie.id);
-
             io.in(data.roomId).emit('movie:add', {
                 movie: data.movie,
             });

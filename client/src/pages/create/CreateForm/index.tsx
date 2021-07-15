@@ -52,7 +52,7 @@ const CreateForm = () => {
             }),
         };
         setUser(newUser);
-        createRoom((res) => {
+        createRoom({ roomId: null }, (res) => {
             if (!res.success) {
                 return;
             }

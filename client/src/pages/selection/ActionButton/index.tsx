@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
+import { useHistory } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
 import { startSwiper, toggleReady } from '../../../sockets/emitters';
@@ -23,6 +24,7 @@ import {
 const ActionButton = () => {
     const { room } = useRoom();
     const { user } = useUser();
+    const history = useHistory();
     const [groupModalVisible, setGroupModalVisible] = useState(false);
     const [swipeModalVisible, setSwipeModalVisible] = useState(false);
     const owner = room.participants.find((p) => p.id === room.ownerId);
@@ -49,7 +51,10 @@ const ActionButton = () => {
         });
     };
 
-    const confirmSwipeAction = () => startSwiper({ roomId: room.roomId as string });
+    const confirmSwipeAction = () => {
+        startSwiper({ roomId: room.roomId as string });
+        history.replace(`/swiper/${room.roomId}`);
+    };
 
     const startSwiping = () => {
         if (!disableSwiping) {
@@ -59,6 +64,11 @@ const ActionButton = () => {
 
         if (!room.movies.length) {
             useToast({ type: ToastType.Custom, message: 'Add movies to your list to start swiping.' });
+            return;
+        }
+
+        if (room.participants.length <= 1) {
+            useToast({ type: ToastType.Custom, message: 'Invite participants to start.' });
             return;
         }
 

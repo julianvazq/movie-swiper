@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { RouteProps, useHistory } from 'react-router-dom';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
-import { checkRoom, joinRoom } from '../../../sockets/emitters';
+import { checkRoom, createRoom, joinRoom } from '../../../sockets/emitters';
 import { Title } from '../../../styles';
+import { ActionType } from '../../../types/actions';
 import { Stage } from '../../../types/room';
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props) => {
-    const { room } = useRoom();
+    const { room, dispatch } = useRoom();
     const { user } = useUser();
     const history = useHistory();
     const [status, setStatus] = useState<'loading' | 'error' | 'success'>('loading');
@@ -23,33 +24,39 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
 
     useEffect(() => {
         try {
-            new Promise((resolve) => setTimeout(resolve, 3000));
-            const userNotInRoom = room.roomId !== roomId;
-            if (userNotInRoom) {
-                /* Check if room exists */
-                checkRoom({ roomId }, (res) => {
-                    if (!res.success) {
-                        history.replace('/expired');
+            console.log(room.roomId, roomId);
+            if (!roomId) return history.replace('/expired');
+            /* Check if room exists */
+            checkRoom({ roomId }, (res) => {
+                if (res.success) {
+                    /* If username is already set, join room */
+                    if (user.name) {
+                        joinRoom({ roomId, user }, (res) => {
+                            if (res.success) {
+                                setStatus('success');
+                            } else {
+                                setStatus('error');
+                            }
+                        });
+                        /* If username is not set, go to Join screen to set it */
+                    } else {
+                        return history.replace(`/join/${roomId}`);
                     }
-                });
-                /* If username is already set, join room */
-                if (user.name) {
-                    joinRoom({ roomId, user }, (res) => {
-                        if (res.success) {
-                            // setTimeout(() => setStatus('success'), 1000);
-                            setStatus('success');
-                        } else {
-                            setStatus('error');
-                        }
-                    });
-                    /* If username is not set, go to Join screen to set it */
                 } else {
-                    history.replace(`/join/${roomId}`);
+                    if (!room.roomId) return history.replace('/create');
+
+                    createRoom({ roomId }, (res) => {
+                        if (!res.success) return;
+
+                        dispatch({
+                            type: ActionType.GET_ROOM,
+                            payload: { room },
+                        });
+                        return history.push(`/selection/${roomId}`);
+                    });
                 }
-            } else {
-                // setTimeout(() => setStatus('success'), 1000);
-                setStatus('success');
-            }
+            });
+            setStatus('success');
         } catch (error) {
             console.log(error);
             setStatus('error');

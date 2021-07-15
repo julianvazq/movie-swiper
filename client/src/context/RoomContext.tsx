@@ -1,7 +1,8 @@
 /* eslint-disable react/display-name */
-import React, { createContext, ReactNode, useContext, useEffect, useReducer } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useReducer, useRef } from 'react';
+import toast from 'react-hot-toast';
+import { useLocation } from 'react-router-dom';
 import { Participant } from '../../../server/src/types';
-import { useLocalStorage } from '../hooks/useLocalStorage';
 import { socket } from '../sockets';
 import { changeRoomOwner } from '../sockets/emitters';
 import {
@@ -115,24 +116,46 @@ const reducer = (state: Room, action: Action): Room => {
                 ),
             };
         default:
-            throw new Error();
+            throw new Error('Action not defined.');
     }
 };
 
+const LS_KEY = 'rooms';
+
 const RoomProvider = ({ children }: Props) => {
+    const { pathname } = useLocation();
     const { user } = useUser();
-    const [room, dispatch] = useReducer(reducer, initialState);
-    const [storedMovies, setStoredMovies] = useLocalStorage('movies', {});
+    const [room, dispatch] = useReducer(reducer, initialState, getLocalStorage);
+    const toastId = useRef<string>();
+
+    function getLSRooms(): { [key: string]: Room } | null {
+        const item = localStorage.getItem(LS_KEY);
+        if (!item) return null;
+        return JSON.parse(item);
+    }
+
+    function getLocalStorage(initialState: Room) {
+        const item = localStorage.getItem(LS_KEY);
+        if (!item) return initialState;
+
+        const rooms: { [key: string]: Room } = JSON.parse(item);
+        const roomIdParam = pathname.split('/').filter(Boolean)[1];
+        const room = rooms[roomIdParam];
+        return room ? room : initialState;
+    }
+
+    function setLocalStorage(rooms: { [key: string]: Room }) {
+        localStorage.setItem(LS_KEY, JSON.stringify(rooms));
+    }
 
     useEffect(() => {
-        if (room.movies) {
-            const newMovieList = {
-                id: room.roomId,
-                movies: room.movies,
-            };
-            setStoredMovies({ ...storedMovies, newMovieList });
+        console.log(room);
+        const rooms = getLSRooms();
+        if (room.roomId) {
+            const updatedRooms = { ...rooms, [room.roomId as string]: room };
+            setLocalStorage(updatedRooms);
         }
-    }, [room.movies]);
+    }, [room]);
 
     useEffect(() => {
         onParticipantJoin(room, (newParticipant) => {
@@ -182,7 +205,6 @@ const RoomProvider = ({ children }: Props) => {
         onToggleReady(({ userId }) => {
             const userToToggle = room.participants.find((p) => p.id === userId);
             if (userToToggle && !userToToggle.ready && user.id !== userToToggle.id) {
-                console.log(userToToggle, user);
                 useToast({
                     type: ToastType.Success,
                     message: () => (
@@ -195,9 +217,7 @@ const RoomProvider = ({ children }: Props) => {
             dispatch({ type: ActionType.TOGGLE_READY, payload: { id: userId } });
         });
         onStartSwiper(({ roomId }) => {
-            if (roomId !== room.roomId) {
-                return;
-            }
+            if (roomId !== room.roomId) return;
             dispatch({ type: ActionType.SET_STAGE, payload: { stage: Stage.SWIPER } });
         });
         onNameChange(({ userId, name }) => {
@@ -221,6 +241,25 @@ const RoomProvider = ({ children }: Props) => {
             socket.removeAllListeners();
         };
     }, [socket, room, dispatch]);
+
+    useEffect(() => {
+        /* BUG HERE */
+        toast.dismiss(toastId.current);
+        const isOwner = user.id === room.ownerId;
+        const participants = room.participants.filter((p) => p.id !== user.id);
+        const everyoneReady = participants.length > 0 && participants.every((p) => p.ready);
+        if (isOwner && everyoneReady) {
+            setTimeout(
+                () =>
+                    (toastId.current = useToast({
+                        type: ToastType.Success,
+                        message: 'Everyone is ready to start.',
+                        duration: 99999,
+                    })),
+                2500,
+            );
+        }
+    }, [room.participants]);
 
     return <RoomContext.Provider value={{ room, dispatch }}>{children}</RoomContext.Provider>;
 };

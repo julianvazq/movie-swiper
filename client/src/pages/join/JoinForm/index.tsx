@@ -15,7 +15,7 @@ const initialInputs = {
 
 const JoinForm = () => {
     const history = useHistory();
-    const { id: roomId }: any = useParams();
+    const { id: roomId }: { [key: string]: string } = useParams();
     const { user, setUser } = useUser();
     const [inputs, setInputs] = useState(initialInputs);
     const [touched, setTouched] = useState<Errors>({});

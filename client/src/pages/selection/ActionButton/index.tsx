@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useHistory } from 'react-router-dom';
+import FixedContainer from '../../../components/FixedContainer';
+import Modal from '../../../components/Modal';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
 import { startSwiper, toggleReady } from '../../../sockets/emitters';
 import { ToastType, useToast } from '../../../utils';
-import FixedContainer from '../../shared/FixedContainer';
-import Modal from '../../shared/Modal';
 import {
     CrownIcon,
     EmptyCheckbox,

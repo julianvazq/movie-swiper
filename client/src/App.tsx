@@ -3,6 +3,10 @@ import React from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
+import AppContainer from './components/AppContainer';
+import Footer from './components/Footer';
+import Nav from './components/Nav';
+import ProtectedRoute from './components/ProtectedRoute';
 import { useMoviePreview } from './context/MoviePreviewContext';
 import Create from './pages/create/Create';
 import Expired from './pages/expired/Expired';
@@ -11,10 +15,6 @@ import Join from './pages/join/Join';
 import Results from './pages/results/Results';
 import MovieDetail from './pages/selection/MovieDetail';
 import Selection from './pages/selection/Selection';
-import AppContainer from './pages/shared/AppContainer';
-import Footer from './pages/shared/Footer';
-import Nav from './pages/shared/Nav';
-import ProtectedRoute from './pages/shared/ProtectedRoute';
 import Swiper from './pages/swiper/Swiper';
 
 const App = () => {

@@ -1,6 +1,6 @@
 import { FaUserCircle } from 'react-icons/fa';
 import styled from 'styled-components';
-import { Button } from '../../../styles';
+import { Button } from '../../styles';
 
 export const Container = styled.section`
     background: rgb(0 0 0 / 25%);

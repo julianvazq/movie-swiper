@@ -1,6 +1,6 @@
 import React from 'react';
-import { Movie } from '../../../../../server/src/types/movies';
-import { Title } from '../../../styles';
+import { Title } from '../../styles';
+import { Movie } from '../../types/movies';
 import Modal from '../Modal';
 
 interface Props {

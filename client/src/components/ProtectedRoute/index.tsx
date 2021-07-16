@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { RouteProps, useHistory } from 'react-router-dom';
-import { useRoom } from '../../../context/RoomContext';
-import { useUser } from '../../../context/UserContext';
-import { checkRoom, createRoom, joinRoom } from '../../../sockets/emitters';
-import { Title } from '../../../styles';
-import { ActionType } from '../../../types/actions';
-import { Stage } from '../../../types/room';
+import { useRoom } from '../../context/RoomContext';
+import { useUser } from '../../context/UserContext';
+import { checkRoom, createRoom, joinRoom } from '../../sockets/emitters';
+import { Title } from '../../styles';
+import { ActionType } from '../../types/actions';
+import { Stage } from '../../types/room';
 
 interface Props {
     component: React.ElementType;

@@ -1,11 +1,11 @@
 /* eslint-disable react/display-name */
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useRoom } from '../../../context/RoomContext';
-import { useUser } from '../../../context/UserContext';
-import { changeName } from '../../../sockets/emitters';
-import { FontWeight600, StyledForm } from '../../../styles';
-import { ToastType, useToast } from '../../../utils';
+import { useRoom } from '../../context/RoomContext';
+import { useUser } from '../../context/UserContext';
+import { changeName } from '../../sockets/emitters';
+import { FontWeight600, StyledForm } from '../../styles';
+import { ToastType, useToast } from '../../utils';
 import Modal from '../Modal';
 import {
     ChangeButton,

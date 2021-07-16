@@ -66,6 +66,18 @@ export const MainTitle = styled.h1`
     margin: 0 0 4rem;
     font-weight: 400;
     text-align: center;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        height: 2px;
+        background: #cecece54;
+        background: #aaaaaa;
+        width: 100%;
+        bottom: -0.5rem;
+        left: 0;
+    }
 
     @media (min-width: 500px) {
         text-align: left;
@@ -91,22 +103,11 @@ export const Subtitle = styled.h2`
     font-size: 1rem;
     font-weight: 500;
     color: #aaaaaa;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     letter-spacing: 2px;
     margin-right: auto;
     position: relative;
     text-align: center;
-
-    &::after {
-        content: '';
-        position: absolute;
-        height: 2px;
-        background: #cecece54;
-        background: #aaaaaa;
-        width: 100%;
-        bottom: -0.5rem;
-        left: 0;
-    }
 
     @media (min-width: 500px) {
         text-align: left;

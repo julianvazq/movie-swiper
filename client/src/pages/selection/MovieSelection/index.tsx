@@ -1,6 +1,6 @@
 import React from 'react';
+import Tabs from '../../../components/Tabs';
 import { useRoom } from '../../../context/RoomContext';
-import Tabs from '../../shared/Tabs';
 import MovieList from '../MovieList';
 import MovieSearch from '../MovieSearch';
 

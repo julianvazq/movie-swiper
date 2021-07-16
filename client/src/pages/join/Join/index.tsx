@@ -6,7 +6,7 @@ const Join = () => {
     return (
         <FormPageContainer>
             <Title>Enter Your Name</Title>
-            <Subtitle>Enter your name and a deck name before proceeding to movie selection.</Subtitle>
+            <Subtitle>Enter your name before proceeding to movie selection.</Subtitle>
             <JoinForm />
         </FormPageContainer>
     );

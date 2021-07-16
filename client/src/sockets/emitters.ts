@@ -3,8 +3,11 @@ import { AddedMovie } from '../types/movies';
 import { SocketResponse } from '../types/socket';
 import { Participant } from './../../../server/src/types/index';
 
-export const createRoom = (callback: (res: SocketResponse<{ roomId: string }>) => void) => {
-    socket.emit('room:create', null, callback);
+export const createRoom = (
+    data: { roomId: string | null },
+    callback: (res: SocketResponse<{ roomId: string }>) => void,
+) => {
+    socket.emit('room:create', data, callback);
 };
 
 export const checkRoom = (data: { roomId: string }, callback: (res: SocketResponse<{ roomId: string }>) => void) => {

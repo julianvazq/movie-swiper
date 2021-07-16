@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router';
-import TheMovieDBLogo from '../../../assets/themoviedb-logo.svg';
-import { Stage } from '../../../types/room';
+import TheMovieDBLogo from '../../assets/themoviedb-logo.svg';
+import { Stage } from '../../types/room';
 import { Attribution, Container, InnerContainer, TheMovieDB } from './style';
 
 const Footer = () => {

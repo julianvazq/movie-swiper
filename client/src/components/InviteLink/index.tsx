@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { ToastType, useToast } from '../../../utils';
-import { Container, Label, InputContainer, CopyButton } from './style';
+import { ToastType, useToast } from '../../utils';
+import { Container, CopyButton, InputContainer, Label } from './style';
 
 const InviteLink = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);

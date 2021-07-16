@@ -1,7 +1,7 @@
 import React from 'react';
+import Tabs from '../../../components/Tabs';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
-import Tabs from '../../shared/Tabs';
 import Matches from '../Matches';
 import SwipeArea from '../SwipeArea';
 import { Container } from './style';

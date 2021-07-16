@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useRoom } from '../../../context/RoomContext';
-import { useUser } from '../../../context/UserContext';
-import SwipeItem from '../SwipeItem';
-import { LikeButton, DislikeButton, LikeIcon, DislikeIcon } from './style';
-import FixedContainer from '../../shared/FixedContainer';
-import { swipeMovie } from '../../../sockets/emitters';
-import { AddedMovie } from '../../../types/movies';
-
+import { useHistory } from 'react-router-dom';
+import SwiperCore, { A11y, EffectCoverflow, EffectFade, Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 // Swiper imports
 import 'swiper/swiper-bundle.min.css';
-import SwiperCore, { Pagination, A11y, EffectCoverflow, EffectFade } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { PaginationOptions } from 'swiper/types/components/pagination';
 import { CoverflowEffectOptions } from 'swiper/types/components/effect-coverflow';
-import { useHistory } from 'react-router-dom';
+import { PaginationOptions } from 'swiper/types/components/pagination';
+import FixedContainer from '../../../components/FixedContainer';
+import { useRoom } from '../../../context/RoomContext';
+import { useUser } from '../../../context/UserContext';
+import { swipeMovie } from '../../../sockets/emitters';
+import { AddedMovie } from '../../../types/movies';
+import SwipeItem from '../SwipeItem';
+import { DislikeButton, DislikeIcon, LikeButton, LikeIcon } from './style';
+
 SwiperCore.use([Pagination, A11y, EffectCoverflow, EffectFade]);
 
 const coverFlowEffectProps: CoverflowEffectOptions = {

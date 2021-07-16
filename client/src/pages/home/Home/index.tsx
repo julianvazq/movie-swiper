@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Nav from '../../shared/Nav';
+import Nav from '../../../components/Nav';
 import Explainer from '../Explainer';
 import { Bold, Container, CTA, GetStartedButton, MainTitle, Subtitle } from './style';
 

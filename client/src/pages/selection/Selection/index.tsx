@@ -1,8 +1,8 @@
 import React from 'react';
+import InviteLink from '../../../components/InviteLink';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
 import { FontWeight600, Subtitle, Title } from '../../../styles';
-import InviteLink from '../../shared/InviteLink';
 import ActionButton from '../ActionButton';
 import MovieSelection from '../MovieSelection';
 import { Container } from './style';

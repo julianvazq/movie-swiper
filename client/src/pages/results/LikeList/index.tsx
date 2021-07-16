@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import Modal from '../../../components/Modal';
 import { Participant } from '../../../types/room';
-import Modal from '../../shared/Modal';
-import { List, Item, Color, Name, MoreItems, ModalContent } from './styled';
+import { Color, Item, List, ModalContent, MoreItems, Name } from './styled';
 
 interface Props {
     users: Participant[];

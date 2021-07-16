@@ -1,12 +1,12 @@
 /* eslint-disable react/display-name */
 import React from 'react';
+import toast from 'react-hot-toast';
 import { useRoom } from '../context/RoomContext';
 import { useUser } from '../context/UserContext';
 import { addMovie, removeMovie } from '../sockets/emitters';
-import { AddedMovie, Movie } from '../types/movies';
-import toast from 'react-hot-toast';
-import { ToastType, useToast } from '../utils';
 import { FontWeight600 } from '../styles';
+import { AddedMovie, Movie } from '../types/movies';
+import { ToastType, useToast } from '../utils';
 
 const useMovieManager = (movie: Movie) => {
     const { room } = useRoom();

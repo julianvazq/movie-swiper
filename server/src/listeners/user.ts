@@ -1,4 +1,4 @@
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
 import { SocketCallback } from '../types';
 
 module.exports = (io: Server) => {
@@ -26,9 +26,8 @@ module.exports = (io: Server) => {
         userId: string;
         name: string;
     }) {
-        const socket: Socket = this;
         try {
-            socket.to(data.roomId).emit('user:name-change', {
+            io.in(data.roomId).emit('user:name-change', {
                 userId: data.userId,
                 name: data.name,
             });

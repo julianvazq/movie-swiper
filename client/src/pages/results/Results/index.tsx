@@ -1,7 +1,7 @@
 import React from 'react';
+import InfoBox from '../../../components/InfoBox';
 import { useRoom } from '../../../context/RoomContext';
 import { Subtitle, Title } from '../../../styles';
-import InfoBox from '../../shared/InfoBox';
 import ResultList from '../ResultList';
 import { Container } from './style';
 

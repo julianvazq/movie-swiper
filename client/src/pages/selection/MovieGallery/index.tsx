@@ -1,6 +1,6 @@
 import React from 'react';
+import MovieCardSkeleton from '../../../components/MovieCardSkeleton';
 import { MovieResponse } from '../../../types/movies';
-import MovieCardSkeleton from '../../shared/MovieCardSkeleton';
 import MovieCard from '../MovieCard';
 import { Gallery } from './style';
 

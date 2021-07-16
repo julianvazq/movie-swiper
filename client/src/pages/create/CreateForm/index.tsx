@@ -14,15 +14,14 @@ interface Errors {
     roomName?: string;
 }
 
-const initialInputs = {
-    name: 'Julian',
-    roomName: 'MyGroup',
-};
-
 const CreateForm = () => {
     const history = useHistory();
     const { room, dispatch } = useRoom();
     const { user, setUser } = useUser();
+    const initialInputs = {
+        name: user.name || '',
+        roomName: '',
+    };
     const [disabled, setDisabled] = useState(false);
     const [inputs, setInputs] = useState(initialInputs);
     const [touched, setTouched] = useState<Errors>({});
@@ -52,7 +51,7 @@ const CreateForm = () => {
             }),
         };
         setUser(newUser);
-        createRoom((res) => {
+        createRoom({ roomId: null }, (res) => {
             if (!res.success) {
                 return;
             }

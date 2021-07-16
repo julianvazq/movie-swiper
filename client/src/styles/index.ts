@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const MaxWidthContainer = styled.section`
     max-width: 1100px;
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: 3rem 1rem;
 
     @media (min-width: 600px) {
         padding: 4rem 1rem;

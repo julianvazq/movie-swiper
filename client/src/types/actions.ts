@@ -6,6 +6,7 @@ export enum ActionType {
     GET_ROOM = 'get_room',
     JOIN = 'join',
     LEAVE = 'leave',
+    CHANGE_OWNER = 'change_owner',
     ADD_MOVIE = 'add_movie',
     REMOVE_MOVIE = 'remove_movie',
     SWIPE_MOVIE = 'swipe_movie',
@@ -32,6 +33,11 @@ export interface JoinAction {
 export interface LeaveAction {
     type: ActionType.LEAVE;
     payload: { id: string };
+}
+
+export interface ChangeOwnerAction {
+    type: ActionType.CHANGE_OWNER;
+    payload: { ownerId: string };
 }
 
 export interface AddMovieAction {
@@ -67,6 +73,7 @@ export interface UserNameChangeAction {
 export type Action =
     | JoinAction
     | LeaveAction
+    | ChangeOwnerAction
     | AddMovieAction
     | RemoveMovieAction
     | SwipeMovieAction

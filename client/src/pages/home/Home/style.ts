@@ -43,10 +43,9 @@ export const CTA = styled.section`
     display: flex;
     align-items: flex-start;
     padding: 4rem 1.5rem;
-    width: 90%;
+    /* width: 90%; */
 
     @media (min-width: 450px) {
-        /* max-width: 500px; */
         margin: auto;
         justify-content: center;
     }
@@ -62,30 +61,11 @@ export const MainTitle = styled.h1`
     font-size: 2.5rem;
     max-width: 650px;
     letter-spacing: 1px;
-    line-height: 1.2;
+    line-height: 1.4;
     color: #b3c4d8;
     margin: 0 0 4rem;
-    font-weight: 500;
-
-    @media (min-width: 700px) {
-        font-size: 2.5rem;
-    }
-`;
-
-export const Bold = styled.span`
-    color: var(--white);
-    font-weight: 700;
-    font-size: 2.75rem;
-`;
-
-export const Subtitle = styled.h2`
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-weight: 500;
-    color: #cececea3;
-    margin-bottom: 1rem;
-    letter-spacing: 2px;
-    margin-right: auto;
+    font-weight: 400;
+    text-align: center;
     position: relative;
 
     &::after {
@@ -93,9 +73,44 @@ export const Subtitle = styled.h2`
         position: absolute;
         height: 2px;
         background: #cecece54;
+        background: #aaaaaa;
         width: 100%;
         bottom: -0.5rem;
         left: 0;
+    }
+
+    @media (min-width: 500px) {
+        text-align: left;
+    }
+
+    @media (min-width: 700px) {
+        font-size: 2.75rem;
+    }
+`;
+
+export const Bold = styled.span`
+    color: var(--white);
+    font-weight: 700;
+    font-size: 2.75rem;
+
+    @media (min-width: 700px) {
+        font-size: 3.5rem;
+    }
+`;
+
+export const Subtitle = styled.h2`
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #aaaaaa;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    margin-right: auto;
+    position: relative;
+    text-align: center;
+
+    @media (min-width: 500px) {
+        text-align: left;
     }
 `;
 
@@ -112,8 +127,13 @@ export const GetStartedButton = styled(Button)`
     padding: 1rem 3rem;
     font-weight: 500;
     transition: background 100ms ease-in;
+    width: 100%;
 
     &:hover {
         background: var(--blue-action-90);
+    }
+
+    @media (min-width: 500px) {
+        width: auto;
     }
 `;

@@ -1,6 +1,6 @@
 import { FaUserCircle } from 'react-icons/fa';
 import styled from 'styled-components';
-import { Button } from '../../../styles';
+import { Button } from '../../styles';
 
 export const Container = styled.section`
     background: rgb(0 0 0 / 25%);
@@ -77,4 +77,5 @@ export const InputGroup = styled.div`
 export const ChangeButton = styled(Button)`
     background: var(--blue-action);
     padding: 0.75rem 1rem;
+    width: 100%;
 `;

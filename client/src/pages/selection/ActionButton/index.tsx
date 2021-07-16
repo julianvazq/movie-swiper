@@ -28,17 +28,19 @@ const ActionButton = () => {
     const [groupModalVisible, setGroupModalVisible] = useState(false);
     const [swipeModalVisible, setSwipeModalVisible] = useState(false);
     const owner = room.participants.find((p) => p.id === room.ownerId);
-    const isReady = room.participants.find((p) => p.id === user.id)?.ready;
+    const isUserReady = room.participants.find((p) => p.id === user.id)?.ready;
     const participantsReady = room.participants.filter((p) => p.ready && p.id !== room.ownerId);
     const disableSwiping = !room.movies.length || !participantsReady.length;
     const toastId = useRef<string>();
+    const timeoutId = useRef<number>();
 
     const toggleReadyHandler = () => {
         toast.dismiss(toastId.current);
+        clearTimeout(timeoutId.current);
         toggleReady({ roomId: room.roomId as string, userId: user.id }, (res) => {
-            if (res.success && !isReady) {
+            if (res.success && !isUserReady) {
                 useToast({ type: ToastType.Success, message: 'The room owner has been notified.', duration: 2500 });
-                setTimeout(
+                timeoutId.current = window.setTimeout(
                     () =>
                         (toastId.current = useToast({
                             type: ToastType.Loading,
@@ -104,7 +106,7 @@ const ActionButton = () => {
                     </MainButton>
                 ) : (
                     <ToggleReadyButton onClick={toggleReadyHandler}>
-                        {isReady ? <FillCheckbox /> : <EmptyCheckbox />}
+                        {isUserReady ? <FillCheckbox /> : <EmptyCheckbox />}
                         Ready To Swipe
                     </ToggleReadyButton>
                 )}

@@ -127,6 +127,7 @@ const RoomProvider = ({ children }: Props) => {
     const { user } = useUser();
     const [room, dispatch] = useReducer(reducer, initialState, getLocalStorage);
     const toastId = useRef<string>();
+    const timeoutId = useRef<number>();
 
     function getLSRooms(): { [key: string]: Room } | null {
         const item = localStorage.getItem(LS_KEY);
@@ -244,12 +245,15 @@ const RoomProvider = ({ children }: Props) => {
 
     useEffect(() => {
         /* BUG HERE */
-        toast.dismiss(toastId.current);
         const isOwner = user.id === room.ownerId;
         const participants = room.participants.filter((p) => p.id !== user.id);
         const everyoneReady = participants.length > 0 && participants.every((p) => p.ready);
+        if (!everyoneReady && timeoutId.current) {
+            clearTimeout(timeoutId.current);
+            toast.dismiss(toastId.current);
+        }
         if (isOwner && everyoneReady) {
-            setTimeout(
+            timeoutId.current = window.setTimeout(
                 () =>
                     (toastId.current = useToast({
                         type: ToastType.Success,

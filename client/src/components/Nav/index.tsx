@@ -68,7 +68,11 @@ const Nav = ({ forceShow: show }: Props) => {
                 </Logo>
                 <NavContainer>
                     <NavLinks>
-                        <NavLink to="/create">Create</NavLink>
+                        {room.roomId ? (
+                            <NavLink to={`/${room.stage}/${room.roomId}`}>Room</NavLink>
+                        ) : (
+                            <NavLink to="/create">Create</NavLink>
+                        )}
                         {user.name && (
                             <UserButton onClick={() => setVisible(true)}>
                                 {user.name}

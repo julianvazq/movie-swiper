@@ -1,41 +1,37 @@
 import React from 'react';
-// import InviteLinkScreenshot from '../../../assets/invite-link.png';
-import useViewportWidth from '../../../hooks/useViewportWidth';
-import NumberedCircle from '../NumberedCircle';
+import Instruction from '../Instruction';
 import * as S from './style';
 
-const steps = ['Create a group and invite others', 'Add movies to the shared list', 'Swipe to vote'];
+const instructions = [
+    {
+        headline: 'Invite your friends',
+        body: 'Create a room, copy the link and share it with others.',
+        icon: <S.UsersIcon />,
+    },
+    {
+        headline: 'Pick your movies',
+        body: 'Browse by genre or find the exact movie you have in mind, then add it to the shared list.',
+        icon: <S.FilmIcon />,
+    },
+    {
+        headline: 'Swipe to vote',
+        body: 'Like a movie? Swipe right. Dislike a movie? Swipe left.',
+        icon: <S.PollIcon />,
+    },
+];
 
 const Explainer = () => {
-    const { width } = useViewportWidth();
-
-    if (width < 500) {
-        return (
-            <S.Section>
-                <S.MobileContainer>
-                    {steps.map((step, i) => (
-                        <NumberedCircle key={i} number={i + 1} text={step} />
-                    ))}
-                </S.MobileContainer>
-            </S.Section>
-        );
-    }
-
     return (
-        <S.Section>
-            <S.Container>
-                <S.Item>
-                    {/* <img src={InviteLinkScreenshot} alt="Invite link screenshot." /> */}
-                    <NumberedCircle number={1} text={steps[0]} />
-                </S.Item>
-                <S.Item>
-                    <NumberedCircle number={2} text={steps[1]} />
-                </S.Item>
-                <S.Item>
-                    <NumberedCircle number={3} text={steps[2]} />
-                </S.Item>
-            </S.Container>
-        </S.Section>
+        <S.Grid>
+            {instructions.map((i) => (
+                <Instruction key={i.headline}>
+                    <Instruction.Headline>
+                        {i.icon} {i.headline}
+                    </Instruction.Headline>
+                    <Instruction.Body>{i.body}</Instruction.Body>
+                </Instruction>
+            ))}
+        </S.Grid>
     );
 };
 

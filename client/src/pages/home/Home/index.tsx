@@ -14,7 +14,6 @@ const Home = () => {
             <Container>
                 <Nav forceShow />
                 <CTA>
-                    {/* <MovieCardDisplay /> */}
                     <div>
                         <MainTitle>
                             Movie night?

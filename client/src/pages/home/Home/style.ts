@@ -3,7 +3,6 @@ import Cinema from '../../../assets/movie-posters.jpg';
 import { Button } from '../../../styles';
 
 export const Container = styled.section`
-    min-height: 100vh;
     position: relative;
     z-index: 1;
     overflow: hidden;
@@ -31,7 +30,7 @@ export const Container = styled.section`
         bottom: 0;
         left: 0;
         right: 0;
-        background: rgba(0, 0, 0, 0.65);
+        background: hsl(211deg 43% 13% / 90%);
         width: 100%;
         height: 100%;
         z-index: -1;
@@ -41,17 +40,23 @@ export const Container = styled.section`
 export const CTA = styled.section`
     position: relative;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     padding: 4rem 1.5rem;
-    /* width: 90%; */
+    min-height: 500px;
 
     @media (min-width: 450px) {
         margin: auto;
         justify-content: center;
     }
 
+    @media (min-width: 700px) {
+        align-items: flex-start;
+        min-height: 600px;
+    }
+
     @media (min-width: 1500px) {
         padding: 6rem 1rem;
+        min-height: 700px;
     }
 `;
 
@@ -80,7 +85,7 @@ export const MainTitle = styled.h1`
     }
 
     @media (min-width: 500px) {
-        text-align: left;
+        /* text-align: left; */
     }
 
     @media (min-width: 700px) {
@@ -110,7 +115,7 @@ export const Subtitle = styled.h2`
     text-align: center;
 
     @media (min-width: 500px) {
-        text-align: left;
+        /* text-align: left; */
     }
 `;
 
@@ -128,6 +133,7 @@ export const GetStartedButton = styled(Button)`
     font-weight: 500;
     transition: background 100ms ease-in;
     width: 100%;
+    margin: auto;
 
     &:hover {
         background: var(--blue-action-90);

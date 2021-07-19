@@ -18,7 +18,7 @@ import {
     StartButton,
     ToggleReadyButton,
     UserCheck,
-    UserIcon,
+    UserIcon
 } from './style';
 
 const ActionButton = () => {
@@ -64,13 +64,13 @@ const ActionButton = () => {
             return;
         }
 
-        if (!room.movies.length) {
-            useToast({ type: ToastType.Custom, message: 'Add movies to your list to start swiping.' });
+        if (room.participants.length <= 1) {
+            useToast({ type: ToastType.Custom, message: 'Invite participants to start.' });
             return;
         }
 
-        if (room.participants.length <= 1) {
-            useToast({ type: ToastType.Custom, message: 'Invite participants to start.' });
+        if (!room.movies.length) {
+            useToast({ type: ToastType.Custom, message: 'Add movies to your list to start swiping.' });
             return;
         }
 

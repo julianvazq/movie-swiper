@@ -6,17 +6,18 @@ import { AddedMovie } from '../../../types/movies';
 import { generateImageUrl } from '../../../utils';
 import { genres as genreObjects } from '../MovieSearch/genres';
 import {
+    ButtonContainer,
+    GenreContainer,
     Image,
     InfoContainer,
+    InfoIcon,
     Item,
-    Overview,
-    Title,
-    SmallGenre,
-    GenreContainer,
-    SeeMoreButton,
-    ButtonContainer,
-    PlusIcon,
     MinusIcon,
+    Overview,
+    PlusIcon,
+    SeeMoreButton,
+    SmallGenre,
+    Title,
 } from './styled';
 
 interface Props {
@@ -30,6 +31,11 @@ const MovieListItem = ({ movie, allowActions }: Props) => {
     const { movieInList, movieActionHandler, buttonBackgroundColor } = useMovieManager(movie);
     const genres = movie.genre_ids.map((genreId) => genreObjects.find((g) => g.id === genreId));
 
+    const onMovieAction = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        e.stopPropagation();
+        movieActionHandler();
+    };
+
     const onMovieClick = () => {
         const { pathname } = history.location;
         if (pathname.includes(movie.id.toString())) {
@@ -40,9 +46,9 @@ const MovieListItem = ({ movie, allowActions }: Props) => {
     };
 
     return (
-        <Item>
+        <Item onClick={onMovieClick} role="button">
             {allowActions && (
-                <ButtonContainer onClick={movieActionHandler} backgroundColor={buttonBackgroundColor}>
+                <ButtonContainer onClick={onMovieAction} backgroundColor={buttonBackgroundColor}>
                     {!movieInList && <PlusIcon />}
                     {movieInList && <MinusIcon />}
                 </ButtonContainer>
@@ -56,7 +62,10 @@ const MovieListItem = ({ movie, allowActions }: Props) => {
                     ))}
                 </GenreContainer>
                 <Overview>{movie.overview}</Overview>
-                <SeeMoreButton onClick={onMovieClick}>See More</SeeMoreButton>
+                <SeeMoreButton onClick={onMovieClick}>
+                    <InfoIcon />
+                    See More
+                </SeeMoreButton>
             </InfoContainer>
         </Item>
     );

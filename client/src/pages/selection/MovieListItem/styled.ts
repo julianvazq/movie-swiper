@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { HiMinus, HiOutlinePlus } from 'react-icons/hi';
+import { RiInformationLine } from 'react-icons/ri';
 import styled from 'styled-components';
 import { Button } from './../../../styles/index';
 import { Genre } from './../MovieDetail/style';
@@ -8,6 +9,7 @@ export const Item = styled.article`
     display: flex;
     position: relative;
     height: 250px;
+    cursor: pointer;
 
     @media screen and (min-width: 800px) {
         height: 300px;
@@ -177,4 +179,9 @@ export const PlusIcon = styled(HiOutlinePlus)`
 
 export const MinusIcon = styled(HiMinus)`
     font-size: 2rem;
+`;
+
+export const InfoIcon = styled(RiInformationLine)`
+    font-size: 1.125rem;
+    margin-right: 0.5rem;
 `;

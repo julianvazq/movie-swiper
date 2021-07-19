@@ -63,7 +63,7 @@ export const CTA = styled.section`
 export const MainTitle = styled.h1`
     display: flex;
     flex-direction: column;
-    font-size: 2.5rem;
+    font-size: 2rem;
     max-width: 650px;
     letter-spacing: 1px;
     line-height: 1.4;
@@ -71,10 +71,11 @@ export const MainTitle = styled.h1`
     margin: 0 0 4rem;
     font-weight: 400;
     text-align: center;
+    text-transform: uppercase;
     position: relative;
 
     &::after {
-        content: '';
+        /* content: ''; */
         position: absolute;
         height: 2px;
         background: #cecece54;
@@ -84,12 +85,8 @@ export const MainTitle = styled.h1`
         left: 0;
     }
 
-    @media (min-width: 500px) {
-        /* text-align: left; */
-    }
-
     @media (min-width: 700px) {
-        font-size: 2.75rem;
+        font-size: 2.25rem;
     }
 `;
 
@@ -97,6 +94,8 @@ export const Bold = styled.span`
     color: var(--white);
     font-weight: 700;
     font-size: 2.75rem;
+    text-transform: none;
+    line-height: 1.2;
 
     @media (min-width: 700px) {
         font-size: 3.5rem;
@@ -107,16 +106,12 @@ export const Subtitle = styled.h2`
     text-transform: uppercase;
     font-size: 1rem;
     font-weight: 500;
-    color: #aaaaaa;
+    color: #d8d8d8;
     margin-bottom: 1rem;
     letter-spacing: 2px;
     margin-right: auto;
     position: relative;
     text-align: center;
-
-    @media (min-width: 500px) {
-        /* text-align: left; */
-    }
 `;
 
 export const BR = styled.br`
@@ -137,9 +132,5 @@ export const GetStartedButton = styled(Button)`
 
     &:hover {
         background: var(--blue-action-90);
-    }
-
-    @media (min-width: 500px) {
-        /* width: auto; */
     }
 `;

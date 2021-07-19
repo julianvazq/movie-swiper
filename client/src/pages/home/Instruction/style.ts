@@ -4,6 +4,7 @@ export const Container = styled.article`
     padding: 1.5rem;
     background-color: var(--blue-active);
     border-radius: 4px;
+    box-shadow: 0px 5px 15px 5px rgb(24 38 53 / 55%);
 `;
 
 export const Headline = styled.h3`
@@ -18,6 +19,8 @@ export const Headline = styled.h3`
 `;
 
 export const Body = styled.p`
-    font-size: 1.25rem;
     line-height: 1.5;
+    @media screen and (min-width: 500px) {
+        font-size: 1.125rem;
+    }
 `;

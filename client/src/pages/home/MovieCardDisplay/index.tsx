@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useMoviePreview } from '../../../context/MoviePreviewContext';
 import { Movie } from '../../../types/movies';
 import { generateImageUrl } from '../../../utils';
 import * as S from './style';
@@ -26,6 +27,7 @@ const MovieCardDisplay = () => {
     const [movie, setMovie] = useState<Movie | null>(null);
     const [loading, setLoading] = useState(true);
     const imageUrl = movie && generateImageUrl(movie.poster_path, 'w342');
+    const { setMoviePreview } = useMoviePreview();
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -48,15 +50,16 @@ const MovieCardDisplay = () => {
         fetchMovie();
     }, []);
 
-    if (!movie || !imageUrl) {
-        return null;
-    }
+    if (!movie || !imageUrl) return null;
 
     return (
-        <S.Container>
+        <S.Button onClick={() => setMoviePreview(movie)}>
             <S.Image src={imageUrl} alt={`Movie poster for ${movie?.title}.`} />
-            <S.ButtonSection>More Details</S.ButtonSection>
-        </S.Container>
+            <S.ButtonSection>
+                <S.InfoIcon />
+                See Details
+            </S.ButtonSection>
+        </S.Button>
     );
 };
 

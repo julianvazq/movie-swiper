@@ -2,9 +2,13 @@ import { FaUserCircle } from 'react-icons/fa';
 import styled from 'styled-components';
 import { Button } from '../../styles';
 
-export const Container = styled.section`
+export const Container = styled.nav`
     background: rgb(0 0 0 / 25%);
     padding: 1rem;
+
+    @media screen and (min-width: 700px) {
+        padding: 1.5rem 1rem;
+    }
 `;
 
 export const InnerContainer = styled.div`
@@ -24,7 +28,7 @@ export const Logo = styled.div`
 
 export const NavContainer = styled.section``;
 
-export const NavLinks = styled.nav`
+export const NavLinks = styled.div`
     display: flex;
     align-items: center;
     list-style: none;

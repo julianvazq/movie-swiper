@@ -41,12 +41,12 @@ export const CTA = styled.section`
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 4rem 1.5rem;
     min-height: 500px;
 
     @media (min-width: 450px) {
         margin: auto;
-        justify-content: center;
     }
 
     @media (min-width: 700px) {
@@ -140,6 +140,6 @@ export const GetStartedButton = styled(Button)`
     }
 
     @media (min-width: 500px) {
-        width: auto;
+        /* width: auto; */
     }
 `;

@@ -2,36 +2,37 @@ import axios from 'axios';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useMoviePreview } from '../../../context/MoviePreviewContext';
 import { useRoom } from '../../../context/RoomContext';
-import { MovieDetails, Movie } from '../../../types/movies';
+import useMovieManager from '../../../hooks/useMovieManager';
+import { Movie, MovieDetails } from '../../../types/movies';
+import { Stage } from '../../../types/room';
+import { generateImageUrl } from '../../../utils';
 import {
-    ContentContainer,
-    Container,
-    Title,
-    Overlay,
+    AddButton,
     BackButton,
-    Image,
-    Overview,
-    Tag,
-    Genre,
-    WrapContainer,
-    Label,
-    Grid,
-    GridCell,
-    Divider,
-    Star,
-    Video,
     BackIcon,
     ButtonContainer,
-    AddButton,
-    PlusIcon,
+    Container,
+    ContentContainer,
     DesktopAddButton,
+    Divider,
+    Genre,
+    Grid,
+    GridCell,
+    Image,
+    Label,
     MinusIcon,
+    Overlay,
+    Overview,
+    PlusIcon,
+    RatingText,
+    Star,
+    Tag,
+    Title,
+    Video,
+    WrapContainer,
 } from './style';
-import useMovieManager from '../../../hooks/useMovieManager';
-import { generateImageUrl } from '../../../utils';
-import { useMoviePreview } from '../../../context/MoviePreviewContext';
-import { Stage } from '../../../types/room';
 
 interface Props {
     movie: Movie;
@@ -153,9 +154,9 @@ const MovieDetail = ({ movie }: Props) => {
                                 <Grid>
                                     <GridCell>
                                         <Label>Rating</Label>
-                                        <p>
+                                        <RatingText>
                                             {details.vote_average} <Star />
-                                        </p>
+                                        </RatingText>
                                     </GridCell>
                                     <GridCell>
                                         <Label>Runtime</Label>

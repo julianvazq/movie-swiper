@@ -86,6 +86,7 @@ export const Title = styled(motion.h3)`
 
 export const Tag = styled.p`
     margin-bottom: 1rem;
+    color: var(--white-muted);
 `;
 
 export const WrapContainer = styled.div`
@@ -107,7 +108,7 @@ export const Genre = styled.p`
 `;
 
 export const Overview = styled.p`
-    line-height: 1.5;
+    line-height: 1.7;
     margin-bottom: 2rem;
 `;
 
@@ -125,6 +126,11 @@ export const Divider = styled.p`
     color: var(--gray);
     border-bottom: 1px solid;
     font-size: 0.875rem;
+`;
+
+export const RatingText = styled.p`
+    display: flex;
+    align-items: center;
 `;
 
 export const Grid = styled.div`

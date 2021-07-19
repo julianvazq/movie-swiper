@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Nav from '../../../components/Nav';
 import Explainer from '../Explainer';
+import Showcase from '../Showcase';
 import { Bold, Container, CTA, GetStartedButton, MainTitle, Subtitle } from './style';
 
 const Home = () => {
@@ -25,6 +26,7 @@ const Home = () => {
                 </CTA>
             </Container>
             <Explainer />
+            <Showcase />
         </>
     );
 };

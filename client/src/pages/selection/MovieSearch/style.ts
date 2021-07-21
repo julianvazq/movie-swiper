@@ -14,6 +14,10 @@ export const FormField = styled.div<{ show: boolean }>`
         padding: 0.5rem;
         border-radius: 4px;
     }
+
+    &:last-of-type {
+        margin-bottom: 2rem;
+    }
 `;
 
 export const StyledSelect = styled(Select)`

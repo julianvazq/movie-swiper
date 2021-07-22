@@ -1,6 +1,3 @@
 import io from 'socket.io-client';
 
-export const socket = io('http://localhost:4500', {
-    transports: ['websocket'],
-    reconnection: true,
-});
+export const socket = io();

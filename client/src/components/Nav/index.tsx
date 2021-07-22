@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useRoom } from '../../context/RoomContext';
 import { useUser } from '../../context/UserContext';
+import useViewportWidth from '../../hooks/useViewportWidth';
 import { changeName } from '../../sockets/emitters';
 import { FontWeight600, StyledForm } from '../../styles';
 import { ToastType, useToast } from '../../utils';
@@ -10,14 +11,13 @@ import Modal from '../Modal';
 import {
     ChangeButton,
     Container,
-    CurrentName,
     InnerContainer,
     InputGroup,
     Logo,
     ModalContent,
-    Name,
     NavContainer,
     NavLinks,
+    StyledLink,
     UserButton,
     UserIcon,
 } from './style';
@@ -27,19 +27,16 @@ interface Props {
 }
 
 const Nav = ({ forceShow: show }: Props) => {
+    const { width } = useViewportWidth();
     const { room } = useRoom();
     const { user, setUser } = useUser();
     const { pathname } = useLocation();
     const [visible, setVisible] = useState(false);
-    const [newName, setNewName] = useState('');
-
-    if (pathname === '/' && !show) {
-        return null;
-    }
+    const [newName, setNewName] = useState(user.name);
+    const username = user.name.length > 8 ? `${user.name.slice(0, 8)}...` : user.name;
 
     const closeModal = () => {
         setVisible(false);
-        setNewName('');
     };
 
     const confirmNameChange = (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,6 +57,8 @@ const Nav = ({ forceShow: show }: Props) => {
         }
     };
 
+    if (pathname === '/' && !show) return null;
+
     return (
         <Container>
             <InnerContainer>
@@ -68,28 +67,37 @@ const Nav = ({ forceShow: show }: Props) => {
                 </Logo>
                 <NavContainer>
                     <NavLinks>
-                        {room.roomId ? (
-                            <NavLink to={`/${room.stage}/${room.roomId}`}>Room</NavLink>
-                        ) : (
-                            <NavLink to="/create">Create</NavLink>
+                        <StyledLink $active={pathname.includes('create')} to="/create">
+                            Create
+                        </StyledLink>
+                        {room.roomId && (
+                            <StyledLink
+                                to={`/${room.stage}/${room.roomId}`}
+                                activeStyle={{
+                                    fontWeight: 700,
+                                }}
+                                $active={['selection', 'swiper', 'results'].includes(
+                                    pathname.split('/').filter(Boolean)[0],
+                                )}
+                            >
+                                Room
+                            </StyledLink>
                         )}
                         {user.name && (
                             <UserButton onClick={() => setVisible(true)}>
-                                {user.name}
+                                {width > 450 && <span>{username}</span>}
                                 <UserIcon />
                             </UserButton>
                         )}
                     </NavLinks>
                 </NavContainer>
             </InnerContainer>
-            <Modal visible={visible} onClose={closeModal} height={280} maxWidth={400}>
+            <Modal visible={visible} onClose={closeModal} height={225} maxWidth={400}>
                 <ModalContent>
                     <h2>Change name</h2>
-                    <CurrentName>Current name</CurrentName>
-                    <Name>{user.name}</Name>
                     <StyledForm onSubmit={confirmNameChange}>
                         <InputGroup>
-                            <label htmlFor="newName">New name</label>
+                            <label htmlFor="newName">Name</label>
                             <input
                                 type="text"
                                 name="newName"

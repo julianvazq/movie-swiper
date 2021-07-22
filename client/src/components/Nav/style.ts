@@ -1,4 +1,5 @@
 import { FaUserCircle } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../../styles';
 
@@ -34,19 +35,32 @@ export const NavLinks = styled.div`
     list-style: none;
 
     & > *:not(:last-child) {
-        margin: 0 1rem;
+        margin-right: 0.75rem;
     }
+
+    @media screen and (min-width: 450px) {
+        & > *:not(:last-child) {
+            margin-right: 1.5rem;
+        }
+    }
+`;
+
+export const StyledLink = styled(NavLink)<{ $active: boolean }>`
+    font-weight: ${(props) => props.$active && 700};
 `;
 
 export const UserButton = styled.button`
     display: flex;
     align-items: center;
     cursor: pointer;
+
+    span {
+        margin-right: 0.75rem;
+    }
 `;
 
 export const UserIcon = styled(FaUserCircle)`
     font-size: 1.25rem;
-    margin-left: 0.75rem;
     width: 20px;
 `;
 
@@ -60,16 +74,6 @@ export const ModalContent = styled.section`
         display: flex;
         align-items: center;
     }
-`;
-
-export const CurrentName = styled.p`
-    color: var(--white-muted);
-    margin-bottom: 0.5rem;
-`;
-
-export const Name = styled.p`
-    margin-bottom: 1rem;
-    font-size: 1.125rem;
 `;
 
 export const InputGroup = styled.div`

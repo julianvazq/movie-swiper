@@ -19,12 +19,12 @@ const io: Server = socketio(server);
 require('./listeners')(io);
 
 /* Deployment */
-// const path = require('path');
-// const clientPath = path.join(__dirname, '../../client/build/index.html');
-// app.use(express.static(clientPath));
-// app.get('*', (req, res) => {
-//     res.sendFile(clientPath);
-// });
+const path = require('path');
+const clientRoot = path.join(__dirname, '../../client/build/');
+app.use(express.static(clientRoot));
+app.get('*', (req, res) => {
+    res.sendFile('index.html', { root: clientRoot });
+});
 
 const PORT = 4500;
 server.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));

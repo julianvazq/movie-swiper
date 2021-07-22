@@ -24,7 +24,7 @@ const useMovieManager = (movie: Movie) => {
                         message: () => (
                             <>
                                 <span>
-                                    Added <FontWeight600>{movie.title}</FontWeight600>.
+                                    You added <FontWeight600>{movie.title}</FontWeight600>.
                                 </span>
                             </>
                         ),

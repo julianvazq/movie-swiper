@@ -18,7 +18,7 @@ import {
     StartButton,
     ToggleReadyButton,
     UserCheck,
-    UserIcon
+    UserIcon,
 } from './style';
 
 const ActionButton = () => {
@@ -35,7 +35,9 @@ const ActionButton = () => {
     const timeoutId = useRef<number>();
 
     const toggleReadyHandler = () => {
-        toast.dismiss(toastId.current);
+        if (toastId.current) {
+            toast.dismiss(toastId.current);
+        }
         clearTimeout(timeoutId.current);
         toggleReady({ roomId: room.roomId as string, userId: user.id }, (res) => {
             if (res.success && !isUserReady) {

@@ -33,7 +33,7 @@ const Nav = ({ forceShow: show }: Props) => {
     const { pathname } = useLocation();
     const [visible, setVisible] = useState(false);
     const [newName, setNewName] = useState(user.name);
-    const username = user.name.length > 8 ? `${user.name.slice(0, 8)}...` : user.name;
+    const username = user.name?.length > 8 ? `${user.name.slice(0, 8)}...` : user.name;
 
     const closeModal = () => {
         setVisible(false);

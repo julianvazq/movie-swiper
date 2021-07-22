@@ -127,7 +127,8 @@ const RoomProvider = ({ children }: Props) => {
     const { user } = useUser();
     const [room, dispatch] = useReducer(reducer, initialState, getLocalStorage);
     const toastId = useRef<string>();
-    const timeoutId = useRef<number>();
+    const toastTimeoutId = useRef<number>();
+    const changeOwnerTimeoutId = useRef<number>();
 
     function getLSRooms(): { [key: string]: Room } | null {
         const item = localStorage.getItem(LS_KEY);
@@ -160,6 +161,9 @@ const RoomProvider = ({ children }: Props) => {
 
     useEffect(() => {
         onParticipantJoin(room, (newParticipant) => {
+            if (newParticipant.id === room.ownerId) {
+                clearTimeout(changeOwnerTimeoutId.current);
+            }
             useToast({
                 type: ToastType.Success,
                 message: () => (
@@ -173,7 +177,9 @@ const RoomProvider = ({ children }: Props) => {
         onParticipantLeave(({ socketId, newOwnerSocketId }) => {
             dispatch({ type: ActionType.LEAVE, payload: { id: socketId } });
             if (socketId === room.ownerId && newOwnerSocketId === socket.id) {
-                changeRoomOwner({ roomId: room.roomId as string, userId: user.id });
+                changeOwnerTimeoutId.current = window.setTimeout(() => {
+                    changeRoomOwner({ roomId: room.roomId as string, userId: user.id });
+                }, 10000);
             }
         });
         onRoomOwnerChange(({ newOwnerId }) => {
@@ -181,7 +187,13 @@ const RoomProvider = ({ children }: Props) => {
             if (newOwnerId === user.id) {
                 useToast({
                     type: ToastType.Custom,
-                    message: 'You are the new room owner.',
+                    message: () => (
+                        <span>
+                            You are the new room owner. <br />
+                            Tap on <FontWeight600>&quot;Start Swiping&quot;</FontWeight600> to begin.
+                        </span>
+                    ),
+                    duration: 8000,
                 });
             }
         });
@@ -195,6 +207,17 @@ const RoomProvider = ({ children }: Props) => {
             dispatch({ type: ActionType.GET_ROOM, payload: { room: { ...room, participants } } });
         });
         onMovieAdd((movie) => {
+            const addedByOtherUser = movie.addedByUserId !== user.id;
+            if (addedByOtherUser) {
+                useToast({
+                    type: ToastType.Success,
+                    message: () => (
+                        <span>
+                            Someone added <FontWeight600>{movie.title}</FontWeight600>.
+                        </span>
+                    ),
+                });
+            }
             dispatch({ type: ActionType.ADD_MOVIE, payload: { movie } });
         });
         onMovieRemove(({ movieId }) => {
@@ -244,26 +267,38 @@ const RoomProvider = ({ children }: Props) => {
     }, [socket, room, dispatch]);
 
     useEffect(() => {
-        /* BUG HERE */
         const isOwner = user.id === room.ownerId;
         const participants = room.participants.filter((p) => p.id !== user.id);
         const everyoneReady = participants.length > 0 && participants.every((p) => p.ready);
-        if (!everyoneReady && timeoutId.current) {
-            clearTimeout(timeoutId.current);
+        if (!everyoneReady && toastTimeoutId.current) {
+            clearTimeout(toastTimeoutId.current);
             toast.dismiss(toastId.current);
         }
         if (isOwner && everyoneReady) {
-            timeoutId.current = window.setTimeout(
+            toastTimeoutId.current = window.setTimeout(
                 () =>
                     (toastId.current = useToast({
                         type: ToastType.Success,
-                        message: 'Everyone is ready to start.',
+                        message: () => (
+                            <span>
+                                Everyone is ready to start.
+                                <br />
+                                Tap on<FontWeight600>&quot;Start Swiping&quot;.</FontWeight600>
+                            </span>
+                        ),
                         duration: 99999,
                     })),
                 2500,
             );
         }
     }, [room.participants]);
+
+    useEffect(() => {
+        clearTimeout(toastTimeoutId.current);
+        if (toastId.current) {
+            toast.dismiss(toastId.current);
+        }
+    }, [pathname]);
 
     return <RoomContext.Provider value={{ room, dispatch }}>{children}</RoomContext.Provider>;
 };

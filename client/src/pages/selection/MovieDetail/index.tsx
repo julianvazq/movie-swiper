@@ -65,7 +65,6 @@ const MovieDetail = ({ movie }: Props) => {
 
     useEffect(() => {
         const onEscPress = (e: KeyboardEvent) => {
-            console.log(e);
             if (e.key === 'Escape') {
                 history.push(`/selection/${room.roomId}`);
             }

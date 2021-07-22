@@ -122,7 +122,6 @@ const SwipeArea = () => {
             return;
         }
 
-        console.log(movie.title, liked);
         movies.current = movies.current.map((m) => (m.id === movie.id ? { ...m, swiped: true } : m));
         swipeMovie({ roomId: room.roomId as string, movieId: movie.id, liked, user });
     };

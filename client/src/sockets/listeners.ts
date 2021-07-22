@@ -15,7 +15,6 @@ export const onConnection = (callback: (socketId: string) => void) => {
 
 export const onParticipantJoin = (room: Room, callback: (user: Participant) => void) => {
     return socket.on('room:new-join', (data: { socketId: string; user: Participant }) => {
-        console.log('new join: ', data.user);
         socket.emit('room:send', { socketId: data.socketId, room });
         callback(data.user);
     });

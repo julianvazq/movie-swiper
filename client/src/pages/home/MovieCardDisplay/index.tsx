@@ -38,7 +38,6 @@ const MovieCardDisplay = () => {
                 if (res.status === 200) {
                     setMovie(res.data);
                 }
-                console.log(res);
             } catch (error) {
                 console.log(error);
                 setMovie(null);

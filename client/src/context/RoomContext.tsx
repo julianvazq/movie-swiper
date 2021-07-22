@@ -48,7 +48,6 @@ export const useRoom = () => {
 };
 
 const reducer = (state: Room, action: Action): Room => {
-    console.log(action);
     switch (action.type) {
         case ActionType.INITIALIZE_ROOM:
             return {
@@ -151,7 +150,6 @@ const RoomProvider = ({ children }: Props) => {
     }
 
     useEffect(() => {
-        console.log(room);
         const rooms = getLSRooms();
         if (room.roomId) {
             const updatedRooms = { ...rooms, [room.roomId as string]: room };

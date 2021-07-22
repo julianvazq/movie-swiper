@@ -78,7 +78,7 @@ const CreateForm = () => {
     function getErrors() {
         const errors: Errors = {};
         if (!inputs.name) errors.name = 'Name is required.';
-        if (!inputs.roomName) errors.roomName = 'Group name is required.';
+        // if (!inputs.roomName) errors.roomName = 'Group name is required.';
 
         return errors;
     }
@@ -90,7 +90,7 @@ const CreateForm = () => {
                 <input type="text" name="name" id="name" value={inputs.name} onChange={onChange} onBlur={onBlur} />
                 {(touched.name || submitted) && errors.name && <ErrorMessage>{errors.name}</ErrorMessage>}
             </InputGroup>
-            <InputGroup>
+            {/* <InputGroup>
                 <label htmlFor="roomName">Group name</label>
                 <input
                     type="text"
@@ -101,7 +101,7 @@ const CreateForm = () => {
                     onBlur={onBlur}
                 />
                 {(touched.roomName || submitted) && errors.roomName && <ErrorMessage>{errors.roomName}</ErrorMessage>}
-            </InputGroup>
+            </InputGroup> */}
             <FormButton $disabled={disabled} disabled={disabled}>
                 Get Started
             </FormButton>

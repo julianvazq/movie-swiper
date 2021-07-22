@@ -3,9 +3,9 @@ import { RouteProps, useHistory } from 'react-router-dom';
 import { useRoom } from '../../context/RoomContext';
 import { useUser } from '../../context/UserContext';
 import { checkRoom, createRoom, joinRoom } from '../../sockets/emitters';
-import { Title } from '../../styles';
 import { ActionType } from '../../types/actions';
 import { Stage } from '../../types/room';
+import * as S from './style';
 
 interface Props {
     component: React.ElementType;
@@ -78,11 +78,20 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
     }, [room.stage]);
 
     if (status === 'loading') {
-        return <Title>Loading...</Title>;
+        return (
+            <S.Container>
+                <S.Text>Joining room</S.Text>
+                <S.LoadingDots />
+            </S.Container>
+        );
     }
 
     if (status === 'error') {
-        return <Title>Could not join. Please try again.</Title>;
+        return (
+            <S.Container>
+                <S.Text>Could not join room. Refresh the page to try again.</S.Text>
+            </S.Container>
+        );
     }
 
     return <Component {...computedMatch} {...rest} />;

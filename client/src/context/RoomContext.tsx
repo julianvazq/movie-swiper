@@ -281,7 +281,7 @@ const RoomProvider = ({ children }: Props) => {
                             <span>
                                 Everyone is ready to start.
                                 <br />
-                                Tap on<FontWeight600>&quot;Start Swiping&quot;.</FontWeight600>
+                                Tap on <FontWeight600>&quot;Start Swiping&quot;.</FontWeight600>
                             </span>
                         ),
                         duration: 99999,

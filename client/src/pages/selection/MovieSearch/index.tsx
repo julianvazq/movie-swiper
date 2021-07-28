@@ -26,13 +26,16 @@ const MovieSearch = () => {
         setGenres(value.map((genre) => genre.value));
     };
 
+    const onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+        e.target.select();
+    };
+
     return (
         <section>
-            {' '}
             <form>
                 <FormField show={true}>
                     <label>Search by name</label>
-                    <input type="text" value={movieQuery} onChange={onQueryChange} />
+                    <input type="text" value={movieQuery} onChange={onQueryChange} onFocus={onFocus} />
                 </FormField>
                 <FormField show={movieQuery === ''}>
                     <label>Search by genre</label>

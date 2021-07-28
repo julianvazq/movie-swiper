@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import InfoBox from '../../../components/InfoBox';
 import { useRoom } from '../../../context/RoomContext';
 import { Subtitle, Title } from '../../../styles';
@@ -40,6 +41,9 @@ const Results = () => {
 
     return (
         <Container>
+            <Helmet>
+                <title>Results | Movie Swiper</title>
+            </Helmet>
             <Title>Final Results</Title>
             <Subtitle>Only movies that 2 or more participants liked will show up here.</Subtitle>
             <InfoBox text={text} margin="0 0 4rem" backgroundColor={backgroundColor} />

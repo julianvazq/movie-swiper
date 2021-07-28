@@ -24,7 +24,6 @@ const ResultCard = ({ movie }: Props) => {
     const { setMoviePreview } = useMoviePreview();
     const { pathname } = useLocation();
     const usersWhoLiked = movie.swipes.filter((swipe) => swipe.liked).map((swipe) => swipe.user);
-    const colors = usersWhoLiked.map((user) => user?.color) as string[];
 
     const onMovieClick = () => {
         if (pathname.includes(movie.id.toString())) {
@@ -52,7 +51,6 @@ const ResultCard = ({ movie }: Props) => {
                 <ExpandIcon />
                 Movie Details
             </DetailButton>
-            {/* <LikeCountBar colors={colors} /> */}
         </Card>
     );
 };

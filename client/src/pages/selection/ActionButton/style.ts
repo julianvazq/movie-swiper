@@ -76,8 +76,8 @@ export const MainButton = styled(Button)<{ disable?: boolean }>`
     }
 `;
 
-export const ToggleReadyButton = styled(MainButton)`
-    background: var(--blue-active);
+export const ToggleReadyButton = styled(MainButton)<{ $ready: boolean }>`
+    background: ${(props) => (props.$ready ? 'var(--accent-purple)' : 'var(--blue-active)')};
 `;
 
 export const ReadyButton = styled(Button)`

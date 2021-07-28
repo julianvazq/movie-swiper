@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import Tabs from '../../../components/Tabs';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
@@ -21,6 +22,9 @@ const Swiper = () => {
 
     return (
         <Container>
+            <Helmet>
+                <title>Swipe | Movie Swiper</title>
+            </Helmet>
             <Tabs tabs={['Movie', `Matches (${numMatches})`]}>
                 <SwipeArea />
                 <Matches />

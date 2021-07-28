@@ -107,7 +107,7 @@ const ActionButton = () => {
                         Start Swiping
                     </MainButton>
                 ) : (
-                    <ToggleReadyButton onClick={toggleReadyHandler}>
+                    <ToggleReadyButton onClick={toggleReadyHandler} $ready={Boolean(isUserReady)}>
                         {isUserReady ? <FillCheckbox /> : <EmptyCheckbox />}
                         Ready To Swipe
                     </ToggleReadyButton>
@@ -133,7 +133,8 @@ const ActionButton = () => {
                             return (
                                 <li key={p.id}>
                                     <div>
-                                        <UserIcon /> {p.name}
+                                        {p.ready ? <UserCheck style={{ marginRight: '1rem' }} /> : <UserIcon />}{' '}
+                                        {p.name}
                                     </div>
                                     {p.ready && <p>Ready</p>}
                                 </li>

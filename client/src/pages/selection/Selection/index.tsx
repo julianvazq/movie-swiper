@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import toast from 'react-hot-toast';
 import InviteLink from '../../../components/InviteLink';
 import { useRoom } from '../../../context/RoomContext';
 import { useUser } from '../../../context/UserContext';
@@ -16,8 +18,8 @@ const ownerText = (
 );
 const participantText = (
     <>
-        Add movies you&apos;d want to watch. Once you&apos;re ready to start, tap on &quot;
-        <FontWeight600>Ready to Swipe</FontWeight600>.&quot;
+        Add movies you&apos;d want to watch. Once you&apos;re ready to start, tap on
+        <FontWeight600>Ready to Swipe</FontWeight600>.
     </>
 );
 
@@ -27,15 +29,27 @@ const Selection = () => {
     const isOwner = room.ownerId === user.id;
 
     useEffect(() => {
-        useToast({
-            type: ToastType.Custom,
-            message: 'Invite others by sharing the link to this page.',
-            duration: 8000,
-        });
+        let toastId: string;
+        const timeoutId = window.setTimeout(() => {
+            toastId = useToast({
+                type: ToastType.Custom,
+                message: 'Invite others by sharing the link to this page.',
+                duration: 8000,
+            });
+        }, 1000);
+        return () => {
+            if (toastId) {
+                toast.dismiss(toastId);
+            }
+            clearTimeout(timeoutId);
+        };
     }, []);
 
     return (
         <Container>
+            <Helmet>
+                <title>Selection | Movie Swiper</title>
+            </Helmet>
             <Title>Pick Your Movies</Title>
             <Subtitle>{isOwner ? ownerText : participantText}</Subtitle>
             <InviteLink />

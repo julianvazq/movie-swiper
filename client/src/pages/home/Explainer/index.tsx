@@ -15,7 +15,12 @@ const instructions = [
     },
     {
         headline: 'Swipe to vote',
-        body: 'Like a movie? Swipe right. Dislike a movie? Swipe left.',
+        body: (
+            <>
+                Like a movie? Swipe right. <br />
+                Dislike a movie? Swipe left.
+            </>
+        ),
         icon: <S.PollIcon />,
     },
 ];

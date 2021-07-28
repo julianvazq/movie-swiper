@@ -10,7 +10,7 @@ interface Props {
 const LikeList = ({ users }: Props) => {
     const [visible, setVisible] = useState(false);
 
-    const maxNumber = 5;
+    const maxNumber = 3;
     if (users.length > maxNumber) {
         return (
             <>
@@ -23,9 +23,7 @@ const LikeList = ({ users }: Props) => {
                     ))}
                     <Item>
                         <MoreItems onClick={() => setVisible(true)}>
-                            <button>
-                                <span>+{users.length - maxNumber}</span> More
-                            </button>
+                            <span>+{users.length - maxNumber}</span> More
                         </MoreItems>
                     </Item>
                 </List>

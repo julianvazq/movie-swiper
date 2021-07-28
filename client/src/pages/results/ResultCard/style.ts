@@ -5,6 +5,7 @@ import { Button } from '../../../styles';
 
 export const Card = styled.article`
     border-right: 1px solid var(--blue-dark);
+    border-radius: 4px;
     background: var(--blue-dark);
 `;
 
@@ -50,10 +51,11 @@ export const TotalLikes = styled.p`
 export const MovieTitle = styled.h3`
     font-size: 1.125rem;
     font-weight: 600;
+    line-height: 1.3;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
-    border-bottom: 1px solid var(--gray);
-    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--blue-active);
+    padding-bottom: 0.75rem;
 `;
 
 export const ResultsContainer = styled.div`

@@ -188,7 +188,7 @@ const RoomProvider = ({ children }: Props) => {
                     message: () => (
                         <span>
                             You are the new room owner. <br />
-                            Tap on <FontWeight600>&quot;Start Swiping&quot;</FontWeight600> to begin.
+                            Tap on <FontWeight600>Start Swiping</FontWeight600> to begin.
                         </span>
                     ),
                     duration: 8000,
@@ -281,7 +281,7 @@ const RoomProvider = ({ children }: Props) => {
                             <span>
                                 Everyone is ready to start.
                                 <br />
-                                Tap on <FontWeight600>&quot;Start Swiping&quot;.</FontWeight600>
+                                Tap on <FontWeight600>Start Swiping.</FontWeight600>
                             </span>
                         ),
                         duration: 99999,

@@ -23,6 +23,7 @@ export const List = styled.section`
 
 export const Empty = styled.p`
     text-align: center;
+    margin: 4rem 0;
 
     @media (min-width: 700px) {
         font-size: 1.25rem;

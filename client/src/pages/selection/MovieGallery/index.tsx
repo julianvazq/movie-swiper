@@ -2,7 +2,7 @@ import React from 'react';
 import MovieCardSkeleton from '../../../components/MovieCardSkeleton';
 import { MovieResponse } from '../../../types/movies';
 import MovieCard from '../MovieCard';
-import { Gallery } from './style';
+import { Empty, Gallery } from './style';
 
 interface Props {
     movies: MovieResponse;
@@ -20,6 +20,10 @@ const MovieGallery = ({ movies, loading }: Props) => {
                 ))}
             </Gallery>
         );
+    }
+
+    if (!moviesOnDisplay?.length) {
+        return <Empty>No movies found. Try a different search.</Empty>;
     }
 
     return (

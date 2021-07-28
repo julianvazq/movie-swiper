@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const List = styled.ul`
     list-style: none;
@@ -32,9 +32,11 @@ export const Name = styled.p<{ wrap: number }>`
     max-width: ${(props) => props.wrap === 0 && '110px'}; ;
 `;
 
-export const MoreItems = styled.p`
+export const MoreItems = styled.button`
     margin-top: 0.5rem;
     color: var(--white-muted);
+    font-weight: 500;
+    cursor: pointer;
 
     span {
         margin-right: 0.25rem;

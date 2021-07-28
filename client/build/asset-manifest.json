@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.aa618fab.chunk.css",
+    "main.js": "/static/js/main.b544bba9.chunk.js",
+    "main.js.map": "/static/js/main.b544bba9.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.b1bf9102.js",
+    "runtime-main.js.map": "/static/js/runtime-main.b1bf9102.js.map",
+    "static/css/2.f131651c.chunk.css": "/static/css/2.f131651c.chunk.css",
+    "static/js/2.aeb506cf.chunk.js": "/static/js/2.aeb506cf.chunk.js",
+    "static/js/2.aeb506cf.chunk.js.map": "/static/js/2.aeb506cf.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.f131651c.chunk.css.map": "/static/css/2.f131651c.chunk.css.map",
+    "static/css/main.aa618fab.chunk.css.map": "/static/css/main.aa618fab.chunk.css.map",
+    "static/js/2.aeb506cf.chunk.js.LICENSE.txt": "/static/js/2.aeb506cf.chunk.js.LICENSE.txt",
+    "static/media/movie-posters.0e940876.jpg": "/static/media/movie-posters.0e940876.jpg",
+    "static/media/poster_unavailable.0646537b.png": "/static/media/poster_unavailable.0646537b.png",
+    "static/media/themoviedb-logo.caee7457.svg": "/static/media/themoviedb-logo.caee7457.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b1bf9102.js",
+    "static/css/2.f131651c.chunk.css",
+    "static/js/2.aeb506cf.chunk.js",
+    "static/css/main.aa618fab.chunk.css",
+    "static/js/main.b544bba9.chunk.js"
+  ]
+}

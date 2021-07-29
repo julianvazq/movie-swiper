@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { AiFillStar } from 'react-icons/ai';
 import { HiMinus, HiOutlinePlus } from 'react-icons/hi';
-import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowBack, IoMdClose } from 'react-icons/io';
 import styled, { css } from 'styled-components';
 import { Button } from '../../../styles';
 
@@ -204,6 +204,23 @@ export const PlusIcon = styled(HiOutlinePlus)`
 
 export const MinusIcon = styled(HiMinus)`
     ${iconStyles}
+`;
+
+export const CloseIcon = styled(IoMdClose)`
+    font-size: 2rem;
+    color: var(--white-muted);
+`;
+
+export const CloseButton = styled.button`
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+
+    @media screen and (min-width: 600px) {
+        display: block;
+    }
 `;
 
 export const DesktopAddButton = styled(Button)<{ backgroundColor: string }>`

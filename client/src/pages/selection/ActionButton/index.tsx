@@ -72,12 +72,12 @@ const ActionButton = () => {
         }
 
         if (!room.movies.length) {
-            useToast({ type: ToastType.Custom, message: 'Add movies to your list to start swiping.' });
+            useToast({ type: ToastType.Custom, message: 'Add movies to the list to start.', duration: 3000 });
             return;
         }
 
         if (!participantsReady.length) {
-            useToast({ type: ToastType.Custom, message: 'Wait for participants to be ready.' });
+            useToast({ type: ToastType.Custom, message: 'Wait for participants to be ready.', duration: 3000 });
         }
     };
 

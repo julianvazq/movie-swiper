@@ -9,7 +9,7 @@ const Create = () => {
             <Helmet>
                 <title>Create | Movie Swiper</title>
             </Helmet>
-            <Title>Create New Group</Title>
+            <Title>Create New Room</Title>
             <Subtitle>Enter your name before proceeding to movie selection.</Subtitle>
             <CreateForm />
         </FormPageContainer>

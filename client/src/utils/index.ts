@@ -32,15 +32,18 @@ interface ToastParams {
     type: ToastType;
     message: ValueOrFunction<Renderable, Toast>;
     duration?: number;
+    icon?: any;
+    id?: string;
 }
 
-export const useToast = ({ type, message, duration }: ToastParams) => {
+export const useToast = ({ type, message, duration, icon, id }: ToastParams) => {
     const successOptions: ToastOptions = {
         duration: duration || 2000,
         style: {
             backgroundColor: 'var(--blue-active)',
             color: '#FFF',
         },
+        icon,
         iconTheme: {
             primary: 'hsl(213deg 24% 53%)',
             secondary: '#FFF',
@@ -53,6 +56,7 @@ export const useToast = ({ type, message, duration }: ToastParams) => {
             backgroundColor: 'hsl(0deg 56% 27%)',
             color: '#FFF',
         },
+        icon,
         iconTheme: {
             primary: '#a23636',
             secondary: '#FFF',
@@ -65,6 +69,7 @@ export const useToast = ({ type, message, duration }: ToastParams) => {
             backgroundColor: 'var(--blue-active)',
             color: '#FFF',
         },
+        icon,
         iconTheme: {
             primary: 'hsl(213deg 24% 53%)',
             secondary: '#FFF',

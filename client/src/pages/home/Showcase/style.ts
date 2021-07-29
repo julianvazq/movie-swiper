@@ -25,6 +25,7 @@ export const Content = styled.div`
         font-weight: 500;
         margin-bottom: 1rem;
         text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
     p {
@@ -49,7 +50,7 @@ export const Content = styled.div`
 
     ul {
         list-style-position: inside;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
 
         & > li + li {
             margin-top: 0.5rem;

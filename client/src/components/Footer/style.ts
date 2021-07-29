@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
-export const Container = styled.footer<{ display: boolean }>`
-    /* background: #141d26; */
+export const Container = styled.footer<{ $display: boolean }>`
     background: rgb(0 0 0 / 25%);
     padding: 2rem;
-    display: ${(props) => (props.display ? 'block' : 'none')};
+    display: ${(props) => (props.$display ? 'block' : 'none')};
 
     @media (min-width: 600px) {
         display: block;

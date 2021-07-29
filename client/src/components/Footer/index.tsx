@@ -13,7 +13,7 @@ const Footer = () => {
         pathname.includes(Stage.RESULTS);
 
     return (
-        <Container display={showFooter}>
+        <Container $display={showFooter}>
             <InnerContainer>
                 <Attribution>
                     Powered by

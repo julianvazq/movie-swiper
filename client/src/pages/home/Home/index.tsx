@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom';
 import Nav from '../../../components/Nav';
 import Explainer from '../Explainer';
@@ -7,11 +8,16 @@ import { Bold, Container, CTA, GetStartedButton, MainTitle, Subtitle } from './s
 
 const Home = () => {
     const history = useHistory();
+
     const navigate = () => {
         history.push('/create');
     };
+
     return (
         <>
+            <Helmet>
+                <title>Movie Swiper</title>
+            </Helmet>
             <Container>
                 <Nav forceShow />
                 <CTA>

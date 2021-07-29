@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { HiMinus, HiOutlinePlus } from 'react-icons/hi';
 import styled from 'styled-components';
 
-export const Container = styled.article`
+export const Container = styled(motion.article)`
     position: relative;
     border-radius: 4px;
     height: 100%;

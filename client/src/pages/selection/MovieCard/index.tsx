@@ -4,6 +4,7 @@ import { Movie } from '../../../../../server/src/types/movies';
 import { useMoviePreview } from '../../../context/MoviePreviewContext';
 import { useRoom } from '../../../context/RoomContext';
 import useMovieManager from '../../../hooks/useMovieManager';
+import useViewportWidth from '../../../hooks/useViewportWidth';
 import { generateImageUrl } from '../../../utils';
 import { ButtonContainer, Card, Container, ContentContainer, Image, MinusIcon, PlusIcon, Title } from './styled';
 
@@ -13,11 +14,13 @@ interface Props {
 
 const MovieCard = ({ movie }: Props) => {
     const history = useHistory();
+    const { width } = useViewportWidth();
     const { setMoviePreview: setMovieDetail } = useMoviePreview();
     const { room } = useRoom();
     const [zIndex, setZIndex] = useState(0);
     const imageUrl = generateImageUrl(movie.poster_path, 'w342');
     const { movieActionHandler, buttonBackgroundColor, movieInList } = useMovieManager(movie);
+    const layoutId = width > 700 ? 'undefined' : `image-${movie.id}`;
 
     const onMovieClick = () => {
         const currPathname = history.location.pathname;
@@ -30,8 +33,8 @@ const MovieCard = ({ movie }: Props) => {
     };
 
     return (
-        <Container>
-            <Card onClick={onMovieClick} layoutId={`image-${movie.id}`} zIndex={zIndex}>
+        <Container layout>
+            <Card onClick={onMovieClick} layoutId={layoutId} zIndex={zIndex}>
                 <ContentContainer>
                     <Image src={imageUrl} alt={`Movie poster for ${movie.title}.`} />
                     <Title>{movie.title}</Title>

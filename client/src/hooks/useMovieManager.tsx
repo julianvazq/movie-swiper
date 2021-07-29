@@ -51,6 +51,7 @@ const useMovieManager = (movie: Movie) => {
                         <FontWeight600>{movie.title}</FontWeight600> can only be removed by the person who added it.
                     </span>
                 ),
+                duration: 4000,
             });
             return;
         } else {

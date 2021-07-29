@@ -11,7 +11,8 @@ const Showcase = () => {
                 <p>Tap on a movie to see more details, including:</p>
                 <ul>
                     <li>Description</li>
-                    <li>Duration</li>
+                    <li>Runtime</li>
+                    <li>Rating</li>
                     <li>Genres</li>
                     <li>Trailer</li>
                 </ul>

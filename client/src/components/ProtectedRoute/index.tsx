@@ -24,7 +24,6 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
 
     useEffect(() => {
         try {
-            console.log(room.roomId, roomId);
             if (!roomId) return history.replace('/expired');
             /* Check if room exists */
             checkRoom({ roomId }, (res) => {
@@ -61,7 +60,7 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
             console.log(error);
             setStatus('error');
         }
-    }, [computedMatch.params.id, user]);
+    }, [computedMatch.params.id]);
 
     useEffect(() => {
         const swipedAll =

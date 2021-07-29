@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { createContext, ReactNode, useContext, useEffect, useReducer, useRef } from 'react';
 import toast from 'react-hot-toast';
+import { FaFilm, FaUser, FaUserCheck } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 import { Participant } from '../../../server/src/types';
 import { socket } from '../sockets';
@@ -169,6 +170,7 @@ const RoomProvider = ({ children }: Props) => {
                         <FontWeight600>{newParticipant.name}</FontWeight600> {' joined.'}
                     </span>
                 ),
+                icon: <FaUser />,
             });
             dispatch({ type: ActionType.JOIN, payload: { participant: { ...newParticipant, ready: false } } });
         });
@@ -214,6 +216,7 @@ const RoomProvider = ({ children }: Props) => {
                             Someone added <FontWeight600>{movie.title}</FontWeight600>.
                         </span>
                     ),
+                    icon: <FaFilm />,
                 });
             }
             dispatch({ type: ActionType.ADD_MOVIE, payload: { movie } });
@@ -234,6 +237,7 @@ const RoomProvider = ({ children }: Props) => {
                             <FontWeight600>{userToToggle.name}</FontWeight600> is ready.
                         </span>
                     ),
+                    icon: <FaUserCheck />,
                 });
             }
             dispatch({ type: ActionType.TOGGLE_READY, payload: { id: userId } });

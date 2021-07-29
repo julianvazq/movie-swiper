@@ -13,6 +13,8 @@ import {
     BackButton,
     BackIcon,
     ButtonContainer,
+    CloseButton,
+    CloseIcon,
     Container,
     ContentContainer,
     DesktopAddButton,
@@ -113,7 +115,10 @@ const MovieDetail = ({ movie }: Props) => {
         >
             <Container>
                 <ContentContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} layoutId={`image-${movie.id}`}>
-                    <Image src={imageUrl} />
+                    <CloseButton onClick={backToSelection}>
+                        <CloseIcon />
+                    </CloseButton>
+                    <Image src={imageUrl} alt={`Movie poster for ${movie.title}.`} />
                     <AnimatePresence>
                         {details && (
                             <motion.div

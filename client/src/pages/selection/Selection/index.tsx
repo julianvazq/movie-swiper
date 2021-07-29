@@ -12,13 +12,13 @@ import { Container } from './style';
 
 const ownerText = (
     <>
-        Add movies you&apos;d want to watch. Once the list is complete and members are ready, tap on &quot;
-        <FontWeight600>Start Swiping</FontWeight600>.&quot;
+        You&apos;re the room owner. Add movies you&apos;d want to watch, then wait for others to add theirs. When
+        participants are ready, tap on <FontWeight600>Start Swiping</FontWeight600>.
     </>
 );
 const participantText = (
     <>
-        Add movies you&apos;d want to watch. Once you&apos;re ready to start, tap on
+        Add movies you&apos;d want to watch. When you&apos;re ready to start voting, tap on{' '}
         <FontWeight600>Ready to Swipe</FontWeight600>.
     </>
 );

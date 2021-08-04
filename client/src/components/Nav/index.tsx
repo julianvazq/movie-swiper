@@ -6,6 +6,7 @@ import { useUser } from '../../context/UserContext';
 import useViewportWidth from '../../hooks/useViewportWidth';
 import { changeName } from '../../sockets/emitters';
 import { FontWeight600, StyledForm } from '../../styles';
+import { Stage } from '../../types/room';
 import { ToastType, useToast } from '../../utils';
 import Modal from '../Modal';
 import {
@@ -59,6 +60,22 @@ const Nav = ({ forceShow: show }: Props) => {
 
     if (pathname === '/' && !show) return null;
 
+    const getRoomLink = () => {
+        const currStage = pathname.split('/').filter(Boolean)[0];
+        const swipedAll =
+            room.movies.length > 0 &&
+            room.movies.every((movie) => movie.swipes.find((swipe) => swipe.user.id === user.id));
+        if (room.roomId && swipedAll) {
+            return `/${Stage.RESULTS}/${room.roomId}`;
+        }
+
+        if (room.roomId && currStage !== room.stage) {
+            return `/${room.stage}/${room.roomId}`;
+        }
+
+        return `/${room.stage}/${room.roomId}`;
+    };
+
     return (
         <Container>
             <InnerContainer>
@@ -72,7 +89,7 @@ const Nav = ({ forceShow: show }: Props) => {
                         </StyledLink>
                         {room.roomId && (
                             <StyledLink
-                                to={`/${room.stage}/${room.roomId}`}
+                                to={getRoomLink()}
                                 activeStyle={{
                                     fontWeight: 700,
                                 }}

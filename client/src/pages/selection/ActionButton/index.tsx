@@ -92,6 +92,7 @@ const ActionButton = () => {
                 toast.dismiss(toastId.current);
                 toastId.current = undefined;
             }
+            clearTimeout(timeoutId.current);
         };
     }, []);
 
@@ -147,9 +148,9 @@ const ActionButton = () => {
                 <ModalContent>
                     <h2>Start Swiping</h2>
                     <ol>
-                        <li>This action will move everyone in the group to the swiping stage.</li>
+                        <li>This action will move everyone in the room to the swiping stage.</li>
                         <br />
-                        <li>Once in this stage, group members won&apos;t be allowed to go back and add more movies.</li>
+                        <li>Once in this stage, room members won&apos;t be allowed to go back and add more movies.</li>
                     </ol>
                     <StartButton onClick={confirmSwipeAction}>Start</StartButton>
                 </ModalContent>

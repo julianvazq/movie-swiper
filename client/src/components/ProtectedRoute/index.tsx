@@ -14,11 +14,17 @@ interface Props {
     path?: RouteProps['path'];
 }
 
+enum Status {
+    LOADING,
+    ERROR,
+    SUCCESS,
+}
+
 const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props) => {
     const { room, dispatch } = useRoom();
     const { user } = useUser();
     const history = useHistory();
-    const [status, setStatus] = useState<'loading' | 'error' | 'success'>('loading');
+    const [status, setStatus] = useState<Status>(Status.LOADING);
     const roomId = computedMatch.params.id;
     const path = computedMatch.url.split('/')[1];
 
@@ -32,9 +38,9 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
                     if (user.name) {
                         joinRoom({ roomId, user }, (res) => {
                             if (res.success) {
-                                setStatus('success');
+                                setStatus(Status.SUCCESS);
                             } else {
-                                setStatus('error');
+                                setStatus(Status.ERROR);
                             }
                         });
                         /* If username is not set, go to Join screen to set it */
@@ -54,11 +60,11 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
                         return history.push(`/selection/${roomId}`);
                     });
                 }
+                setStatus(Status.SUCCESS);
             });
-            setStatus('success');
         } catch (error) {
             console.log(error);
-            setStatus('error');
+            setStatus(Status.ERROR);
         }
     }, [computedMatch.params.id]);
 
@@ -76,7 +82,7 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
         }
     }, [room.stage]);
 
-    if (status === 'loading') {
+    if (status === Status.LOADING) {
         return (
             <S.Container>
                 <S.Text>Joining room</S.Text>
@@ -85,7 +91,7 @@ const ProtectedRoute = ({ component: Component, computedMatch, ...rest }: Props)
         );
     }
 
-    if (status === 'error') {
+    if (status === Status.ERROR) {
         return (
             <S.Container>
                 <S.Text>Could not join room. Refresh the page to try again.</S.Text>
